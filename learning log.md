@@ -4,6 +4,7 @@
 - [] get format
 - [] do your own learning log
 - [x] set up repo / first push
+- [] name home environment at home similar to PS C:\Users\samuel    schuetz\Desktop\Algorithms Advanced\learning log repo>
 
 
 # wednseday 8/26/2026
