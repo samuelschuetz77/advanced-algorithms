@@ -48,6 +48,11 @@ phrase even if the user doesn't re-explain it.
 
 3. **"Generate text report" / "give me my thing" / etc.** — the trigger
    phrase for turn-in prep. When the student says this, Claude should:
+   - **Scope every git command in this flow to this repo specifically**,
+     regardless of which directory Claude was invoked in — this repo is a
+     submodule of `senior`, so where the diff/tag actually lands depends on
+     cwd. See "Running this flow from senior root vs. from inside this
+     repo" below before running anything.
    - Run `git diff` against the most recent `submitted-*` tag (or from the
      start of file history if no tag exists yet) on `learning log.md` to see
      what's new since last submission.
@@ -83,6 +88,46 @@ phrase even if the user doesn't re-explain it.
    in (e.g. "I submitted that," "mark this as submitted") does Claude tag
    the current commit `submitted-YYYY-MM-DD` so future diffs have a clean
    starting point. Never auto-tag on a report generation alone.
+
+## Running this flow from senior root vs. from inside this repo
+
+This repo is a git submodule of `senior`. The learning log flow (diff since
+last `submitted-*` tag, tagging on submission) uses `git diff` and `git tag`,
+which always operate on whatever repo the *current working directory* (or
+`git -C <path>`) resolves to — not on "the repo the file logically belongs
+to." That means the correct invocation depends on where Claude was clauded
+into:
+
+- **Clauded into this repo directly** (`advanced algorithms/` is cwd, or a
+  session started here): plain `git diff`, `git log`, `git tag` just work —
+  they're already scoped to this repo. No special handling needed.
+
+- **Clauded into `senior` root**: plain `git diff`/`git tag` from root hit
+  the *root* repo, not this one. From root's point of view this whole
+  folder is a single opaque gitlink entry — root's git has no idea
+  `learning log.md` exists, so an un-scoped `git diff` here will show
+  nothing useful (or the wrong thing entirely), and an un-scoped `git tag
+  submitted-...` would tag the *root* repo's history instead of this one,
+  silently doing the wrong thing. From root, every command in this flow
+  must be explicitly scoped, e.g.:
+  - `git -C "advanced algorithms" diff submitted-2026-01-01 -- "learning log.md"`
+  - `git -C "advanced algorithms" tag submitted-2026-01-15`
+  - `git -C "advanced algorithms" push origin submitted-2026-01-15`
+  (or `cd "advanced algorithms"` first, run the flow, then return to root —
+  either is fine, but don't run these commands un-scoped from root.)
+
+- **Tagging never needs a root-side step.** Creating `submitted-YYYY-MM-DD`
+  labels an existing commit in this repo — it doesn't create a new commit,
+  so it does *not* trigger the "bump the root pointer" rule from the root
+  `AGENTS.md`. The root pointer only needs updating if the tagged commit
+  itself was new and unpushed (i.e. normal submodule-commit handling
+  applies to the underlying commit, not to the act of tagging it). Do push
+  the tag to this repo's own remote (`git push origin <tag>`) so it's not
+  just local.
+
+- **Report file paths are relative to this repo**, not to `senior` root —
+  `generated-ai-use-reports/...` means
+  `advanced algorithms/generated-ai-use-reports/...` when working from root.
 
 ## Class notes
 
