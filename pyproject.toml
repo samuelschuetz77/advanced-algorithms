@@ -1,0 +1,10 @@
+[project]
+name = "advanced-algorithms"
+version = "0.1.0"
+description = "CS 4230 Advanced Algorithms coursework"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=3.0.5",
+    "pytest>=9.1.1",
+    "seaborn>=0.13.2",
+]
