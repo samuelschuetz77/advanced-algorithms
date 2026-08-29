@@ -38,10 +38,36 @@ nums = [1,2,3,4,7,6,5,8,9]
 
 
 # --- insertion sort ----
+# plan of attack
+#               start at i = 1, progressivly build a snake subarray/sublist if you encounter an i that is less than any number in the sublist insert it in the position it would go.   
 
 unsorted = [77, 33, 35, 12, 98, 2] 
 
-print(unsorted)
+#print(unsorted[0:1])
+
+
+def insertion_sort(list):
+    for i in range(1,len(list),1):   
+        sub = list[0:i+1]    # 1: [77, 33]    2: [33, 77, 35] 3: [33, 35, 77, 12] 4: [12,33,35,77, 98]
+        for j in range(0, i+1, 1):  # e.g j = 0, j = 1   2: j 0,1,2  3: j 0,1,2,3    4: 0,1,2,3,4 
+            if list[j] > list[i]: # if 77 > 33   2: if 33 > 35 nope 3: if 77 > 33 yes  4: if 33 > 12 yes 5: x > 98 no no no no 
+                # wrong: list[j], list[i] = list[i], list[j]  # 1:[33 <swapped> 77, 35, 12,98 etc] 2:[ 33, 35, 77, 12, 98,2] 3: [12,33,35,77,98,2]
+                temp = list[i]
+                for q in range(i, j, -1):
+                    value_moving = list[q-1]
+                    erased = list[q]
+                    list[q] = list[q-1]
+                    # og [77, 33, 35, 12, 98, 2] 
+                list[j] = temp
+                break
+    return list
+
+
+print(insertion_sort(unsorted))
+print()
+print()
+
+
 
 
 
