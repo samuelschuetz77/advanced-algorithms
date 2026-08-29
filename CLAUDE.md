@@ -135,6 +135,22 @@ Whenever "class notes" come up, see `class-notes-fetching.md` — it points to
 the live published Google Doc URL to `WebFetch` rather than relying on a
 stale local copy.
 
+## Scraping Canvas assignment pages with claude-in-chrome
+
+Canvas assignment pages often hide content behind collapsible/dropdown
+sections (e.g. an "Example code" toggle under "Optional Starter Code and
+Ideas"). A plain page read can silently miss that content and leave the
+local `Assignments/*.md` copy incomplete without any obvious sign something
+was skipped — this already happened once with `Project 1 - Sorting.md`,
+which shipped with a "not captured here, re-check the assignment page"
+placeholder instead of the actual example code.
+
+When transcribing a Canvas assignment page into this repo via
+claude-in-chrome: before extracting/copying content, click through and
+expand every collapsible section, dropdown, or "show more"/dropdown-arrow
+control on the page so nothing is left collapsed, then capture the fully
+expanded page content.
+
 ## Notes
 
 - `todo.md` is scratch/setup tracking, not part of the graded product.
