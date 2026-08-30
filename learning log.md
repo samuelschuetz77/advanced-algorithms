@@ -112,20 +112,69 @@ print(insertion_sort(unsorted))
                     # og [77, 33, 35, 12, 98, 2] 
                 list[j] = temp 
     - this change got my expected output list: [2, 12, 33, 35, 77, 98]! yay!
+    -final work: though this is a correct implementation
 - Hours Spent Learning: 1.5
 - Minutes Spent Documenting: 20
-- Confidence: 3, I'm still not sure this will work with every list 
+- Confidence: 3, I'm still not sure this will work with every list and I think 3 forloops is one too many.
 
-## 
+## Saturday 8/29/2026 10:30am : Learning Log 1 
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: How could I make the following function for insertion sort use 2 loops instead of 3?
+
+def insertion_sort(list):
+    for i in range(1,len(list),1):   
+        sub = list[0:i+1]    
+        for j in range(0, i+1, 1):   
+            if list[j] > list[i]: 
+                temp = list[i]
+                for q in range(i, j, -1):
+                    value_moving = list[q-1]
+                    erased = list[q]
+                    list[q] = list[q-1]
+                list[j] = temp
+                break
+    return list
+
+
+- When Identified: same day at around 10:15am
+- start time: 10:30am sat
+- end time: 8:25pm saturday 
+- Importance: 5 if I only need 2 loops and I have 3 I will never acheive o(n) best case, all will be o(n^2)
+- How to Learn: 
+    - reducing from 3 to 2 means there is a way i can do what my last 2 loops do in one loop. 
+    - look at potential ways to fulfill the purpose of each those two loops in a single loop somehow
+
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - the loops I need combining are the j loop and the q loop
+    - j loop has purpose: loop through already sorted sublist from indices 0 to the one right list[i] to see if there is a number in the sublist that is greater than the value stored in list[i] / temp. 
+    - a simple purpose of j is to figure out what index temp value belongs in the list
+
+    - q loop has the purpose of starting at where shifting every value in the list between list[i] and the index j loop deteremined that the list[i] / temp value should live up one so that each value now lives in the next index as it previously did. 
+    - a simple purpose of q loop is to shift all the values necessary so that that peurpose of the j loop can be realized
+
+    - if i combine those simple purposes my new loop would need to determine where the temp value would go and properly shift stuff over so temp can be inserted in right place 
+
+    - thought: instead of counting up in j then counting down (im talking j++ in j and q-- in q) what if I just counted down for the j loop? 
+
+    - aha: if we traverse the list down from list[i] / (e.g temp value index) we would basically be checking on each step:
+            - i have a value at index[i], are you bigger than that? 
+            - if the first value, list[i-1], is bigger than list[i] we have enough evidence to conclude that list[i] belongs somewhere else, which means we can also conclude that list[i-1]'s value should be shifted right to make space for wherever list[i] / temp should go. 
+            - ***if we know list[i] is going somehwere else, we don't need to know where its going yet to know that list[i-1] needs a right shift by 1 ***
+            - every j iteration (--) we can check 1) is list[j] bigger than list[] if so we can perform the shift
+            -after a few times this is what i landed on:
+            def insertion_sort(list):
+            
+            for i in range(1,len(list),1):   
+                temp = list[i]
+                for j in range(i-1, -1, -1): 
+                    if list[j] > temp: 
+                        list[j+1] = list[j]
+                        list[j] = temp 
+            return list
+
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 20
+- Confidence: 5, i believe I now have a correct implementation with correct complexity
 
 ## 
 
