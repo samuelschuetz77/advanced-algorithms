@@ -284,7 +284,7 @@ t have ended this session but I'm curious to see what we learn in regards to thi
 
 ## 
 
-- Question/Problem:
+- Question/Problem: 
 - When Identified:
 - Importance:
 - How to Learn:
