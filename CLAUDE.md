@@ -146,6 +146,15 @@ into:
   `generated-ai-use-reports/...` means
   `advanced algorithms/generated-ai-use-reports/...` when working from root.
 
+## Assignment completion frameworks
+
+If the user wants to tackle an assignment via a named framework (e.g.
+"use the `scaffold_then_guide` framework for this"), see
+`../assignment_completion_frameworks.md` at the `Senior/` root. Note this
+repo's "never edit code in `projects or assignments i turn in live here/`"
+rule above still governs the *default* — a framework must be explicitly
+invoked to override it for that assignment.
+
 ## Class notes
 
 Whenever "class notes" come up, see `class-notes-fetching.md` — it points to
