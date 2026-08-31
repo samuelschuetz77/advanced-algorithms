@@ -5,9 +5,6 @@
 import random
 import time
 
-import pandas as pd
-import pytest
-
 
 # python refresher
 
@@ -39,26 +36,44 @@ nums = [1,2,3,4,7,6,5,8,9]
 
 # --- insertion sort ----
 # plan of attack
-#               start at i = 1, progressivly build a snake subarray/sublist if you encounter an i that is less than any number in the sublist insert it in the position it would go.   
+#               start at i = 1, progressivly build a subarray/sublist if you encounter an i that is less than any number in the sublist insert it in the position it would go.   
 
 unsorted = [77, 33, 12, 35, 98, 2] 
 
 #print(unsorted[0:1])
 
-
-def insertion_sort(list):
-    for i in range(1,len(list),1):   
-        temp = list[i]
+# evolved implementation (optimal solution)
+def insertion_sort(lst):
+    for i in range(1,len(lst),1):   
+        temp = lst[i]
         for j in range(i-1, -1, -1): 
-            if list[j] > temp: 
-                list[j+1] = list[j]
-                list[j] = temp 
-    return list
+            if lst[j] > temp: 
+                lst[j+1] = lst[j]
+                lst[j] = temp
+            else:
+                break
+    return lst
+
+
+# selection sort
+
+def selection_sort(lst):
+    for i in range(0, len(lst)-1, 1):
+        a = lst[i]
+        b = min(lst[i+1:])
+        if a > b:
+            #swap
+            lst[i], lst[lst.index(b)] = lst[lst.index(b)] , lst[i]
+        else:
+            break
+    return lst
+
 
 
 print(insertion_sort(unsorted))
 print()
 print()
+print(selection_sort(unsorted))
 
 
 

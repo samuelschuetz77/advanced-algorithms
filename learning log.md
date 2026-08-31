@@ -176,6 +176,112 @@ def insertion_sort(list):
 - Minutes Spent Documenting: 20
 - Confidence: 5, i believe I now have a correct implementation with correct complexity
 
+## Sunday 8/30/2026 : Learning Log 2 
+
+- Question/Problem:
+    - How does selection sort work?
+- When Identified: 8/30/2026 2:40pm
+- Importance: 4
+- How to Learn: 
+    - utilize that cool asian guys website on github to see a good stepped animation: https://yongdanielliang.github.io/animation
+    - learn how to play the game
+- Insight/Answer:
+    - this one is less complicated than insertion sort in my understanding
+    - as I understand it you iterate from i = 0  up and do a swap with the current element and the min of cdr of the list (borrowing from racket terms) (if I am allowed to use the min(), this shouldn't be too difficult)
+    - you keep swapping list[i] and the min of 
+    - if i had the list [77, 33, 35, 12, 98, 2]:
+    - startiting at i=0, list[1:] would represent the cdr e.g. [33,35,12,98,2] while list[i] = 77
+    - I think min(list([i+1:])) would find the right potential value to swap, but we'd have to make sure min(list([i+1:])) is less than list[i]
+    - min(list([i+1:])) is the min of the cdr of the sublist starting at i -> i guess this is a more accurate way to say it.
+    - okay I'm sure I'm missing pieces but I think I'm ready to implemenet
+- Hours Spent Learning:0.25
+- Minutes Spent Documenting: 10
+- Confidence: 4, confident enough to begin coding
+
+## Sunday 8/30/2026 : Learning Log 2
+
+- Question/Problem: in this implementation where I'm using lst[lst.index(b)] would it still work if I had multiple values that are the same as the value for b 
+
+        def selection_sort(lst):
+            for i in range(0, len(lst), 1):
+                a = lst[i]
+                b = min(lst[i+1:])
+                if a < b:
+                    # tup swap
+                    lst[i], lst[lst.index(b)] = lst[lst.index(b)] , lst[i]
+                else:
+                    break
+
+- When Identified: 3:05pm 8/30/2026 Sunday
+- Importance: 4
+- How to Learn:
+    - Think about it - what could go wrong? 
+    - Hypothesize: my initial thought is it wouldn't matter 
+    - test, this is pretty easy to test throw two 2's in a list and see what happens: would the 2 selected for the swap be the one with a smaller index?
+- Insight/Answer:
+    - well i thought this would be straightforward but i got this error: 
+     
+    b = min(lst[i+1:])
+        ^^^^^^^^^^^^^^
+    ValueError: min() arg is an empty sequence
+
+    - I thought about why I might be getting this and realized we iterate to the last term of the list
+    - the problem with that is min of the cdr of the last number (and i guess the rest of the lsit) on the list would just be null.
+    - this is where the racket knowledge is useful. every list has the numbers in it + null. 
+    - I also realizsed i forgot a return value
+
+    - this is what stuck and (worked): 
+
+    def selection_sort(lst):
+    for i in range(0, len(lst)-1, 1):
+        a = lst[i]
+        b = min(lst[i+1:])
+        if a > b:
+            #swap
+            lst[i], lst[lst.index(b)] = lst[lst.index(b)] , lst[i]
+        else:
+            break
+    return lst
+
+
+
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 5 
+- Confidence: 4, i got it right, but unsure if this is an optimal solution or not in terms of big o
+
+## 
+
+- Question/Problem: I'm still bad at determining if a basic algortihm implemenatnion is an optimal solution or not, how can I learn and never forget? 
+
+- When Identified: 3:35pm 
+- start time: 3:35pm
+- end time: 4:15pm
+- Importance: 4
+- How to Learn: Ask ai for a guide, watch youtube videos on big o
+- Insight/Answer:
+ - after asking ai a good way to learn this and remember it gave me some heavy mathematical forumalas for calcualting time
+  including one for if a loops inner bounds depend on outer loop variables. That got me all the way confused so I asked if I could get an example of what it meant when inner loop bounds depend on outer loop variables
+  - I got frustrated because I never want to do or look at that formula ever and I didn't want this learning session to scope creep into something ugly and horrible that I never want to do - so I asked ai if there is a way to aproximate complexity and be fairly accurate as opposed to mathematically certain and this is what it said: 
+  - "Yes. You can get very accurate Big-O answers here without doing the summation formula.
+
+    An inner loop bound depends on the outer loop when the number of times the inner loop runs changes based on the current value of the outer loop variable."
+
+- as it turned out, my last function i worked on for selection sort is a good example of this: 
+
+in this part: b = min(lst[i+1:])
+
+The amount of work min() does depends on i. At first it checks almost the whole list, then a little less each time. 
+is n is len(lst) then it the outer for loop goes n times, while the inner sum is doing about n worth of work, though the list grows smaller and smaller.. 
+
+this just generalizes to O(n^2), which is good enough for me
+
+
+- Hours Spent Learning: 0.65
+- Minutes Spent Documenting: 10
+- Confidence: 3, although I think what I learned was a good refresher, when we get into recursion things will get a lot harder, I wouldn
+t have ended this session but I'm curious to see what we learn in regards to this stuff in class
+
+
 ## 
 
 - Question/Problem:
@@ -362,6 +468,8 @@ def insertion_sort(list):
 - Hours Spent Learning:
 - Minutes Spent Documenting:
 - Confidence:
+
+
 
 
 

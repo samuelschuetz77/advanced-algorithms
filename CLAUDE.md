@@ -15,6 +15,23 @@ This same split (`Assignments/` for specs, `projects or assignments i turn
 in live here/` for submissions) is the convention for the other class repos
 under `Senior/` (`frontend/`, `maintenance/`) too.
 
+## Never edit code in `projects or assignments i turn in live here/`
+
+This is graded, submitted coursework — same category as `learning log.md`:
+it must stay student-authored, per the class's academic integrity rules.
+Claude must **never edit, complete, or fix** files in this folder unless the
+student explicitly asks for that specific change in that moment.
+
+- If the student is debugging (e.g. a traceback, an import error), diagnose
+  and explain the error, but don't also fix unrelated bugs or finish
+  unfinished logic sitting nearby in the same file — even if it looks
+  broken or incomplete. That's the student's to write.
+- Only touch these files when the student explicitly says to fix, finish,
+  write, or edit specific code here. Answering "why is this broken" is not
+  that request.
+- This applies to any agent/subagent working in this repo, not just the
+  top-level session.
+
 ## The rules
 
 - `learning log.md` contains **only log entries**, one per Question/Problem,
