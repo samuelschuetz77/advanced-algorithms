@@ -9,7 +9,7 @@
 - Part of this question, I'm expecting might be guided by what you tell us on Monday 8/31/2026 or whats updated in canvas. (I'm asking this before the course schedule was/is posted.)
 - When Identified: 8/26/2026 3:30pm
 - Importance: 4
-- How to Learn: - sprint 1: selection / insertion + conduction proof reveiw
+- How to Learn: - sprint 1: selection / insertion + coinduction proof reveiw
         -sprint 2: bubble / counting sort - non- recursive sorts
         -sprint 3: recursion basics refresh / merge sort / quick sort
         -sprint 4: Big O / asymtoptic notation / contradiction proof verifies the sorts from sprints 2-3 are actually correct/efficient
@@ -249,7 +249,7 @@ def insertion_sort(list):
 - Minutes Spent Documenting: 5 
 - Confidence: 4, i got it right, but unsure if this is an optimal solution or not in terms of big o
 
-## 
+## Sunday 8/31/26 : Learning Log 2 
 
 - Question/Problem: I'm still bad at determining if a basic algortihm implemenatnion is an optimal solution or not, how can I learn and never forget? 
 
@@ -282,16 +282,49 @@ this just generalizes to O(n^2), which is good enough for me
 t have ended this session but I'm curious to see what we learn in regards to this stuff in class
 
 
-## 
+## Monday 8/31/2026 : Learning Log 2
 
-- Question/Problem: 
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: Is this implementation for counting sort correct and/or optimal? 
+
+
+def counting_sort(lst):                 # O(n+k) where k is length of count_array 
+    # make count_array:
+    max_num = max(lst)
+    counts = [0] * (max_num + 1)
+    for num in lst:                     # n traversal
+        counts[num]+=1  
+    # return list of nums:
+    lst2 = []
+    for i in range(0, max_num + 1, 1):  # k traversal
+       lst2 += [i] * counts[i]
+    return lst2 
+
+
+- When Identified: 6:00pm 
+- Start time: 4:30pm
+- end time: 8:30pm
+- Importance: 4
+- How to Learn: Use/set up the testing framework proposed in sorting.py assignment
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+ - before I began setting up the pytest framework I noticed that an empty list, I tried an empy list and got this result: 
+
+ Max_num = max(lst)
+              ^^^^^^^^
+ValueError: max() arg is an empty sequence, 
+
+so I fixed that with:
+
+if not(lst):
+    return []    
+
+  - Wow your code was pretty amazing for the testing harness, and 54 total lists to tests per sort. 
+  - took a while to understand it, I think I got it to work. Looks like i needed to add that to my other
+  -  looks like i need to add this to if not lst:
+        return [] too
+  - my question of whether this was a correct implementation was correct after i fixed that empy list bug, it worked in your full test harness
+- Hours Spent Learning: 2.5
+- Minutes Spent Documenting: 10 
+- Confidence: 4
 
 ## 
 

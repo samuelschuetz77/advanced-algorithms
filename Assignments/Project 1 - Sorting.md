@@ -72,95 +72,99 @@ import time
 import statistics
 
 def built_in_sorted(a):
-   a[:] = sorted(a)
+	a[:] = sorted(a)
 
 def in_place_sort(a):
-   a.sort()
+	a.sort()
 
 # bad
 def do_nothing(a):
-   pass
+	pass
 
 def make_two_copies(a):
-   return list(a) * 2
+	return list(a) * 2
 
 def quadratic_garbage(a):
-   for i in range(len(a)):
-      for j in range(len(a)):
-            a[i], a[j] = a[j], a[i]
+	for i in range(len(a)):
+		for j in range(len(a)):
+			a[i], a[j] = a[j], a[i]
 
 def reverse_sorted(a):
-   return list(reversed(sorted(a)))
+	return list(reversed(sorted(a)))
 
 def unchanged(a):
-   return a
+	return a
 
 @pytest.mark.parametrize("original", [
-   [],
-   [1],
-   [1,2],
-   [2,1],
-   [1,2,3],
-   [1,3,2],
-   [2,1,3],
-   [2,3,1],
-   [3,1,2],
-   [3,2,1]
+	[],
+	[1],
+	[1,2],
+	[2,1],
+	[1,2,3],
+	[1,3,2],
+	[2,1,3],
+	[2,3,1],
+	[3,1,2],
+	[3,2,1]
 ])
 def test_all(original):
-   for sort in sorts:
-      a = list(original)
-      sort(a)
-      assert a == sorted(original), f"failed to sort {original} with {sort.__name__}."
+	for sort in sorts:
+		a = list(original)
+		sort(a)
+		assert a == sorted(original), f"failed to sort {original} with {sort.__name__}."
 
 def time_sort(original, prep, sort):
-   a = prep(list(original))
-   start = time.perf_counter()
-   sort(a)
-   end = time.perf_counter()
-   return end - start
+	a = prep(list(original))
+	start = time.perf_counter()
+	sort(a)
+	end = time.perf_counter()
+	return end - start
 
 def aggregated_time_sort(lists, length, prep, sort, repetitions, timeout):
-   return statistics.median(
-      [time_sort(a[:length], prep, sort, timeout)
-            for a in lists
-            for _ in range(repetitions)])
+	return statistics.median(
+		[time_sort(a[:length], prep, sort, timeout)
+			for a in lists
+			for _ in range(repetitions)])
 
 import pandas as pd
 
 sorts = [built_in_sorted, in_place_sort, do_nothing, make_two_copies, quadratic_garbage]
 if __name__ == '__main__':
-   random.seed(4567)
-   preps = [sorted, reverse_sorted, unchanged]
-   num_lengths = 7
-   length_base = 10
-   max_value = 2 ** 10
-   max_length = length_base ** (num_lengths - 1)
-   random_lists = [[random.randint(0, max_value) for _ in range(max_length)] for _ in range(3)]
-   lengths = [length_base**k for k in range(num_lengths)]
-   repetitions = 3
-   timeout = 0.01
-   results = []
-   for prep in preps:
-      print(f'\n{prep.__name__}')
-      for sort in sorts:
-            print(f'\n\t{sort.__name__}', end='')
-            for length in lengths:
-               median_time = aggregated_time_sort(lists=random_lists, length=length,
-                                             prep=prep, sort=sort, repetitions=repetitions,
-                                             timeout=timeout)
-               print('.',end='')
-               results.append(dict(
-                  sort=sort.__name__,
-                  prep=prep.__name__,
-                  length=length,
-                  time=median_time))
-               if median_time > timeout:
-                  # don't consider longer lists if it already was too long on this one
-                  break
-   print()
-   print(results)
-   pd.DataFrame(results).to_csv("sort_times.csv")
+	random.seed(4567)
+	preps = [sorted, reverse_sorted, unchanged]
+	num_lengths = 7
+	length_base = 10
+	max_value = 2 ** 10
+	max_length = length_base ** (num_lengths - 1)
+	random_lists = [[random.randint(0, max_value) for _ in range(max_length)] for _ in range(3)]
+	lengths = [length_base**k for k in range(num_lengths)]
+	repetitions = 3
+	timeout = 0.01
+	results = []
+	for prep in preps:
+		print(f'\n{prep.__name__}')
+		for sort in sorts:
+			print(f'\n\t{sort.__name__}', end='')
+			for length in lengths:
+				median_time = aggregated_time_sort(
+					lists=random_lists,
+					length=length,
+					prep=prep,
+					sort=sort,
+					repetitions=repetitions,
+					timeout=timeout)
+				print('.',end='')
+				results.append(dict(
+					sort=sort.__name__,
+					prep=prep.__name__,
+					length=length,
+					time=median_time))
+				if median_time > timeout:
+					# don't consider longer lists if it already was too long on this one
+					break
+	print()
+	print(results)
+	pd.DataFrame(results).to_csv("sort_times.csv")
 ```
 
 ### Example code (plotting)
