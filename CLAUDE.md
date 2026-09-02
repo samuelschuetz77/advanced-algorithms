@@ -15,6 +15,13 @@ This same split (`Assignments/` for specs, `projects or assignments i turn
 in live here/` for submissions) is the convention for the other class repos
 under `Senior/` (`frontend/`, `maintenance/`) too.
 
+## Main bump flow & commit rules (git sync across machines)
+
+See "The main bump flow" and "Commit message rules" in `Senior/CLAUDE.md`
+— same procedure and rules, verbatim, for every directory under `Senior/`
+(including `Senior` root itself). Read it once there; it's identical
+everywhere, so don't re-derive it per-repo.
+
 ## Never edit code in `projects or assignments i turn in live here/`
 
 This is graded, submitted coursework — same category as `learning log.md`:
