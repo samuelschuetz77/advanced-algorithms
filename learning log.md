@@ -318,39 +318,121 @@ if not(lst):
     return []    
 
   - Wow your code was pretty amazing for the testing harness, and 54 total lists to tests per sort. 
-  - took a while to understand it, I think I got it to work. Looks like i needed to add that to my other
-  -  looks like i need to add this to if not lst:
+  - took a while to understand it, I think I got it to work. Looks l
+  -  looks like i need to add this to selection sort too:
+     if not lst:
         return [] too
   - my question of whether this was a correct implementation was correct after i fixed that empy list bug, it worked in your full test harness
 - Hours Spent Learning: 2.5
 - Minutes Spent Documenting: 10 
 - Confidence: 4
 
-## 
+## Tuesday 9/01/2026 : Learning Log 3
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: What are the components of recursion? 
+- When Identified: 11:20am 
+- start time: 11:20am
+- end time: 
+- Importance: 5
+- How to Learn: 
+  - read about the basics of recursion via AI and others
+  - read about merge sort, identify each component of recursion in a merge sort algorithm
 - Insight/Answer:
-- Hours Spent Learning:
+  - I've always understood the base case is the end condition that stops the recursion from happening, but I read that it can also be thought of as "The smallest version of the problem you already know the answer to"
+  - I think its easy to think in my head what is the value we have to stop at, but I think in more complicated recursion thinking about the smallest subproblem is superior
+  - With the recursive step, I've always thought of it as the part we are repeating.
+  - I think a better way for me to conceptualize this is: 
+  
+    distilling the problem to a few instances and preserving enough structure so that their solutions can be combined into the original soltuion you were after.
+
+    if we think of a factorial alg: 
+
+    solution to n = 
+    n * solution to n - 1
+
+  - lets talk merge sort:
+  - the base case is when you can't split a sublist anymore, when n = 1 or n = 0. becuase technically a list of length 0 and 1 are both 'sorted'
+  - but if we think in terms of 'distilling the problem to a few instances and preserving enough structure so that their solutions can be combined into the original soltuion you were after.' we have something like: 
+      sort(big list)
+      =
+      merge(sort(left half),
+           sort(right half))
+
+      but we still need a way to compse those solutions for left and right half
+
+  - the hardest part about recursive decomposition is preserving the property you care about and isloating it from the stuff that doesn't need to be solved yet. If done right, each recursive call becomes a smaller version of the same problem. 
+  - Three important things to remember when thinking about your recursive step implemenation: 
+    1) What smaller instance of the same problem am I creating. in simple recursion this could be passing the same funtion an n+1 or n-1..
+    2) How does solving that smaller instance help me solve the bigger one?
+    3) How many subproblems am I creating, and how quickly are they shrinking
+
+    def is_palindrome(str)
+        if len(str) >= 1:
+            return True
+        if str[0] != str[-1]
+            return False
+        return is_palidrome(str[1:-1]) 
+        
+        
+        1) What smaller instance of the same problem am I creating? -> is the inner layer a palidrome?  
+        2) How does solving that smaller instance help me solve the bigger one? -> 
+           if the outside chars match then the whole string is a palidrome if the inner layer is a palindrome
+        3) lets take is_palindrome("racecar")
+
+           recursive calls are: "racecar"       # initial call has 7 chars
+                                 "aceca"
+                                  "cec"
+                                   "e" 
+           
+           insight: each recursive call only produces 1 other subcall which is why we have a single chain of subproblems. 
+
+            insight: each subcall reduces the number of chars by 2 because it takes one off each end
+
+            important 2 things to remember with 3) How many subproblems am I creating, and how quickly are they shrinking:
+              - how many branches? 1 in this case
+              - n shrinkage in between call and subsequent call? in this case n shrinks by 2?
+
+            with those two components you can calculate how many recursive calls after original does it take to reach the base case?             
+                   
+- Hours Spent Learning: 1.15
+- Minutes Spent Documenting: 30
+- Confidence: 4
+
+## Tuesday 9/01/2026: Learning Log 3 
+
+- Question/Problem: Among the different types of recursive algorithms, what are all the important things to know about to avoid mistakes and optimize memory and storage? 
+- When Identified: 11:21am 
+-start time 11:21am
+-end time 11:15pm
+- Importance: 5
+- How to Learn:
+  - reveiw the types of recursion
+  - play a game where you look a few project euler problems that are commonly solved with a recursive function and guess what kind of recursion it will take to solve the problem from these 'types' i've already inventoried
+  -try a that one project euler solution again
+
+- Insight/Answer:
+  - Distnguishing the types of recursion comes down to four questions: 
+    1) Does the function call itself directly or through another function? options: direct, indirect/mutual
+    2) How many recursive calls/branches are created? options: linear/single recursion, binary recursion, multiple/tree recursion
+    3) Where is the recursive call? If there is work after the recursive call it is not a tail recursive alg. options: tail and non-tail/head recursion
+    4) How is the problem reduced? options: structural recursion, divide-and-conquer / generative recursion
+  
+  - the last line of a standard factorial recurive algorithm is: 
+
+    return n * factorial(n-1)
+
+    because we multiply n to whatever factorial(n-1), that means the recursive call isn't the final op -- the multiplication is 
+    that means factorial is not tail-recursive
+  - Mutual recursion is where A calls B and B eventually calls A  
+  - I'm looking at a project eueler problem I solved once upon a time with Adam's help
+
+- Hours Spent Learning: 2
 - Minutes Spent Documenting:
 - Confidence:
 
-## 
+## Tuesday 9/01/2026: Learning Log 3 
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
-- Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
-
-## 
-
-- Question/Problem:
+- Question/Problem: When should I use @lru_cache decorator?
 - When Identified:
 - Importance:
 - How to Learn:

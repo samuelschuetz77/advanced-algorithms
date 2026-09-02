@@ -86,6 +86,23 @@ def counting_sort(lst):     # O(n+k) where k is length of count_array
        lst2 += [i] * counts[i]
     return lst2
 
+def bubble_sort(lst):
+    
+    if not(lst):
+        return []
+    swapp_occured = True
+    while (swapp_occured):
+        swapp_occured = False
+        for i in range(len(lst)-1):
+            curr = lst[i]
+            next = lst[i+1]
+            if lst[i] > lst[i+1]:
+                swapp_occured = True
+                lst[i], lst[i+1] = lst[i+1], lst[i]
+    return lst
+                
+            
+
 
 def reverse_sorted(lst): 
     sorted(lst, reverse=True)
@@ -94,18 +111,20 @@ def reverse_sorted(lst):
 def unchanged(lst):
     return lst
 
-print(insertion_sort(unsorted))
-print()
-print()
-print(selection_sort(unsorted))
-print()
-print()
-print(counting_sort(unsorted))
+# print(insertion_sort(unsorted))
+# print()
+# print()
+# print(selection_sort(unsorted))
+# print()
+# print()
+# print(counting_sort(unsorted))
+lst33 = [2, 8, 1, 7] 
+print(bubble_sort(lst33))
 
 
 # --- Part 1 -----
 
-sorts = [insertion_sort, selection_sort, counting_sort]
+sorts = [insertion_sort, selection_sort, counting_sort, bubble_sort]
 
 # 
 # 
