@@ -427,32 +427,90 @@ if not(lst):
   - I'm looking at a project eueler problem I solved once upon a time with Adam's help
 
 - Hours Spent Learning: 2
-- Minutes Spent Documenting:
-- Confidence:
+- Minutes Spent Documenting: 20
+- Confidence: 4, need more experience writing recursive functions to solve problems - though i know work done this entry will help immensely
 
 ## Tuesday 9/01/2026: Learning Log 3 
 
-- Question/Problem: When should I use @lru_cache decorator?
-- When Identified:
-- Importance:
+- Question/Problem: How will I know when using @lru_cache is advantageous?
+- When Identified: Tuesday 9/01/2026: 10:45pm
+- start time: Tueday 9/01/2026 10:45pm
+- Importance: 5
 - How to Learn:
 - Insight/Answer:
 - Hours Spent Learning:
 - Minutes Spent Documenting:
 - Confidence:
 
-## 
+## Wednesday 9/02/2026: Learning Log 3
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
-- Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+- Question/Problem: I got a RecursionError: maximum recursion depth exceeded while attempting merge sort and I want to know why
+                    Is it because my algorithm is majorly flawed or minorly flawed?
+    
+    ######### start code ############################################################
+    def merge_sort(lst):
+    def merge(right, left):
+        r = l = 0
+        while(r < len(right) or l < len(left)):
+            # take index and find min
+            val = min(right[r], left[l])
+            if right[r] == val:
+                r+=1
+            else:
+                l+=1
+            lst += val
+        # while loop terminates because one or both lists has been run thru
+        # determine if another list hasn't been run through and if so append those remaining items to lst 
+        if (r == len(right)-1 and l != len(left)-1):
+            return lst + left[l:]
+        else:
+            return lst + right[r:]
 
-## 
+    # base case: if length of lst = 1 or 0 its sorted, return the sorted lst
+    if (len(lst) <= 1): 
+        return lst
+    mid_i = len(lst) // 2 # floor division means just integer division if you use / you could produce floats
+    # I know this is binary recursion / tree recursion because we produce two branches per call
+    return merge(merge_sort(lst[:mid_i+1]), merge_sort(lst[mid_i+1:]))
+
+    ######### end code #####################################################################
+
+- When Identified: Wednesday 9/02/2026 9:45am
+- start time: Wednesday 9/02/2026 9:45am
+- Importance: 2
+- How to Learn: identify what could cause these errors in beginner merge sort attempts 
+- Insight/Answer: 
+    - here is what I found after googling: 
+    1) The Bug: Checking if len(arr) == 0: instead of if len(arr) <= 1:.
+      - this makes sense because if we set it to end at 0 all the len 1 sub arrays would get split to a lnother len 1 and a len 0, those len1 splits would continue on forever
+      - this makes sense but its not my problem
+    2) Slicing Mistakes
+       2a) Using floating division / instead of integer division // 
+           - again not my problem 
+       2b) Off-by-one slices, if you dont break it up correctly it could fail
+           - I intially thought this couldn't be my problem.. 
+           - I tried working through an initial lst merge_sort call where lst len = 2
+           - ex) lst = [9, 2]
+           - here was my two original lines relevant to slicing:
+           - 1)   mid_i = len(lst) // 2
+           - 2)   return merge(merge_sort(lst[:mid_i+1]), merge_sort(lst[mid_i+1:]))
+           - I would expect it to work like:
+           -      return merge(merge_sort(9), merge_sort(2))
+           - but I suspect it doesn't
+           - lets see: mid_i = len(lst) // 2 = 2 // 2 = 1
+           - I already see my problem but I'll spell it out: 
+               - I thought mid would correlate to the last element of the first list, but it obviosuly correlates with the first element of the second list. 
+               - since mid_i = 1 here my algorithm would make the second sub list start at lst[mid_i + 1] = lst[2] -> that is out of bounds but we probably didnt even reach that error because we hit max depth exceeded first
+               - that would mean the first list would go from 0 to but not including index 2. in other words index 0 and index 1 -> but thats what we started with... i can see how this is similar to this Bug: Checking if len(arr) == 0: instead of if len(arr) <= 1:.
+            - to correct this I need: 
+            - return merge(merge_sort(lst[:mid_i]), merge_sort(lst[mid_i:]))
+            - insight: hey I think i'm starting to understand why pythons weird slicing defaults can be nice sometime! haha!
+            - I have another problem but I'm ending this, because I found the answer to my question
+- Hours Spent Learning: 0.8
+- Minutes Spent Documenting: 20
+- Confidence: 5
+
+## Wednesday 09/02/2026: Learning Log 4
 
 - Question/Problem:
 - When Identified:

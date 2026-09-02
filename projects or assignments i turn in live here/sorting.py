@@ -100,6 +100,40 @@ def bubble_sort(lst):
                 swapp_occured = True
                 lst[i], lst[i+1] = lst[i+1], lst[i]
     return lst
+
+def merge_sort(lst):
+    def merge(right, left):
+        lst= []
+        r = l = 0
+        while(r < len(right) and l < len(left)):
+            # take index and find min
+            val = min(right[r], left[l])
+            if right[r] == val:
+                r+=1
+            else:
+                l+=1
+            lst += [val]
+
+        # while loop terminates because one or both lists has been run thru
+        # determine if another list hasn't been run through and if so append those remaining items to lst 
+        if (r == len(right)):
+            return lst + left[l:]
+        else:
+            return lst + right[r:]
+        
+    # base case: if length of lst = 1 or 0 its sorted, return the sorted lst
+    if (len(lst) <= 1): 
+        return lst
+    mid_i = len(lst) // 2 # floor division means just integer division if you use / you could produce floats
+    # I know this is binary recursion / tree recursion because we produce two branches per call
+    return merge(merge_sort(lst[:mid_i]), merge_sort(lst[mid_i:]))
+    
+        
+
+
+
+
+
                 
             
 
@@ -124,7 +158,7 @@ print(bubble_sort(lst33))
 
 # --- Part 1 -----
 
-sorts = [insertion_sort, selection_sort, counting_sort, bubble_sort]
+sorts = [insertion_sort, selection_sort, counting_sort, bubble_sort, merge_sort]
 
 # 
 # 
