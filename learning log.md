@@ -332,7 +332,7 @@ if not(lst):
 - Question/Problem: What are the components of recursion? 
 - When Identified: 11:20am 
 - start time: 11:20am
-- end time: 
+- end time: 8:25pm
 - Importance: 5
 - How to Learn: 
   - read about the basics of recursion via AI and others
@@ -430,17 +430,6 @@ if not(lst):
 - Minutes Spent Documenting: 20
 - Confidence: 4, need more experience writing recursive functions to solve problems - though i know work done this entry will help immensely
 
-## Tuesday 9/01/2026: Learning Log 3 
-
-- Question/Problem: How will I know when using @lru_cache is advantageous?
-- When Identified: Tuesday 9/01/2026: 10:45pm
-- start time: Tueday 9/01/2026 10:45pm
-- Importance: 5
-- How to Learn:
-- Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
 
 ## Wednesday 9/02/2026: Learning Log 3
 
@@ -510,17 +499,49 @@ if not(lst):
 - Minutes Spent Documenting: 20
 - Confidence: 5
 
-## Wednesday 09/02/2026: Learning Log 4
+## Wednesday 09/02/2026: Learning Log 3 
 
-- Question/Problem:
-- When Identified:
-- Importance:
+- Question/Problem: I now understand the quick sort implementation with uno cards - what are the nuances of actually implementing it? What will my insights be? 
+- When Identified: Wednesday 09/02/2026 4:31pm
+- Start time: 4:31pm 9/02/2026 wednesday 
+- Importance: 5
+- How to Learn: 
+  - prepped by buying two decks of unos at dollar tree and really making sure I understand the 'game' that is quick sort - asking ai questions when i needed clarifications - stuff that there wouldn't be enough time in class for me to articulate before another student needs your help
+  - then implement and see what dust is kicked up - this dust might offer clues of where im getting tripped up understanding recursion in general 
+- Insight/Answer:
+  - first insight was this is the first memorable implemenation of tree recursion where the recursion inst directly in the return statement.. whereas merge was something like
+  
+  return merge(merge_sort(left), merge_sort(right))
+
+  this one has its recursive calls just happening in place, not follwoing a return statement. This is an interesting concept to me because quick was way harder to understand for me than merge, and i think thats concsistent with the complexity of the algorithm. because the partitioning step handles rearranging and finding the sticky pivot before recursing, unlike merge sort which has to do its combining work after.
+
+  - another idea was this idea of having the override function with 1 arg instead of the 3 it typically takes just to get the fucntion to work with your framework code. I thought this would be trickier than it was, very cool how simple that ended up being, I can see lots of applications for this -> a question that follows is: Is this what happens when you have constructor overloads in c# or is there nuances?
+    - answering that question they are similar distict: we have two functions in python vs true constructor overloads in c# use the compiler to basically say, "how many args does your call have?" maps to the constructor with  corresponding # of args. what is closer to this parent 1 arg quick_sort calling the 3 arg one is default params, i could have figured out a way to solve this with pythonsdefaults but I tried and it wasn't trivial. 
+
+  - Finally, yesterday I implemented merge_sort but before I even started I did my learning_log entry on types of recursion. I found learning about the types of recursion to be a very good investment of time, and learning about these subtle differences makes identifying the the recursive step a much cleaner process often and can sometimes make understanding what the base case should be better. Anyway I want to run through what kind of recursion quick_sort is from those recursion-type areas i found yesterday. 
+
+  - 1) it  is direct meaning quick sort calls itself not through some other function
+  - 2) like merge sort it is the binary recursion because each call births two branches. binary is a subset of tee recursion which can be far more than two branches each time. # of branches though is not indicative of recursion depth, and quick_sort is less stable off the bat than merge because how there is a spectrum of luckiness we can get when selecting our pivot. 
+  - 3) tail recursiveness of quicksort:
+        this one is tricky because the we have two recursive calls since binary recursive. from what im reading the second call is truly tail recursive because it is the last thing the fucntion does, but since the first call is not the last thing - the quick_sort as a whole is not truely tail_recursive. by definition binary recursion cannot be tail recursive even though i guess parts of it can be.. But i found a website I do not want to read right now but im putting it here to read over it later: 
+        https://cs.wellesley.edu/~cs251/f20/notes/tailrec.html for the purpose of understanding how binary recursive algorithms can be manipulated into tail recursive algorithms.. this will probably come up in our coursework too, but dual exposure would be good. 
+    - 4) this is generative as opposed to structural, and it relies on randomness in pivot to (hope for) avoiding the worst case
+- End time: 7:04pm
+- Hours Spent Learning: 2 and 33min
+- Minutes Spent Documenting: 20
+- Confidence:4 
+
+## Tuesday 9/01/2026: Learning Log 4 
+
+- Question/Problem: How will I know when using @lru_cache is advantageous?
+- When Identified: Tuesday 9/01/2026: 10:45pm
+- start time: Tueday 9/01/2026 10:45pm
+- Importance: 5
 - How to Learn:
 - Insight/Answer:
 - Hours Spent Learning:
 - Minutes Spent Documenting:
 - Confidence:
-
 ## 
 
 - Question/Problem:

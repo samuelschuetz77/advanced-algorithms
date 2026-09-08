@@ -57,11 +57,10 @@ def selection_sort(lst):
     for i in range(0, len(lst)-1, 1):
         a = lst[i]
         b = min(lst[i+1:])
+        b_index = lst.index(min(lst[i+1:]),i+1)  #second arg is start index otherwise lst.index finds post-swapped values
         if a > b:
             #swap
-            lst[i], lst[lst.index(b)] = lst[lst.index(b)] , lst[i]
-        else:
-            break
+            lst[i], lst[b_index] = lst[b_index] , lst[i]
     return lst
 
 
@@ -84,7 +83,8 @@ def counting_sort(lst):     # O(n+k) where k is length of count_array
     lst2 = []
     for i in range(0, max_num + 1, 1):
        lst2 += [i] * counts[i]
-    return lst2
+    lst[:] = lst2 # for testing harness
+    return lst
 
 def bubble_sort(lst):
     
@@ -126,15 +126,48 @@ def merge_sort(lst):
         return lst
     mid_i = len(lst) // 2 # floor division means just integer division if you use / you could produce floats
     # I know this is binary recursion / tree recursion because we produce two branches per call
-    return merge(merge_sort(lst[:mid_i]), merge_sort(lst[mid_i:]))
+    lst[:] = merge(merge_sort(lst[:mid_i]), merge_sort(lst[mid_i:]))
+    return lst
+
+def quick_sort(lst):
+    def quick_sort_range(lst, low, high):
+        def partition(high, low, lst):
+            #select random index betwen low and high inlclusive
+            piv1 = random.randint(low, high)
+            # swap it so its at postion lst[0]
+            lst[low], lst[piv1] = lst[piv1], lst[low]
+            
+            # j is used to track the "boundary" between 'smaller-than-or-equal-to' list and 'larger-than' list
+            j = low+1
+            # pivot is now at postion 0 which means i starts at 1 instead of 0
+            for i in range(low+1, high+1, 1):
+                #compare lst[i] with pivot
+                if lst[i] <= lst[low]:
+                    #swap list[i] with first element of 'larger-than' list
+                    lst[j], lst[i] = lst[i], lst[j]
+                    j+=1
+            #put pivot into final pos
+            lst[low], lst[j-1] = lst[j-1], lst[low]
+            return j -1
+
+        if low >= high:
+            return
+        pivot_index = partition(high, low, lst) #this is the one that sticks
+
+        quick_sort_range(lst, low, pivot_index - 1)
+        quick_sort_range(lst, pivot_index+1, high)
+
+
+    return quick_sort_range(lst, 0, len(lst)-1)
     
-        
 
-
-
-
-
+    
+            
                 
+             
+
+    
+       
             
 
 
@@ -148,17 +181,17 @@ def unchanged(lst):
 # print(insertion_sort(unsorted))
 # print()
 # print()
-# print(selection_sort(unsorted))
+print(merge_sort(unsorted))
 # print()
 # print()
-# print(counting_sort(unsorted))
+print(counting_sort(unsorted))
 lst33 = [2, 8, 1, 7] 
 print(bubble_sort(lst33))
 
 
 # --- Part 1 -----
 
-sorts = [insertion_sort, selection_sort, counting_sort, bubble_sort, merge_sort]
+sorts = [insertion_sort, selection_sort, counting_sort, bubble_sort, merge_sort, quick_sort]
 
 # 
 # 

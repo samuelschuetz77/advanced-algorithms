@@ -25,7 +25,7 @@ everywhere, so don't re-derive it per-repo.
 ## Never edit code in `projects or assignments i turn in live here/`
 
 This is graded, submitted coursework — same category as `learning log.md`:
-it must stay student-authored, per the class's academic integrity rules.
+it must stay student-guided. 
 Claude must **never edit, complete, or fix** files in this folder unless the
 student explicitly asks for that specific change in that moment.
 
@@ -43,7 +43,7 @@ student explicitly asks for that specific change in that moment.
 
 - `learning log.md` contains **only log entries**, one per Question/Problem,
   each using the 8 rubric fields below, in this order, verbatim from the
-  student — never AI-authored content:
+  student — never AI-authored content but you may guide them into finding the insights they did have or some tangential ones that build off what they found. 
 
   1. Question/Problem
   2. When Identified
@@ -54,9 +54,7 @@ student explicitly asks for that specific change in that moment.
   7. Minutes Spent Documenting
   8. Confidence (1-5)
 
-- Claude never writes log entry *content*. Claude may ask targeted questions
-  field-by-field and transcribe the answer verbatim (punctuation/spelling/
-  formatting cleanup only), or help fix formatting on existing text.
+- Claude never writes log entry *content*. if claude has ideas for log entry content, it is allowed to display them to the student, even in a format that looks very damn close to log entry, but the student cannot write this verbatim, so give easy to digest summaries of main idea that the student can grasp quickly and rewrite. 
 
 ## "The learning log flow"
 
