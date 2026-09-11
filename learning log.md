@@ -537,15 +537,74 @@ if not(lst):
 - When Identified: Tuesday 9/01/2026: 10:45pm
 - start time: Tueday 9/01/2026 10:45pm
 - Importance: 5
-- How to Learn:
+- How to Learn: search the web for real stories on how people use @lru_cache, and read Python's documentation on it
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
-## 
+    - lru stands for least recently used and is a caching eviction policy among others like FIFO or least frequently used. It says which things are we getting rid of from cache and wagers that if you haven't used it in awhile then it probably won't be as important as the stuff most recently used.
+    - how @lru_cache works: it saves return values attached to specific args so that if those args show up again it pulls the result quickly from cache. When dealing with recursive functions this is basically a built in "I'll handle memoization and make it easy" feature.
+    - I found from the documentation that you can and should use @lru_cache when you are expecting to use the same args in multiple function calls, so because this is a very common thing with recursion, you can almost always use it when dealing with pure recursive implementations. One caveat is that when your recursive functions have side effects (network calls, print statements, modifying global vars, dealing with randoms, db writes, non deterministic behavior) you should not use it. That makes sense.
+    - Adding this to concrete the idea of non deterministic functions in my head. If you try to use @lru_cache for non deterministic functions, for example maybe your function does something with a current time stamp, the cached version will always be based on the first call. So even though you have matching args you'd have different behavior and it wouldn't be advantageous to save a cached version if that version is different (even if only slight) from what you would expect if you didn't skip computations.
+- Hours Spent Learning: 0.75
+- end time: 9:30pm 9/8/2026
+- Minutes Spent Documenting: 15
+- Confidence: 5
 
-- Question/Problem:
-- When Identified:
+## Tuesday 9/08/2026 : Learning Log 4
+
+- Question/Problem: What is the priority and what is the key in the priority queue?
+- When Identified: 7:15pm 9/8/2026
+- start time: 7:15pm 9/8/2026
+- Importance: 4
+- How to Learn: read the Sheehy chapters, ask questions to AI about heap order / priority queues until confident in understanding about graphs / priority queues / min heaps
+- Insight/Answer:
+    - priority is just the value the whole structure is "sorted" by
+    - by "sorted" I mean heap ordered, which basically means a node's (up to 2) children must be greater than or equal to the parent
+    - adding a new node we call updating, and it will either add a node if the key isn't used, or update the data of that node - because we are eventually using Prim's algorithm, we have to put some check to make sure we are only fulfilling updates that include a lower number than current for priority
+- Hours Spent Learning: 1
+- end time: 8:12pm 9/8/2026
+- Minutes Spent Documenting: 14
+- Confidence: 5
+
+## Wednesday 9/9/2026 : Learning Log 4
+
+- Question/Problem: In min-heap priority queue with some locator dict, why is it not enough to swap the heap array entries during sift-up/sift-down, and why do the corresponding locator dictionary values need to be updated as a packaged deal with the heap-array swap?
+- When Identified: 4:45pm 9/9/2026
+- start time: 4:45pm 9/9/2026
+- end time: 6:45pm 9/9/2026
+- Importance: 4
+- How to Learn: Understand the benefit of the locator dict, understand how this optimized data structure should/would work, and then go over scenarios where things malfunction and what would be the net effect.
+- Insight/Answer:
+    - to find a key's index fast instead of a linear scan: we could just do a dic that stores the same key but its value would just be the index it lives at
+    - this sift would not ever swap a child node with some node at the parents level (but not the same node as the parent), in other words you are always swapping between a parent and a child, always
+    - Whenver you are performing sifting/swapping something always needs to happen concerning the locator dict: you would need to swap the values of these two keys, especially because you are using the locator dict in some capacity for the swaps of the min-heap array.
+    - the locator dic would not be updated if it didnt happen, youd have a stale key index mapping that would screw things up significantly -- swap values, not keys: if locator["b"] == 2 and locator["e"] == 5 before a swap, after swapping array indices 2 and 5 you need locator["b"] == 5 and locator["e"] == 2, keep the keys, swap the index values
+    - if the locator isn't updated: it would swap potentially an old value for e with 0, it would swap something that might not even be e -- it would look for e's index and it would swap the element at the index e used to be at, causing a dilemma. the failure is temporally displaced from its cause, and it never announces itself -- you get plausible-looking wrong answers instead of a stack trace
+    - on order vs atomicity: I don't think it matters which you do first, I think it just matters that you do each as a unit, and try to eradicate/minimize any steps in between the operations
+    - these should be bundled as a packaged deal whenever there is a shift up or down because if they weren't wrapped in the swap function I'm going to implement, it could cause problems -- there is a safe way to make it impossible for code to run in between these two iterable modifications, and it has to do with atomicity
+- Hours Spent Learning: 2
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## Wednesday 9/9/2026 : Learning Log 4
+
+- Question/Problem: Why did my sift_up/update implementation for the locator-heap priority queue keep breaking, and what specific bugs were causing it?
+- When Identified: 6:00pm 9/9/2026
+- start time: 5:30pm 9/9/2026
+- end time: 11:30pm 9/9/2026
+- Importance: 4
+- How to Learn: Write and concpetualize sift_up but think about the iterative version of a base case
+- Insight/Answer:
+    - first insight: I referenced parent_key in the while condition before it was ever assigned and i  fixed it by computing parent_index/parent_key before the while loop and refreshing them at the end of each iteration.
+    - My while condition / root guard was backwards (curr <= 0 instead of curr > 0) - this would yerminate the while before anything meaningful could get done.
+    - I realized new keys were never being registered in self.locator_dict, only swaps updated it in sift_up, so a fresh key's index was never recorded, causing sift_up to combust into a fiery explosion of autism
+    - When updating an existing key to a lower priority, I was appending a new tuple instead of overwriting the existing one at its current index... since im using a list of tuples with keys this was theroretically possible but it shouldn't have been at all. I should have buttoned that up.
+- Hours Spent Learning: 2.5
+- Minutes Spent Documenting: 12
+- Confidence: 3 I'm confident my insights are getting me closer to being done with this, but I'm not done yet
+
+## Learning Log 5 kickoff question
+
+- Question/Problem: How can I remember the jist of Prim's vs Djisktras graph algorithms? 
+- When Identified:11:45pm 9/9/2026
 - Importance:
 - How to Learn:
 - Insight/Answer:

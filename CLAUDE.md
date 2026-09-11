@@ -42,8 +42,8 @@ student explicitly asks for that specific change in that moment.
 ## The rules
 
 - `learning log.md` contains **only log entries**, one per Question/Problem,
-  each using the 8 rubric fields below, in this order, verbatim from the
-  student — never AI-authored content but you may guide them into finding the insights they did have or some tangential ones that build off what they found. 
+  each using the 8 rubric fields below, in this order, based on the student's
+  demonstrated reasoning, dictated notes, corrections, and claimed insights.
 
   1. Question/Problem
   2. When Identified
@@ -54,7 +54,57 @@ student explicitly asks for that specific change in that moment.
   7. Minutes Spent Documenting
   8. Confidence (1-5)
 
-- Claude never writes log entry *content*. if claude has ideas for log entry content, it is allowed to display them to the student, even in a format that looks very damn close to log entry, but the student cannot write this verbatim, so give easy to digest summaries of main idea that the student can grasp quickly and rewrite. 
+- Claude should not invent log-entry content disconnected from the student's
+  work. Claude may draft or edit an entry when the student explicitly asks
+  for it and the source material is the student's reasoning, wording,
+  corrections, claimed insights, or approved ideas from the conversation.
+
+### Current clarification: edit the file when asked
+
+The sentence above is meant to prevent invented filler, not to make Claude
+argue when the student asks for a concrete file edit. When the student has
+worked through a topic in conversation and then asks Claude to update
+`learning log.md`, Claude should perform the mechanical edit.
+
+Use the student's own chat messages, dictated notes, corrections, and claimed
+insights as source material. Light cleanup is allowed: spelling,
+capitalization, formatting into the 8-field structure, and removing obvious
+chat filler.
+
+If Claude contributes phrasing during a Socratic session and the student
+explicitly claims that idea, rewrites it, approves it, or asks for it to be
+incorporated, treat that as student-approved source material for the log. The
+entry should reflect what the student understood and approved, not unrelated
+AI filler.
+
+Do not moralize, stall, or relitigate academic-integrity concerns when the
+requested action is a direct edit based on the student's demonstrated
+reasoning in the current conversation. If there is a genuine policy conflict,
+state the concrete conflict once, then offer the compliant edit path and
+proceed as far as possible.
+
+### Learning-log drafting example
+
+The locator-heap conversation on 2026-09-09 is the model workflow:
+
+- The student worked through why a raw heap array requires an O(n) scan to
+  locate a key for `remove` or `update`.
+- The student identified the locator dict as `key -> index`.
+- The student claimed the insight that when two heap array entries swap, the
+  locator keeps the same keys but swaps the index values.
+- The student claimed the stale-locator failure mode: the heap array can stay
+  structurally valid while a future `update("e", 0)` uses the stale index and
+  mutates the wrong item, causing silent, temporally displaced corruption.
+- The student claimed the atomicity insight: array swap plus locator update
+  should be a packaged deal whenever sift-up or sift-down swaps entries, best
+  enforced by a single swap helper so no code can run between the two
+  modifications.
+
+If the student asks to add an entry after a session like that, Claude should
+format these student-claimed insights into the required 8 fields and edit
+`learning log.md` directly, using the student's timestamps and requested
+hours/minutes/confidence values when provided. If a value is missing, use a
+plain placeholder rather than refusing the edit.
 
 ## "The learning log flow"
 
@@ -65,8 +115,11 @@ phrase even if the user doesn't re-explain it.
    student works through a question by asking targeted questions, getting
    examples, etc.
 
-2. **Editing the log**: student dictates field values; Claude transcribes
-   them into `learning log.md` verbatim (cleanup only, no added content).
+2. **Editing the log**: student dictates field values or points Claude to
+   the relevant chat context; Claude edits `learning log.md` into the required
+   format using the student's demonstrated reasoning, claimed insights, and
+   approved wording as source material. Use placeholders for missing fields
+   instead of blocking the edit.
 
 3. **"Generate text report" / "give me my thing" / etc.** — the trigger
    phrase for turn-in prep. When the student says this, Claude should:

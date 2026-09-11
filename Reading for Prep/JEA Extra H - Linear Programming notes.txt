@@ -1,0 +1,997 @@
+The greatest ﬂood has the soonest ebb; the sorest tempest the most sudden
+calm; the hottest love the coldest end; and from the deepest desire oftentimes
+ensues the deadliest hate.
+                                                                     — Socrates
+
+Th’ extremes of glory and of shame, Like east and west, become the same.
+                              — Samuel Butler, Hudibras Part II, Canto I (c. 1670)
+
+Everything is dual; everything has poles; everything has its pair of opposites; like
+and unlike are the same; opposites are identical in nature, but different in degree;
+extremes meet; all truths are but half-truths; all paradoxes may be reconciled.
+                            — The Kybalion: A Study of The Hermetic Philosophy
+                                            of Ancient Egypt and Greece (1908)
+
+Oh, that!
+                            — John von Neumann to George Dantzig (May 1947)
+
+
+
+
+                                                                                                       H
+                                                         Linear Programming
+                                                                                    [Read Chapters F and G ﬁrst.]
+                                                                                Status: Text beta. Needs ﬁgures.
+
+
+
+
+H.1         Introduction
+The maximum flow and minimum cut problems are examples of a general class of
+problems called linear programming. Many other optimization problems fall into
+this class, including minimum spanning trees and shortest paths, as well as several
+common problems in scheduling, logistics, and economics. Linear programming was used
+implicitly by Fourier and Jacobi in the early 1800s, but it was first formalized and applied
+to problems in economics in the 1930s by Leonid Kantorovich. Kantorivich’s work was
+hidden behind the Iron Curtain (where it was largely ignored) and therefore unknown
+in the West. Linear programming was rediscovered and applied to shipping problems
+in the late 1930s by Tjalling Koopmans. The first complete algorithm to solve linear
+programming problems, called the simplex method, was published by George Dantzig
+in 1947. Koopmans first proposed the name “linear programming" in a discussion with
+Dantzig in 1948. Kantorovich and Koopmans shared the 1975 Nobel Prize in Economics
+
+                            © 2018 Jeff Erickson                     http://algorithms.wtf                          1
+H. LINEAR PROGRAMMING
+
+
+
+        “for their contributions to the theory of optimum allocation of resources”. Dantzig did
+        not; his work was apparently too pure. Koopmans wrote to Kantorovich suggesting that
+        they refuse the prize in protest of Dantzig’s exclusion, but Kantorovich saw the prize as
+        a vindication of his use of mathematics in economics, which his Soviet colleagues had
+        written off as “a means for apologists of capitalism”.
+            A linear programming problem—or more simply, a linear program—asks for a vector
+        x ∈ Rd that maximizes or minimizes a given linear function, among all vectors x that
+        satisfy a given set of linear inequalities. The general form of a linear programming
+        problem is the following:
+
+                                           d
+                                           X
+                              maximize           cj x j
+                                           j=1
+                                          d
+                                          X
+                             subject to         ai j x j ≤ bi      for each i = 1 .. p
+                                          j=1
+                                          d
+                                          X
+                                                ai j x j = bi      for each i = p + 1 .. p + q
+                                          j=1
+                                          d
+                                          X
+                                                ai j x j ≥ bi      for each i = p + q + 1 .. n
+                                          j=1
+
+
+        Here, the input consists of a constraint matrix A = (ai j ) ∈ Rn×d , an offset vector b ∈ Rn ,
+        and an objective vector c ∈ Rd . Each coordinate of the vector x is called a variable. Each
+        of the linear inequalities is called a constraint. The function x 7→ c · x is called the
+        objective function.
+            A linear program is said to be in canonical form1 if it has the following structure:
+
+                                                 d
+                                                 X
+                                   maximize               cj x j
+                                                 j=1
+                                                d
+                                                X
+                                  subject to           ai j x j ≤ bi   for each i = 1 .. n
+                                                 j=1
+
+                                                             xj ≥ 0    for each j = 1 .. d
+
+        A canonical linear program is completely determined by its constraint matrix A, its offset
+        vector b, and its objective vector c. In addition to the n matrix constraints Ax ≥ b, every
+        canonical linear program includes d sign constraints of the form x j ≥ 0.
+             1
+               Confusingly, some authors call this standard form. Linear programs in this form are also sometimes
+        called packing LPs.
+
+
+2
+                                                                      H.2. The Geometry of Linear Programming
+
+
+
+    We can express this canonical form more compactly as follows. For two vectors
+x = (x 1 , x 2 , . . . , x d ) and y = ( y1 , y2 , . . . , yd ), the expression x ≥ y means that x i ≥ yi
+for every index i.
+                                               max c · x
+                                                s.t. Ax ≤ b
+                                                      x ≥0
+
+Any linear programming problem can be converted into canonical form as follows:
+ • For each variable x j , add two new variables x i+ and x i− , an equality constraint
+   x j = x +j − x −j , and inequalities x +j ≥ 0 and x −j ≥ 0.
+ • Replace any equality constraint             j ai j x j = bi with two inequality constraints
+                                             P
+
+                      and                  .
+   P                      P
+        a  x
+       j ij j ≥  b  i         a  x
+                             j ij j ≤  b i
+
+ • Finally, replace any upper bound constraint j ai j x j ≥ bi with the equivalent lower
+                                                          P
+
+   bound j −ai j x j ≤ −bi .
+             P
+
+This conversion potentially doubles the number of variables and the number of constraints;
+fortunately, it is rarely necessary in practice.
+    Another useful format for linear programs is slack form2 , in which every inequality
+is of the form x j ≥ 0:
+                                               max c · x
+                                                s.t. Ax = b
+                                                      x ≥0
+
+It’s fairly easy to convert any linear programming problem into slack form; I’ll leave the
+details as an easy exercise (hint, hint). Slack form is especially useful in executing the
+simplex algorithm, which we’ll see in the next chapter.
+
+
+H.2        The Geometry of Linear Programming
+A point x ∈ Rd is feasible with respect to some linear programming problem if it satisfies
+all the linear constraints. The set of all feasible points is called the feasible region for that
+linear program. The feasible region has a particularly nice geometric structure that lends
+some useful intuition to the linear programming algorithms we’ll see later.
+     Any linear equation in d variables defines a hyperplane in Rd ; think of a line when
+d = 2, or a plane when d = 3. This hyperplane divides Rd into two halfspaces; each
+halfspace is the set of points that satisfy some linear inequality. Thus, the set of feasible
+points is the intersection of several hyperplanes (one for each equality constraint) and
+halfspaces (one for each inequality constraint). The intersection of a finite number
+of hyperplanes and halfspaces is called a polyhedron. It’s not hard to verify that any
+    2
+        Confusingly, some authors call this standard form.
+
+
+                                                                                                            3
+H. LINEAR PROGRAMMING
+
+
+
+        halfspace, and therefore any polyhedron, is convex—if a polyhedron contains two points
+        x and y, then it contains the entire line segment x y.
+
+
+
+
+                        Figure H.1. A two-dimensional polyhedron deﬁned by 11 linear inequalities.
+
+            By rotating Rd (or choosing an appropriate coordinate frame) so that the objective
+        function points downward, we can express any linear programming problem in the
+        following geometric form:
+
+                                Find the lowest point in a given polyhedron.
+
+            With this geometry in hand, we can easily picture two pathological cases where a
+        given linear programming problem has no solution. The first possibility is that there are
+        no feasible points; in this case the problem is called infeasible.
+
+
+                                 maximize       x−y
+                                 subject to   2x + y ≤ 1
+                                                x+ y ≥2
+                                                 x, y ≥ 0
+
+
+
+                  Figure H.2. An infeasible linear programming problem; arrows indicate the constraints.
+
+            The second possibility is that there are feasible points at which the objective function
+        is arbitrarily large; in this case, we call the problem unbounded. The same polyhedron
+        could be unbounded for some objective functions but not others, or it could be unbounded
+        for every objective function.
+
+
+
+
+4
+                                                                                                  H.3. Examples
+
+
+
+
+    Figure H.3. A two-dimensional polyhedron (white) that is unbounded downward but bounded upward.
+
+
+H.3    Examples
+One Shortest Path
+We can compute the length of the shortest path from s to t in a weighted directed graph
+by solving the following simple linear program.
+
+               maximize                  dist(t)
+               subject to                dist(s) = 0
+                             dist(v) − dist(u) ≤ `(u v) for every edge u v
+
+Here the input consists of a graph G = (V, E) and a vector ` ∈ R E (or equivalently, a
+function `: E → R) representing the lengths of edges in G, and our goal is to compute a
+vector dist ∈ RV (or equivalently, a function dist: V → R) such that dist(t) is the shortest
+path distance from s to t. The constraints in the linear program encode Ford’s generic
+requirement that every edge in the graph must be relaxed. These relaxation constraints
+imply that in any feasible solution, dist(v) is at most the shortest path distance from s to v,
+for every vertex v. Thus, somewhat counterintuitively, we are correctly maximizing
+dist(t) to compute the shortest-path distance from s to t!
+ • This linear program is feasible if and only if the graph has no negative cycles. On the
+   one hand, if the graph has no negative cycles, then the true shortest-path distances
+   give a feasible solution. On the other hand, if the graph has a negative cycle, then
+   for any distance values dist(v), at least one edge in that cycle will be tense.
+ • This linear program is bounded if and only if the graph contains a path from s to t.
+   On the one hand, if there is a path from s to t, the length of that path is an upper
+   bound on the optimal objective value. On the other hand, if there is no path from s
+   to t, we can obtain a feasible solution by setting dist(v) = 0 for all vertices v that are
+   reachable from s, and dist(v) = ∞ for all vertices v that are not reachable from s.
+ • The optimal solution to this linear program is not necessarily unique. For example,
+   if the graph contains a vertex v that cannot reach t, we can transform any optimal
+   solution into another optimal solution by arbitrarily decreasing dist(v). More
+
+                                                                                                             5
+H. LINEAR PROGRAMMING
+
+
+
+            generally, this LP has a unique optimal solution if and only if (1) every vertex lies on
+            a path from s to t and (2) every path from s to t has the same length.
+
+        One Shortest Path, Take Two
+        Alternatively, and perhaps more intuitively, we can formulate the shortest-path problem
+        as a minimization problem. However, instead of using variables that represent distances,
+        this linear program uses variables x(u v) that intuitively indicate which edges u v lie
+        on the shortest path from s to t.
+                                   X
+                   minimize            `(u v) · x(u v)
+                                     u v
+                               X                X
+                  subject to        x(u t) −       x(t w) = 1
+                                u               w
+                               X                X
+                                    x(u v) −       x(v w) = 0 for every vertex v 6= s, t
+                                u               w
+                                                    x(u v) ≥ 0 for every edge u v
+
+        Any path from s to t—in particular, the shortest from s to t path—yields a feasible
+        point x for this linear program, where x(u v) = 1 for each edge u v in the path and
+        x(u v) = 0 for every other edge. More generally, any walk from s to t implies a feasible
+        solution, where x(u v) is the number of times u v appears in the walk.
+            Sharp-eyed readers might recognize this linear program as a minimum-cost flow
+        problem, where each edge u v has cost `(u v) and infinite capacity, the source vertex
+        s has balance −1 (one unit of supply), the target vertex t has balance 1 (one unit of
+        demand), and all other vertices have balance 0. (The missing balance constraint for s is
+        implied by the other V − 1 balance constraints.) More concisely, the feasible points for
+        this linear program are flows from s to t with value 1, and the objective function ` · x is
+        the cost of this flow.
+            Because all balances and (nonexistent) capacities in this network are integers, we
+        know that there is an integral minimum-cost flow from s to t. (The existence of an
+        integral optimal solution a feature of this particular linear program! It is possible for a
+        linear program with only integral input data A, b, and c to have only non-integral optimal
+        solutions.) A simple flow decomposition argument now implies that the minimum-cost
+        flow from s to t is actually a simple path from s to t.
+         • This linear program is feasible if and only if the underlying graph contains a path
+           from s to t. If G contains a path from s to t, then sending one unit of flow along that
+           path gives us a feasible solution. On the other hand, any (s, t)-flow is a weighted
+           sum of (s, t)-paths and possibly cycles.
+         • This linear program is bounded if and only if the underlying graph has no negative
+           cycles. If the G contains a negative cycle, we can arbitrarily decrease the cost of any
+           solution by pushing more flow around that cycle. On the other hand, suppose G has
+
+6
+                                                                                        H.3. Examples
+
+
+
+   no negative cycles, and let x be any feasible solution. If x contains any cycles, we can
+   decrease the cost of x by removing them. Then the maxflow-mincut theorem implies
+   that x(u v) ≤ 1 for every edge u v. We conclude that the cost of any feasible
+   solution is at least the sum of all negative edge lengths in G.
+ • The optimal solution to this linear program is not necessarily unique, because shortest
+   paths are not necessarily unique. Moreover, if there is more than one optimal solution,
+   then there are infinitely many optimal solutions. Specifically, if x and x 0 are optimal
+   solutions, then for any constant 0 < α < 1, the convex combination αx + (1 − α)x 0
+   is also an optimal solution.
+
+Single-Source Shortest Paths
+In the optimal solution for the first shortest-path linear program, the objective func-
+tion dist(t) is the actual shortest-path distance from s to t, but for any vertex v that is
+not on the shortest path from s to t, the corresponding value dist(v) may underestimate
+the true distance from s to v. We can obtain the true distances from s to every other
+vertex by modifying the objective function as follows:
+                                 X
+                maximize             dist(v)
+                                        v
+              subject to                    dist(s) = 0
+                               dist(v) − dist(u) ≤ `(u v) for every edge u v
+
+Again, we are counterintuitively faced with a maximization problem to find shortest
+paths.
+   We can similarly modify the second shortest-path linear program to compute a
+spanning tree of shortest paths.
+                            X
+           minimize              `(u v) · x(u v)
+                                 u v
+                        X                    X
+           subject to          x(u v) −          x(v w) = 1 for every vertex v 6= s
+                           u                  w
+                                                  x(u v) ≥ 0 for every edge u v
+
+Let T be any shortest-path tree rooted at s, and for any vertex v, let Dv denote set of all
+descendants of v in T . (In particular, Ds = V , and Dv = |v| if v is a leaf of T .) Then we
+can obtain an optimal solution to this second LP by setting
+                                         ¨
+                                           |Dv | if u v ∈ T
+                             x(u v) =
+                                           0      otherwise
+
+Again, sharp-eyed readers may recognize this linear program as an uncapacitated
+minimum-cost flow problem.
+
+                                                                                                   7
+H. LINEAR PROGRAMMING
+
+
+
+        Maximum Flows and Minimum Cuts
+        Recall that the input to the maximum (s, t)-flow problem consists of a directed graph
+        G = (V, E), two special vertices s and t, and a function assigning a non-negative capacity
+        c(e) to each edge e. Our task is to compute a flow function f ∈ E R subject to the usual
+        capacity and balance constraints. The maximum-flow problem can be encoded as a
+        linear program as follows:
+                            X               X
+               maximize         f (sw) −      f (us)
+                              w                u
+                             X                 X
+               subject to         f (v w) −       f (u v) = 0         for every vertex v 6= s, t
+                              w                u
+                                                   f (u v) ≤ c(u v) for every edge u v
+                                                   f (u v) ≥ 0         for every edge u v
+            Similarly, the minimum cut problem can be formulated using “indicator” variables
+        similarly to the shortest-path problem. We define a variable S(v) for each vertex v,
+        indicating whether v ∈ S or v ∈ T , and a variable x(u v) for each edge u v, indicating
+        whether u ∈ S and v ∈ T , where (S, T ) is some (s, t)-cut.
+                                   X
+                       minimize        c(u v) · x(u v)
+                                       u v
+                        subject to    x(u v) + S(v) − S(u) ≥ 0      for every edge u v
+                                                      x(u v) ≥ 0    for every edge u v
+                                                         S(s) = 1
+                                                         S(t) = 0
+        Like the minimization linear programs for shortest paths, there can be optimal solutions
+        that assign fractional values to the variables. Nevertheless, the minimum value for the
+        objective function is the cost of the minimum cut, and there is an optimal solution for
+        which every variable is either 0 or 1, representing an actual minimum cut.
+
+
+        H.4    Linear Programming Duality
+        Each of the preceding pairs of linear programs is an example of a general relationship
+        called duality. For any linear programming problem, there is a corresponding dual linear
+        program that can be obtained by a mechanical translation, essentially by swapping the
+        constraints and the variables. The translation is simplest when the original LP is in
+        canonical form:
+                                   Primal (Π)              Dual (q)
+                                     max     c·x                  min   y·b
+                                      s.t. Ax ≤ b
+                                                      ⇐⇒          s.t. yA ≥ c
+                                            x ≥0                        y ≥0
+
+
+8
+                                                                                H.4. Linear Programming Duality
+
+
+
+We can also write the dual linear program in exactly the same canonical form as the
+primal, by swapping the coefficient vector c and the objective vector b, negating both
+vectors, and replacing the constraint matrix A with its negative transpose.3
+
+                         Primal (Π)                          Dual (q)
+                        max c · x                      max     −b> · y >
+                         s.t. Ax ≤ b
+                                            ⇐⇒          s.t. −A> y > ≤ −c >
+                               x ≥0                              y> ≥ 0
+
+Written in this form, it should be immediately clear that duality is an involution: The dual
+of the dual linear program q is identical to the primal linear program Π. The choice of
+which linear program to call the “primal” and which to call the “dual” is totally arbitrary.4
+
+Dualizing Arbitrary LPs
+Given a linear program Π that is not in canonical form, we can mechanically derive its
+dual linear program by first converting Π into canonical form and then applying the
+pattern shown above. If we push the symbols around long enough, we eventually find the
+following general pattern for constructing the dual of any maximization linear program.
+(The rules for dualizing minimization programs are the reverse of these.)
+ • For each constraint in the primal LP except sign constraints of the form x i ≷ 0, there
+   is a corresponding variable in the dual LP.
+      – If the primal constraint is an upper bound, the dual variable must be non-negative.
+      – If the primal constraint is a lower bound, the dual variable must be non-positive.
+      – If the primal constraint is an equation, the sign of dual variable is not constrained.
+      – The right side of the primal constraint becomes the dual variable’s coefficient in
+        the objective function.
+      – The dual linear program minimizes its objective value.
+ • Conversely, for each variable in the primal LP, there is a corresponding constraint in
+   the dual LP.
+      – If the primal variable is non-negative, the dual constraint is a lower bound.
+      – If the primal variable is non-positive, the dual constraint is an upper bound.
+      – If the sign of the primal variable is not constrained, the dual constraint is an
+        equation.
+    3
+      For the notational purists: In these formulations, x and b are column vectors, and y and c are row
+vectors. This is a somewhat nonstandard choice. Yes, that means the dot in c · x is redundant. Sue me.
+    4
+      For historical reasons, maximization linear programs tend to be called “primal” and minimization
+linear programs tend to be called “dual”. (Or is it the other way around?) This habit is nothing but a
+pointless and distracting religious tradition.
+
+
+                                                                                                             9
+H. LINEAR PROGRAMMING
+
+
+
+             – Finally, if the primal variable is equal to zero, the dual constraint doesn’t actually
+               exist. (If something can’t vary, it’s not really a variable!)
+             – The primal variable’s coefficient in the objective function becomes the right side
+               of the dual constraint.
+
+                             Primal                 Dual                    Primal                 Dual
+                            max c · x          min y · b                   min c · x          max y · b
+                        P                                              P
+                             ai j x j ≤ bi         yi ≥ 0                   ai j x j ≤ bi         yi ≤ 0
+                        Pj                                             Pj
+                             ai j x j ≥ bi         yi ≤ 0                   ai j x j ≥ bi         yi ≥ 0
+                        Pj                                             Pj
+                            j ai j x j = bi           —                    j ai j x j = bi           —
+                                              P                                              P
+                             xj ≥ 0                yi ai j ≥ c j            xj ≤ 0                yi ai j ≥ c j
+                                              Pi                                             Pi
+                             xj ≤ 0                yi ai j ≤ c j            xj ≥ 0                yi ai j ≤ c j
+                                              Pi                                             Pi
+                                —                 i yi ai j = c j              —                 i yi ai j = c j
+                             xj = 0                   —                     xj = 0                   —
+
+                               Figure H.4. Constructing the dual of an arbitrary linear program.
+
+            At first glance, these rules appear to be asymmetric: The inequality directions for
+        primal constraints and dual variables are opposites, but the inequality directions for
+        primal variables and dual constraints are identical. In fact, this asymmetry reflects the
+        switch from a primal maximization LP to a dual minimization LP. The dual of the dual of
+        any linear program is always (equivalent to) the original linear program.
+
+        Shortest Path Example
+        As an example, let’s derive the dual of our very first linear program for shortest paths:
+
+                        maximize                        dist(t)
+                        subject to                       dist(s) = 0
+                                          dist(v) − dist(u) ≤ `(u v) for every edge u v
+
+        This linear program has a variable dist(v) for every vertex v and a constraint for every
+        edge. Thus, the underlying constraint matrix A has a row (constraint) for every edge
+        and a column (variable) for every vertex. Specifically, we have
+                                                 
+                                                 −1 if u = w,
+                                                 
+                                   A(u v, w) = +1 if v = w,
+                                                         otherwise.
+                                                 
+                                                 0
+
+        (A is the signed incidence matrix of the underlying directed graph G.) The coefficients of
+        the objective vector are +1 for t and 0 for every other vertex, and the coefficients of the
+        offset vector are the edge lengths.
+
+10
+                                                                             H.5. The Fundamental Theorem
+
+
+
+    So, the dual linear program has a constraint for every vertex and a variable for
+every edge. Let’s call the edge variables x(u v), because why not? Because dist(s) = 0,
+there is no dual constraint corresponding to dist(s) after all. Because the other primal
+variables dist(v) are not sign-constrained, the dual constraints are all equations. The
+primal constraints are upper bounds, so the dual variables x(u v) must be non-negative.
+Finally, the coefficients of the dual objective vector are the edge lengths, and the
+coefficients of the dual offset vector are +1 for t and 0 for every other vertex.
+                             X
+          minimize                  `(u v) · x(u v)
+                             u v
+                       X                 X
+          subject to        x(u t) −         x(t w) = 1
+                        u                 w
+                       X                X
+                            x(u v) −         x(v w) = 0   for every vertex v 6= s, t
+                        u                 w
+                                              x(u v) ≥ 0   for every edge u v
+
+Hey, this looks familiar!
+
+
+H.5    The Fundamental Theorem
+The most important structural observation about linear programming is the following
+broad generalization of the maxflow-mincut theorem.
+
+The Fundamental Theorem of Linear Programming. A canonical linear program Π
+has an optimal solution x ∗ if and only if the dual linear program q has an optimal
+solution y ∗ such that c · x ∗ = y ∗ Ax ∗ = y ∗ · b.
+
+    The Fundamental Theorem (in a slightly different form) was first conjectured by
+John von Neumann in May 1947, during a fateful meeting with George Dantzig. Dantzig
+met with von Neumann to explain his general theory of linear programming and his
+simplex algorithm (which we’ll see in the next chapter). According to Dantzig, after
+about half an hour into his presentation, von Neumann told him “Get to the point!” When
+Dantzig then explained his algorithm more concisely, von Neumann replied dismissively
+“Oh, that!” and proceeded to lecture Dantzig for over an hour on convexity, fixed points,
+and his theory of two-player games, while Dantzig sat (as he later put it) dumbfounded.
+During his lecture, von Neumann defined the negative-transpose dual of an arbitrary
+linear program—based on a similar duality in two-player zero-sum games that trivially
+results from swapping the players—and conjectured correctly that the Fundamental
+Theorem could be derived from his famous min-max theorem, which he proved in 1928:
+
+Min-Max Theorem. For any matrix A, we have min max xAy = max min xAy.
+                                                        x   y            y     x
+
+
+                                                                                                       11
+H. LINEAR PROGRAMMING
+
+
+
+            Von Neumann’s min-max theorem is itself a consequence of several equivalent
+        “Theorems of the Alternative” proved by Paul Gordan, Hermann Minkowski, Gyula
+        Farkas, Erich Stiemke, Theodore Motzkin, and others in the late 1800s and early 1900s.
+        The earliest example of such a theorem (that I know of) was proved by Gordan in 1873.
+
+        Gordan’s Theorem of the Alternative. For any matrix A, either Ax = 0 and x ≥ 0 for
+        some non-zero vector x, or yA > 0 for some vector y, but not both.
+
+            Soon after their 1947 meeting, von Neumann and Dantzig independently wrote up
+        proofs of the Fundamental Theorem, which they each distributed privately for many
+        years. Unfortunately, von Neumann’s proof was flawed, although his errors were finally
+        corrected when he finally published the proof in 1963, and Dantzig never published his
+        proof. The first published proof was written by Albert Tucker, David Gale, and Harold
+        Kuhn in 1951.
+            I will defer a proof of the full Fundamental Theorem until after we develop some
+        more intuition, but the following weak form is trivial to prove.
+
+        Weak Duality Theorem. If x is a feasible solution for a canonical linear program Π,
+        and y is a feasible solution for its dual q, then c · x ≤ yAx ≤ y · b.
+
+        Proof: Because x is feasible for Π, we have Ax ≤ b. Since y is non-negative, we can
+        multiply both sides of the inequality to obtain yAx ≤ y · b. Conversely, y is feasible
+        for q and x is non-negative, so yAx ≥ c · x.                                        
+
+        The Weak Duality Theorem has two important immediate consequences:
+         • Let x and y be arbitrary feasible solutions to a canonical linear program and its dual,
+           respectively. If c · x = y · b, then x and y are optimal primal and dual solutions,
+           respectively, and c · x = yAx = y · b.
+         • If a linear program is unbounded, then its dual is infeasible; equivalently, if a linear
+           program is feasible, then its dual is bounded. (It is possible for a linear program and
+           its dual to both be infeasible, but only if both linear programs are degenerate.)
+        The full version of the Fundamental Theorem implies that that all these implications are
+        actually equivalences.
+
+
+        H.6      Another Duality Example
+        Before I prove the stronger duality theorem, let me try to provide some intuition
+        about how this duality thing actually works.5 Consider the following canonical linear
+            5
+              This example is taken from Robert Vanderbei’s excellent textbook Linear Programming: Foundations
+        and Extensions [Springer, 2001], but the idea appears earlier in Jens Clausen’s 1997 paper “Teaching Duality
+        in Linear Programming: The Multiplier Approach”.
+
+
+12
+                                                                              H.6. Another Duality Example
+
+
+
+programming problem:
+
+                              maximize 4x 1 + x 2 + 3x 3
+                              subject to      x 1 + 4x 2        ≤2
+                                            3x 1 − x 2 + x 3 ≤ 4
+                                                    x1, x2, x3 ≥ 0
+
+Let σ∗ denote the optimum objective value for this LP. The feasible solution x = (1, 0, 0)
+gives us a lower bound σ∗ ≥ 4. A different feasible solution x = (0, 0, 3) gives us a better
+lower bound σ∗ ≥ 9. We could play this game all day, finding different feasible solutions
+and getting ever larger lower bounds. How do we know when we’re done? Is there a
+way to prove an upper bound on σ∗ ?
+    In fact, there is. Let’s multiply each of the constraints in our LP by a new non-negative
+scalar value yi :
+
+                          maximize          4x 1 + x 2 + 3x 3
+                          subject to     y1 ( x 1 + 4x 2        ) ≤ 2 y1
+                                         y2 (3x 1 − x 2 + x 3 ) ≤ 4 y2
+                                                     x1, x2, x3 ≥ 0
+
+Because each yi is non-negative, we do not reverse any of the inequalities. Any feasible
+solution (x 1 , x 2 , x 3 ) must satisfy both of these inequalities, so it must also satisfy their
+sum:
+                         ( y1 + 3 y2 )x 1 + (4 y1 − y2 )x 2 + y2 x 3 ≤ 2 y1 + 4 y2 .
+
+Now suppose that the coefficient of each variable x i in the expression on the left side of
+this inequality is larger than the corresponding coefficient of the objective function:
+
+                        y1 + 3 y2 ≥ 4,       4 y1 − y2 ≥ 1,        y2 ≥ 3.
+
+This assumption implies an upper bound on the objective value of any feasible solution:
+
+         4x 1 + x 2 + 3x 3 ≤ ( y1 + 3 y2 )x 1 + (4 y1 − y2 )x 2 + y2 x 3 ≤ 2 y1 + 4 y2 .      (∗)
+
+In particular, by plugging in the optimal solution (x 1∗ , x 2∗ , x 3∗ ) for the original LP, we
+obtain the following upper bound on σ∗ :
+
+                            σ∗ = 4x 1∗ + x 2∗ + 3x 3∗ ≤ 2 y1 + 4 y2 .
+
+   Now it is natural to ask how tight this upper bound can be. That is, how small can
+we make the expression 2 y1 + 4 y2 without violating any of the inequalities we used to
+
+                                                                                                       13
+H. LINEAR PROGRAMMING
+
+
+
+        prove the upper bound? This is just another linear programming problem.
+
+                                         minimize 2 y1 + 4 y2
+                                         subject to    y1 + 3 y2 ≥ 4
+                                                      4 y1 − y2 ≥ 1
+                                                              y2 ≥ 3
+                                                           y1 , y2 ≥ 0
+
+        In fact, the resulting linear program is precisely the dual of our original linear program!
+        Moreover, inequality (∗) is just an instantiation of the Weak Duality Theorem.
+
+
+        H.7    Strong Duality
+        The Fundamental Theorem can be rephrased in the following form:
+
+        Strong Duality Theorem. If x ∗ is an optimal solution for a canonical linear program Π,
+        then there is an optimal solution y ∗ for its dual q, such that c · x ∗ = y ∗ Ax ∗ = y ∗ · b.
+
+        Proof (sketch): I’ll prove the theorem only for non-degenerate linear programs, in
+        which (a) the objective vector is not normal to any constraint hyperplane, and (b) at
+        most d constraint hyperplanes pass through any point. The first assumption implies
+        that the optimal solution to the LP—if it exists—is unique and is therefore a vertex of
+        the feasible region. These non-degeneracy assumptions are relatively easy to enforce in
+        practice and can be removed from the proof at the expense of some technical detail. I
+        will also assume that n ≥ d; the argument for under-constrained LPs is similar (if not
+        simpler).
+             To develop some intuition, let’s first consider the very special case where x ∗ =
+        (0, 0, . . . , 0). Let ei denote the ith standard basis vector, whose ith coordinate is 1 and
+        all other coordinates are 0. Because x i∗ = 0 for all i, our non-degeneracy assumption
+        implies the strict inequality ai · x ∗ < bi for all i. Thus, any sufficiently small ball around
+        the origin does not intersect any other constraint hyperplane ai · x = bi . Thus, for all i,
+        and for any sufficiently small δ > 0, the vector δei is feasible. Because x ∗ is the unique
+        optimum, we must have δci = c · (δei ) < c · x ∗ = 0. We conclude that ci < 0 for all i.
+             Now let y = (0, 0, . . . , 0) as well. We immediately observe that yA ≥ c and y ≥ 0; in
+        other words, y is a feasible solution for the dual linear program q. But y · b = 0 = c · x ∗ ,
+        so the weak duality theorem implies that y is an optimal solution to q, and the proof is
+        complete for this very special case!
+            Now let’s consider the more general case. Let x ∗ be the optimal solution for the
+        linear program Π; our non-degeneracy assumption implies that this solution is unique,
+        and that it satisfies exactly d of the n linear constraints with equality. Without loss of
+
+14
+                                                                                                      H.7. Strong Duality
+
+
+
+generality (by permuting the constraints and possibly changing coordinates), we can
+assume that these are the first d constraints. Thus, we have
+
+                                    ai · x ∗ = bi      for all i ≤ d,
+                                          ∗
+                                    ai · x < bi        for all i ≥ d + 1,
+
+where ai denotes the ith row of A. Let A• denote the d × d matrix containing the first d
+rows of A. Our non-degeneracy assumption implies that A• has full rank, and thus has a
+well-defined inverse V = A−1
+                           • .
+   Now define a vector y ∈ Rn by setting
+
+                                    y j := c · v j     for all j ≤ d,
+                                    y j := 0           for all j ≥ d + 1,
+
+where v j denotes the jth column of V . The definition of matrix inverse implies that
+ai · v i = 1 for all i, and ai · v j = 0 for all i 6= j.
+     To simplify notation, let y• = ( y1 , y2 , . . . , yd ) and let b• = (b1 , b2 , . . . , bd ) = A• x ∗ .
+Because yi = 0 for all i ≥ d + 1, we immediately have
+
+                               y · b = y• · b• = cV b• = cA−1
+                                                           • b• = c · x
+                                                                        ∗
+
+
+and
+                                   yA = y• A• = cVA• = cA−1
+                                                         • A• = c.
+
+      The point x ∗ lies on exactly d constraint hyperplanes; moreover, any sufficiently
+small ball around x ∗ intersects only those d constraint hyperplanes. Consider the point
+x̃ = x ∗ − "v j , for some index 1 ≤ j ≤ d and some sufficiently small " > 0. We have
+ai · x̃ = ai · x ∗ − "(ai · v j ) = bi for all i 6= j, and a j · x̃ = a j · x ∗ − "(a j · v j ) = b j − " < b j .
+Thus, x̃ is a feasible point for Π. Because x ∗ is the unique optimum for Π, we must have
+c · x̃ = c · x ∗ − "(c · v j ) < c · x ∗ . We conclude that y j = c · v j > 0 for all j.
+      We have shown that yA ≥ c and y ≥ 0, so y is a feasible solution for the dual linear
+program q. We have also shown that y · b = c · x ∗ , so the Weak Duality Theorem implies
+that y is an optimal solution for q, and the proof is complete!                                             
+
+    We can also give a useful geometric interpretation to the dual vector y• ∈ Rd . Each
+linear equation ai · x = bi defines a hyperplane in Rd with normal vector ai . The
+normal vectors a1 , . . . , ad are linearly independent (by non-degeneracy) and therefore
+describe a coordinate frame for the vector space Rd . The definition of y• implies that
+              Pd
+c = y• A• = i=1 yi ai . In other words, the non-zero dual variables y1 , . . . , yd are the
+coefficients of the objective vector c in the coordinate frame a1 , . . . , ad .
+    In more physical terms, imagine that the objective vector c points downward, and
+that x ∗ is the lowest point in the feasible region, which is found by tossing a marble into
+the feasible region and letting it fall as far as possible without crossing any constraint
+
+                                                                                                                      15
+H. LINEAR PROGRAMMING
+
+
+
+        hyperplane. Even after the marble reaches the lowest feasible point, gravity is still
+        pulling it downward, but the marble isn’t moving, so the constraint hyperplanes must
+        be pushing it upward. Each constraint hyperplane can only push in the direction of
+        its normal vector. Each dual variable yi is the amount of force applied by the ith
+        constraint hyperplane.
+
+
+        H.8    Complementary Slackness
+        The Strong Duality Theorem implies a relationship between the optimal solutions of
+        a linear program and its dual that is stronger than just the equality of their objective
+        values. In physical terms, a constraint hyperplane applies a non-zero force to the marble
+        only if it touches the marble; that is, if a dual variable is positive, then the corresponding
+        constraint must be satisfied with equality.
+             Recall that the theorem states that if x ∗ is the optimal solution to a canonical
+        linear program Π, then the dual program q has an optimal solution y ∗ such that
+        c · x ∗ = y ∗ Ax ∗ = y ∗ · b. These equations have two immediate consequences for any
+        optimal solution vectors x ∗ and y ∗ .
+          • For any row index i, either yi∗ = 0 or ai · x ∗ = b (or both).
+          • For any column index j, either x ∗j = 0 or y ∗ · a j = c (or both).
+        Here, ai and a j respectively denote the ith row and jth column of A. These consequences
+        of strong duality are called the complementary slackness conditions.
+            Call a constraint tight if it is satisfied with equality and loose otherwise. The
+        complementary slackness conditions can be phrased more colloquially as follows:
+         • If a primal variable is positive, the corresponding dual constraint is tight.
+         • If a dual constraint is loose, the corresponding primal variable is zero.
+         • If a dual variable is positive, the corresponding primal constraint is tight.
+         • If a primal constraint is loose, the corresponding dual variable is zero.
+
+        Complementary Slackness Theorem. Let x be an arbitrary feasible solution to a canon-
+        ical linear program Π, and let y be an arbitrary feasible solution to the dual linear
+        program q. The following conditions are equivalent:
+          • x and y are optimal solutions to their respective linear programs.
+          • c·x = y·b
+          • c · x = yAx
+          • yAx = y · b
+          • x and y satisfy all complementary slackness conditions.
+
+            The complementary slackness conditions are not necessarily exclusive; it is possible for
+        a constraint to be tight and for the corresponding dual variable to be zero. Nevertheless,
+        every bounded and feasible linear program has optimal primal and dual solutions x ∗
+        and y ∗ that satisfy strict complementary slackness conditions:
+
+16
+                                                                                                Exercises
+
+
+
+ • For any row index i, either yi∗ > 0 or ai · x ∗ < b (but not both).
+ • For any column index j, either x ∗j > 0 or y ∗ · a j > c (but not both).
+However, if the linear program is non-degenerate, the primal and dual optimal solutions
+are both unique and therefore satisfy these stricter conditions.
+
+
+Exercises
+       Need more!                                                                                  ÆÆÆ
+1. A matrix A = (ai j ) is skew-symmetric if and only if a ji = −ai j for all indices i 6= j;
+   in particular, every skew-symmetric matrix is square. A canonical linear program
+   max{c · x | Ax ≤ b; x ≥ 0} is self-dual if the matrix A is skew-symmetric and the
+   objective vector c is equal to the constraint vector b.
+   (a) Prove that any self-dual linear program Π is syntactically equivalent to its dual
+       program q.
+   (b) Show that any linear program Π with d variables and n constraints can be
+       transformed into a self-dual linear program with n + d variables and n + d
+       constraints. The optimal solution to the self-dual program should include both
+       the optimal solution for Π (in d of the variables) and the optimal solution for the
+       dual program q (in the other n variables).
+
+2. (a) Give a linear-programming formulation of the bipartite maximum matching
+       problem. The input is a bipartite graph G = (U ∪ V ; E), where E ⊆ U × V ; the
+       output is the largest matching in G. Your linear program should have one variable
+       for each edge.
+   (b) Now dualize the linear program from part (a). What do the dual variables
+       represent? What does the objective function represent? What problem is this!?
+
+3. (a) Give a linear-programming formulation of the minimum-cost circulation prob-
+       lem. You are given a flow network whose edges have both capacities and costs,
+       and your goal is to find a feasible circulation (flow with value 0) whose total cost
+       is as small as possible.
+   (b) Derive the dual of your linear program from part (a).
+
+4. Suppose we are given a sequence of n linear inequalities of the form ai x + bi y ≤ ci .
+   Collectively, these n inequalities describe a convex polygon P in the plane.
+   (a) Describe a linear program whose solution describes the largest axis-aligned
+       square that lies entirely inside P.
+   (b) Describe a linear program whose solution describes the maximum-perimeter
+       axis-aligned rectangle that lies entirely inside P.
+
+                                                                                                      17
+H. LINEAR PROGRAMMING
+
+
+
+            (c) Describe a linear program whose solution describes the largest circle that lies
+                entirely inside P.
+           (d) Describe a polynomial-time algorithm to compute two interior-disjoint axis-
+               aligned squares with maximum total perimeter that lie entirely inside P. [Hint:
+               There are exactly two interesting cases to consider; for each case, formulate a
+               corresponding linear program.]
+           (e) Describe a polynomial-time algorithm to compute two interior-disjoint axis-
+               aligned rectangles with maximum total perimeter that lie entirely inside P. [Hint:
+               Again, there are only two interesting cases to consider.]
+            In all subproblems, “axis-aligned” means that the edges of the square(s) or rectan-
+            gles(s) are horizontal and vertical.
+
+
+
+
+         5. Given points (x 1 , y1 ), (x 2 , y2 ), . . . , (x n , yn ) in the plane, the linear regression prob-
+            lem asks for real numbers a and b such that the line y = a x + b fits the points as
+            closely as possible, according to some criterion. The most common fit criterion is
+            minimizing the L2 error, defined as follows:6
+                                                           n
+                                                           X
+                                             "2 (a, b) =     ( yi − a x i − b)2 .
+                                                           i=1
+
+            But there are many other ways of measuring a line’s fit to a set of points, some of
+            which can be optimized via linear programming.
+           (a) The L1 error (or total absolute deviation) of the line y = a x + b is defined as
+               follows:
+                                                    n
+                                                    X
+                                        "1 (a, b) =     yi − a x i − b .
+                                                             i=1
+
+                 Describe a linear program whose solution (a, b) describes the line with minimum
+                 L1 error.
+           6
+             This measure is also known as sum of squared residuals, and the algorithm to compute the best fit is
+        normally called (ordinary/linear) least squares.
+
+
+18
+                                                                                           Exercises
+
+
+
+  (b) The L∞ error (or maximum absolute deviation) of the line y = a x + b is defined
+      as follows:
+                                        n
+                           "∞ (a, b) = max yi − a x i − b .
+                                            i=1
+
+      Describe a linear program whose solution (a, b) describes the line with minimum
+      L∞ error.
+
+6. Let G = (V, E) be an arbitrary directed graph with weighted vertices; vertex weights
+   may be positive, negative, or zero. A prefix of G is a subset P ⊆ V , such that there
+   is no edge u v where u 6∈ P but v ∈ P. A suffix of G is the complement of a prefix.
+   Finally, an interval of G is the intersection of a prefix of G and a suffix of G. The
+   weight of a prefix, suffix, or interval is the sum of the weights of its vertices.
+  (a) Describe a linear program whose solution describes the maximum-weight prefix
+      of G. Your linear program should have one variable per vertex, indicating whether
+      that vertex is or is not in the chosen prefix.
+  (b) Describe an algorithm that computes the maximum-weight prefix of G, by reducing
+      to a standard maximum-flow problem in a related graph. [Hint: Consider the
+      special case where G is a dag. Haven’t we seen this problem before?]
+  (c) Describe an efficient algorithm that computes the maximum-weight prefix of G,
+      when G is a rooted tree with all edges pointing away from the root. [Hint: This
+      is really easy if you don’t think about linear programming.]
+  (d) Describe a linear program whose solution describes the maximum-weight interval
+      of G.
+  (e) Describe an efficient algorithm that computes the maximum-weight interval of G,
+      when G is a rooted tree with all edges pointing away from the root. [Hint: Again,
+      this is easy if you don’t think about linear programming.]
+   [Hint: Don’t worry about the solutions to your linear programs being integral; they
+   will be (essentially by part (b)). If all vertex weights are negative, the maximum-
+   weight interval is empty; if all vertex weights are positive, the maximum-weight
+   interval contains every vertex.]
+
+7. Suppose you are given an arbitrary directed graph G = (V, E) with arbitrary edge
+   weights `: E → R, and two special vertices. Each edge in G is colored either red,
+   white, or blue to indicate how you are permitted to modify its weight:
+    • You may increase, but not decrease, the length of any red edge.
+    • You may decrease, but not increase, the length of any blue edge.
+    • You may not change the length of any black edge.
+   Your task is to modify the edge weights—subject to the color constraints—so that
+   every path from s to t has exactly the same length. Both the given weights and the
+
+                                                                                                 19
+H. LINEAR PROGRAMMING
+
+
+
+                new weights of the edges can be positive, negative, or zero. To keep the following
+                problems simple, assume every edge in G lies on at least one path from s to t, and
+                that G has no isolated vertices.
+            (a) Describe a linear program that is feasible if and only if it is possible to make every
+                path from s to t the same length. [Hint: Let dist(v) denote the length of every
+                path from s to v.]
+            (b) Construct the dual of the linear program from part (a). [Hint: Choose a
+                convenient objective function for your primal LP.]
+            ª
+                (c) Give a self-contained description of the combinatorial problem encoded by the
+                    dual linear program from part (b), and prove directly that it is equivalent to the
+                    original path-equalization problem. Do not use the words “linear”, “program”, or
+                    “dual”. Yes, you’ve seen this problem before. [Hint: The proof is the hard part.]
+            (d) Describe and analyze an algorithm to determine in O(EV ) time whether it is
+                possible to make every path from s to t the same length. Do not use the words
+                “linear”, “program”, or “dual”.
+            (e) Finally, suppose we want to equalize path lengths while modifying the edge
+                weights as little as possible. Specifically, we want to compute new edge weights
+                  0
+                `P  (e) that give every path from s to t the same length, such that the sum
+                         0
+                     e |` (e)−`(e)| is as small as possible. Describe and analyze an efficient algorithm
+                 to solve this optimization problem. [Hint: Modify your solutions to parts (a)–(c).]
+
+        ©
+         8. An integer program is a linear program with the additional constraint that the
+            variables must take only integer values.
+            (a) Prove that deciding whether an integer program has a feasible solution is NP-
+                complete.
+            (b) Prove that finding the optimal feasible solution to an integer program is NP-hard.
+                [Hint: Almost any NP-hard decision problem can be formulated as an integer
+                program. Pick your favorite.]
+
+         9. A convex combination of n points x 1 , x 2 , . . . , x n ∈ Rd is weighted average of those
+            points:
+                                                      X n
+                                              p=             λi x i
+                                                           i=1
+                                                                                         Pn
+                for some coefficients λ1 , λ2 , . . . , λn such that λi ≥ 0 for all i and i=1 λi = 1. The
+                convex hull of a set of points X is the set of all convex combinations of points in X .
+                For example, the convex hull of two points is the line segment between them, the
+                convex hull of three points is the (filled) triangle with those three vertices, and so on.
+                    Carathéodory’s theorem states that for any set of points X ⊂ Rd , every point in
+                the convex hull of X lies in the convex hull of d + 1 points of X . For example, when
+
+20
+                                                                                               Exercises
+
+
+
+    d = 2, the theorem states every point inside a convex polygon P is also inside the
+    triangle spanned by three vertices of P.
+        Prove Carathéodory’s theorem. [Hint: Express “p lies in the convex hull of X ” as
+    a system of linear inequalities over the variables λi .]
+
+10. Helly’s theorem states that for any collection of convex bodies in Rd , if every d + 1
+    of them intersect, then there is a point lying in the intersection of all of them.
+    Prove Helly’s theorem for the special case where the convex bodies are halfspaces.
+    Equivalently, show that if a system of linear inequalities Ax ≤ b is infeasible, then we
+    can select a subset of d + 1 inequalities such that the resulting subsystem infeasible.
+    [Hint: Construct a linear program from the system by imposing a 0 objective vector,
+    and consider the dual LP.]
+
+
+
+
+                     © 2018 Jeff Erickson            http://algorithms.wtf                           21
+

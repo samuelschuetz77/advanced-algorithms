@@ -257,13 +257,15 @@ if __name__ == '__main__':
                   break
     print()
     print(results)
-    pd.DataFrame(results).to_csv("sort_times.csv")
+    import os
+    os.makedirs("sorting_outputs", exist_ok=True)
+    pd.DataFrame(results).to_csv("sorting_outputs/sort_times.csv")
     import seaborn as sns
 
     sns.set_theme()
-    data = pd.read_csv("sort_times.csv")
+    data = pd.read_csv("sorting_outputs/sort_times.csv")
     plot = sns.relplot(data=data, kind='line', x='length', y='time', style='prep', hue='sort')
-    plot.savefig("sort_times.png")
+    plot.savefig("sorting_outputs/sort_times.png")
 
 
 

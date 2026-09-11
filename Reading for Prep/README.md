@@ -16,3 +16,13 @@ Almost every "Reading for Prep" row on the Canvas course schedule points to one 
 - **QFT** (due 12/4) — links to a Microsoft Learn tutorial page, not a PDF.
 
 Downloaded PDFs will be re-fetched/updated only if the Canvas schedule page changes its source links — check `../course-schedule.md`'s "Last synced" date.
+
+## Looking up text quickly
+
+Each PDF has a plain-text sibling (same name, `.txt`) extracted with `pdftotext -layout`, since the PDF renderer on this machine needs `pdftoppm`/poppler (installed via `winget install oschwartz10612.Poppler`, but the tool needs a fresh Claude Code process to pick up the PATH change). Grep the `.txt` file instead of opening the PDF — much faster for finding a section or exercise set, e.g.:
+
+```
+grep -n "Exercises" "JEA - Algorithms textbook (Erickson).txt"
+```
+
+then read the surrounding lines. Re-run `pdftotext -layout <file>.pdf <file>.txt` if a PDF is ever re-fetched/updated.
