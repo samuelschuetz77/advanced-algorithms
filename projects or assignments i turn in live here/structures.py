@@ -56,6 +56,7 @@ class PriorityQueue:
     def __init__(self):
         self.min_heap_array = []
         self.locator_dict = {}
+        self.data_dict = {}
 
     def get_index_from_key(self, key):
         return self.locator_dict.get(key)
@@ -65,14 +66,19 @@ class PriorityQueue:
             index_of = self.get_index_from_key(key)
             if  only_if_less and priority >= self.get_priority(key):
                 return #noop
-                
-            elif only_if_less and priority < self.get_priority(key):
-                self.min_heap_array.append((key, priority))
-                self.sift_up(key,priority)
-                return
+
+            old_priority = self.get_priority(key)
+            self.min_heap_array[index_of] = (key, priority)
+            self.data_dict[key] = data
+
+            if priority < old_priority:
+                self.sift_up(key, priority)
+            else:
+                self.sift_down(key)
         else:
             self.min_heap_array.append((key, priority))
-            self_index
+            self.locator_dict[key] = len(self.min_heap_array) - 1
+            self.data_dict[key] = data
             self.sift_up(key,priority)
 
 
@@ -87,28 +93,70 @@ class PriorityQueue:
         parent_index = (i - 1) // 2
         parent_key = self.min_heap_array[parent_index][0]
         curr = i
-        while (priority < self.get_priority(parent_key) and curr > 0):
-            self.min_heap_array[curr], self.min_heap_array[parent_index] = self.min_heap_array[parent_index], self.min_heap_array[curr]
-            self.locator_dict[key] = parent_index
-            self.locator_dict[parent_key] = curr
+        while (curr > 0 and priority < self.get_priority(parent_key)):
+            self.swap(curr, parent_index)
             curr = parent_index
             parent_index = (curr - 1) // 2
             parent_key = self.min_heap_array[parent_index][0]
-            
-            
 
+    def sift_down(self, key):
+        curr = self.get_index_from_key(key)
+        while True:
+            left_child = 2 * curr + 1
+            right_child = 2 * curr + 2
+            smallest = curr
+
+            if left_child < self.count() and self.min_heap_array[left_child][1] < self.min_heap_array[smallest][1]:
+                smallest = left_child
+            if right_child < self.count() and self.min_heap_array[right_child][1] < self.min_heap_array[smallest][1]:
+                smallest = right_child
+
+            if smallest == curr:
+                return
+
+            self.swap(curr, smallest)
+            curr = smallest
+
+    def swap(self, first_index, second_index):
+        self.min_heap_array[first_index], self.min_heap_array[second_index] = self.min_heap_array[second_index], self.min_heap_array[first_index]
+        first_key = self.min_heap_array[first_index][0]
+        second_key = self.min_heap_array[second_index][0]
+        self.locator_dict[first_key] = first_index
+        self.locator_dict[second_key] = second_index
 
     def get_priority(self, key):
         index_of = self.locator_dict[key]
         priority = self.min_heap_array[index_of][1]
         return priority
+
+    def count(self):
+        return len(self.min_heap_array)
+
+    def peek_min(self):
+        return self.min_heap_array[0][0]
+
+    def get_data(self, key):
+        return self.data_dict[key]
+
+    def remove(self, key):
+        index_of = self.get_index_from_key(key)
+        last_index = self.count() - 1
+
+        self.swap(index_of, last_index)
+        self.min_heap_array.pop()
+        del self.locator_dict[key]
+        del self.data_dict[key]
+
+        if index_of < self.count():
+            replacement_key = self.min_heap_array[index_of][0]
+            self.sift_up(replacement_key, self.get_priority(replacement_key))
+            self.sift_down(replacement_key)
     
 
 
         #else perform the update / inintal
     def contains_key(self, key):
-        if key in self.locator_dict.keys():
-            return True
+        return key in self.locator_dict
     
 
 
@@ -117,7 +165,34 @@ def prim_mst(graph, edge_weight=None, start_node=None):
     Find minimum spanning tree using Prim's algorithm.
     (Provided by the assignment — copy in as-is, do not modify.)
     """
-    pass
+    if edge_weight is None:
+        edge_weight = lambda parent, child: graph.get_edge_data(parent, child)
+
+    if start_node is None:
+        start_node = next(iter(graph.get_nodes()))
+
+    mst = Graph()
+    pq = PriorityQueue()
+
+    pq.update(start_node, 0, data=None)
+
+    while pq.count() > 0:
+        current_node = pq.peek_min()
+        parent_node = pq.get_data(current_node)
+        pq.remove(current_node)
+
+        if not mst.contains_node(current_node):
+            mst.add_node(current_node)
+            if parent_node is not None:
+                data = graph.get_edge_data(parent_node, current_node)
+                mst.add_undirected_edge(parent_node, current_node, data=data)
+
+            for child in graph.get_children(current_node):
+                if not mst.contains_node(child):
+                    weight = edge_weight(current_node, child)
+                    pq.update(child, weight, data=current_node, only_if_less=True)
+
+    return mst
 
 
 ### Graph Tests
@@ -243,6 +318,12 @@ def test_get_data_returns_associated_data():
     pq.update("a", 5, data="hello")
     assert pq.get_data("a") == "hello"
 
+def test_for_get_priority():
+    pq = PriorityQueue()
+    pq.update("a", 5)
+    pq.update("a", 2)
+    assert pq.get_priority("a") == 2
+
 def test_update_existing_key_changes_priority_without_duplicating():
     pq = PriorityQueue()
     pq.update("a", 5)
@@ -303,6 +384,23 @@ def test_many_updates_and_removes_maintain_min_heap_order():
         pq.remove(m)
     assert order == ["d", "b", "f", "a", "c", "e"]
 
-# ---------------------------------------------------------------------------
-# Prim's MST tests (write these yourself)
-# ---------------------------------------------------------------------------
+# Prim's tests 
+
+def test_prim_work_good():
+    graph = Graph()
+    for node in ["a", "b", "c", "d"]:
+        graph.add_node(node)
+
+    graph.add_undirected_edge("a", "b", data=1)
+    graph.add_undirected_edge("a", "c", data=4)
+    graph.add_undirected_edge("b", "c", data=2)
+    graph.add_undirected_edge("b", "d", data=5)
+    graph.add_undirected_edge("c", "d", data=1)
+
+    mst = prim_mst(graph, start_node="a")
+
+    assert set(mst.get_nodes()) == {"a", "b", "c", "d"}
+    assert mst.contains_edge("a", "b")
+    assert mst.contains_edge("b", "c")
+    assert mst.contains_edge("c", "d")
+    assert len(mst.get_edges()) == 6
