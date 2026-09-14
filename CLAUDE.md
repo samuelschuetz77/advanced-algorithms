@@ -1,5 +1,13 @@
 # This repo: Advanced Algorithms Learning Log
 
+## "Look at the most recent screenshot"
+
+When the user says "look at the most recent screenshot" or a close variant
+("latest screenshot", "check the screenshot", "look at my screenshot", etc.),
+inspect the newest file in `C:\Users\Samuel\Pictures\Screenshots`.
+Sort by `LastWriteTime` descending, open the newest image with the
+image-viewing tool, and report the exact path inspected.
+
 This repo holds exactly one gradeable product: `learning log.md`. Everything
 else here (reports, transcripts, todo.md) is scaffolding around it.
 

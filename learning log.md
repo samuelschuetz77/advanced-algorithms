@@ -612,27 +612,50 @@ if not(lst):
 - Minutes Spent Documenting:
 - Confidence:
 
-## 
+## Friday 9/11/2026 5:45pm : Learning Log 5
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: How should I study/review for this assignment in a way where I'm using the reading to excel and be competent on the assignment due Friday 9/18, especially considering class today with recursion trees did not click well?
+- When Identified: Friday 9/11/2026 5:45pm
+- start time: Friday 9/11/2026 5:45pm
+- end time 10:21pm friday 9/11/2026
+- Importance: 5 my plan for getting the stuff done I've found makes the diffeence between passive getting-by in a class and actually exceling
+- How to Learn: there are multiple ways I could go about studying this week and getting ready for the project due friday, a few options I found:
+    1) finish reading JEA 1.6-1.7 and also read the JEA induction notes pdf plus redo the recursion tree math from fidays 9/11 class by hand until the geometric series part actually makes sense, before touching any code. Good because it goes straight at the part that didn't click and the project grades the recursion tree analysis just as much as the actual code, but bad because more abstract math right after class already didn't work today so doing more of the same thing might not work either or might take more time than trying a different problem and circling back. 
+    2) code first, theory later: start with the easy warm up tests and divide_and_conquer_multiply tomorrow, get it passing on real numbers, then do karatsuba, and only after both are working go back and do the recursion tree / big theta analysis using my own code instead of trying to follow along with fridays lecture - good because im seeing new material faster and it grounds the abstract tree stuff in something i actually built, and I figure when I eventually do circle back to what we went over today in class It will make more sense. TLDR f(time invested) yields more progress this way - is my hypothesis. f returns being able too fully conceptualize and complete this assignment along with umderstanding umbrella concepts. 
+    3) split it up by day instead of by topic: sat/sun is reading (jea 1.6-1.7 plus the induction notes), mon-wed is implementation (warm up tests -> divide_and_conquer_multiply -> karatsuba, one thing at a time), thu is the recursion tree analysis plus the benchmark and plot - good because the recursion tree part actually gets its own dedicated day instead of getting crammed in at the end like it probably would with the other two options, bad because it's a rigid schedule and if any day runs long everything after it gets squeezed
+- Insight/Answer: 
+    - I inintally favored option 2 because I'm seeing more material more quickly. The plan would be to try working a different recursion-tree problem on my own first, then come back to the concrete worked example we did in class - the understanding should compound, and I'll have more success concretizing the idea that way.
+    - But I also like that option 3 lays out the daily steps to get there. When goals are more thought out - the when, how, why, how long are answered they are more likley to happen -- so i like that this specific strategy has my ultimate goal for this week broken down to smaller tasks by the day. This is also good. 
+    - If I combined the two strategies I would still have a day/days to do list, but I would still try having some code that I worked through myself before getting heavy into math - which i think is very valauble and a superior way to do it. 
+    - I think this hybrid strategy could look like this: 
+        - saturday/ sunday: light reading/skimming limit to about 1 hour total  trying hard to get exposure but puprosely not entertaining too many tangents. reading would be jea 1.6-1.7 + jea induction notes
+        - monday / tuesday: code first (option 2 inspired): warm up tests, divide_and_conquer_multiply, karatsuba, get everything passing maybe a 3-4 hour sprint at tops
+        - wed: do a recursion tree analysis of the stuff we built monday / tuesday - understand every inch of this process / have good questions for class and when you reach some friction / concretize by referring and understanding fridays lecture
+        - thursday: get the benchmarking done as well as the reflection. use this as a buffer day in case the previous steps took longer than expected or didn't find/make the time for them. 
+        - friday: touch ups and turn in
+    - That is my strategy ^ and answer to my question
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 25
+- Confidence: 4
+
+## Sunday 9/13/2026 : Learning Log 5
+
+- Question/Problem: How do I go from a recursion tree picture to a Big-O bound — recognizing whether level totals are decreasing, equal, or increasing, and why that's what determines the answer?
+- When Identified: 10:00pm 9/13/2026
+- start time: 10:00pm 9/13/2026
+- end time: 11:00pm 9/13/2026
+- Importance: 5
+- How to Learn: read JEA 1.6-1.7, then practice deriving T(n) recurrences from hand-drawn recursion trees of varying shapes (balanced, unbalanced, different branching factors) and classifying each as decreasing/equal/increasing
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
-
-## 
-
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
-- Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - given a tree where each node splits into r children each of size n/c, and non-recursive work at a node is proportional to its own size, T(n) = r*T(n/c) + O(n) — the r is just "how many subproblems," c is "how much smaller each one is"
+    - practiced this on a few shapes: r=2,c=2 (mergesort, T(n)=2T(n/2)+O(n)), r=3,c=3 (T(n)=3T(n/3)+O(n)), and an unbalanced one with two unequal children (T(n)=T(n/4)+T(n/2)+O(n))
+    - mergesort is the "Equal" case: every level totals n (2^i nodes * n/2^i work each = n), so T(n) = O(n log n)
+    - worked through T(n)=3T(n/2)+O(n) (Karatsuba's recurrence) as an "Increasing" example: level totals go n, 1.5n, 2.25n... growing by a constant factor each level, so the leaves dominate and T(n) = O(n^log2(3)) ≈ O(n^1.585)
+    - key insight on why the level-by-level classification determines the whole answer: T(n) is the sum of all level totals. If levels are flat, sum = (one level's value) × (number of levels). If shrinking, the top level alone is basically the whole sum (rest is a tiny geometric tail). If growing, the bottom level alone is basically the whole sum (it outweighs everything above it combined). So whichever level dominates, that's the answer — no need to add up every level individually, just spot the pattern and take the dominant term
+    - still shaky: haven't actually worked a "Decreasing" case by hand yet (T(n) = T(n/2) + O(n)), and want more reps recognizing the Increasing case since that's the one that'll show up with Karatsuba on the actual assignment
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 15
+- Confidence: 4 because I still haven't looked much at the cases when levels are increasing like karatsuba
 
 ## 
 
