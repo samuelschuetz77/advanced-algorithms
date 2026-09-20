@@ -7,6 +7,11 @@
 
 **Last synced:** 2026-08-27 (from text pasted by Samuel)
 
+## Office Hours (Adam)
+
+From a message Adam sent 2026-09-18/19: TTh 8:30-10am and MTWF 4:30-5pm. Also
+open to reviewing/practicing ideas outside those hours if asked.
+
 | Wk | Module | Day | Date | Reading for Prep | Notes |
 |----|--------|-----|------|-------------------|-------|
 | 1 | 1 Foundations | Wed | 8/26 | [JEA Preface](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Intro |

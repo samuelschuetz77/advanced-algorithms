@@ -13,15 +13,32 @@ else here (reports, transcripts, todo.md) is scaffolding around it.
 
 ## Directory convention (applies across all class repos in `Senior/`)
 
-- `Assignments/` — assignment **descriptions and rubrics only** (specs,
-  study guides, quiz notes). Never put actual submitted work here.
+- `assignment information/` — assignment **descriptions and rubrics only** (specs,
+  study guides, quiz notes). Never put actual submitted work here. Start with
+  `assignment information/CURRENT.md` when routing active/due work.
 - `projects or assignments i turn in live here/` — the actual files that get
   submitted (e.g. `sorting.py` for Project 1). This is the analogous folder
-  to `Assignments/` but for deliverables instead of specs.
+  to `assignment information/` but for deliverables instead of specs.
 
-This same split (`Assignments/` for specs, `projects or assignments i turn
+This same split (`assignment information/` for specs, `projects or assignments i turn
 in live here/` for submissions) is the convention for the other class repos
 under `Senior/` (`frontend/`, `maintenance/`) too.
+
+## Assignment routing
+
+For any prompt about an advanced algorithms assignment, due date, "due
+tonight", YOLO, or an assignment completion framework:
+- Read `assignment information/CURRENT.md` first.
+- Then open the linked full assignment spec(s) before choosing a target or
+  editing files.
+- Sort by due date and status, not by file modified time alone.
+- Do not assume an existing project folder is the assignment target until it is
+  matched to a spec.
+- If multiple active/unsubmitted assignments match, report the candidates
+  briefly before building.
+
+When Canvas assignments are scraped or status changes, update both the full
+assignment spec in `assignment information/` and `assignment information/CURRENT.md`.
 
 ## Main bump flow & commit rules (git sync across machines)
 
@@ -221,6 +238,15 @@ repo's "never edit code in `projects or assignments i turn in live here/`"
 rule above still governs the *default* — a framework must be explicitly
 invoked to override it for that assignment.
 
+### `Learning Log Waterfall` / `Learning Log Waterfall Complete`
+
+A framework specific to this repo's learning logs — see
+`../assignment_completion_frameworks/learning_log_waterfall.md`. Recognize
+these two names (with an optional granularity level, e.g. "granularity 5")
+even without the word "framework" attached. Output goes to
+`LLWaterfall.md` in this repo, always for whichever learning log is next
+due — it's scratch candidate space, not `learning log.md` itself.
+
 ## Class notes
 
 Whenever "class notes" come up, see `class-notes-fetching.md` — it points to
@@ -232,7 +258,7 @@ stale local copy.
 Canvas assignment pages often hide content behind collapsible/dropdown
 sections (e.g. an "Example code" toggle under "Optional Starter Code and
 Ideas"). A plain page read can silently miss that content and leave the
-local `Assignments/*.md` copy incomplete without any obvious sign something
+local `assignment information/*.md` copy incomplete without any obvious sign something
 was skipped — this already happened once with `Project 1 - Sorting.md`,
 which shipped with a "not captured here, re-check the assignment page"
 placeholder instead of the actual example code.

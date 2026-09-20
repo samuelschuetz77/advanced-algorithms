@@ -6,7 +6,7 @@ agent can scaffold it correctly without re-deriving these decisions.
 
 ## Why these choices
 
-- **`uv`** — explicitly recommended in `Assignments/Project 1 - Sorting.md`
+- **`uv`** — explicitly recommended in `assignment information/Project 1 - Sorting.md`
   for managing deps (pytest, pandas, seaborn). Already installed (`uv
   0.11.15`) and confirmed working.
 - **Native Windows, not WSL** — WSL is used elsewhere in this environment for
@@ -36,7 +36,7 @@ if a reading/assignment calls for another package later.
 - Interpreter: point VS Code at `.venv/Scripts/python.exe` (uv creates this
   natively on Windows — no WSL remote connection needed for this repo).
 - Use the non-AI-enabled **Classwork Profile** (see
-  `Assignments/ClassworkProfile.md`) whenever writing or editing code here —
+  `assignment information/ClassworkProfile.md`) whenever writing or editing code here —
   this is a course policy, not optional.
 
 ## Running things
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
 - Formal submissions (e.g. `sorting.py` for Project 1) live in
   `projects or assignments i turn in live here/` — see the convention note
-  in `CLAUDE.md`. `Assignments/` holds only assignment descriptions/rubrics,
+  in `CLAUDE.md`. `assignment information/` holds only assignment descriptions/rubrics,
   not the actual submitted files.
 - Practice files working through book examples/exercises can go in a
   `practice/` folder (create it the first time it's needed) so they don't

@@ -601,7 +601,7 @@ if not(lst):
 - Minutes Spent Documenting: 12
 - Confidence: 3 I'm confident my insights are getting me closer to being done with this, but I'm not done yet
 
-## Learning Log 5 kickoff question
+## Backlog on 5
 
 - Question/Problem: How can I remember the jist of Prim's vs Djisktras graph algorithms? 
 - When Identified:11:45pm 9/9/2026
@@ -624,7 +624,7 @@ if not(lst):
     2) code first, theory later: start with the easy warm up tests and divide_and_conquer_multiply tomorrow, get it passing on real numbers, then do karatsuba, and only after both are working go back and do the recursion tree / big theta analysis using my own code instead of trying to follow along with fridays lecture - good because im seeing new material faster and it grounds the abstract tree stuff in something i actually built, and I figure when I eventually do circle back to what we went over today in class It will make more sense. TLDR f(time invested) yields more progress this way - is my hypothesis. f returns being able too fully conceptualize and complete this assignment along with umderstanding umbrella concepts. 
     3) split it up by day instead of by topic: sat/sun is reading (jea 1.6-1.7 plus the induction notes), mon-wed is implementation (warm up tests -> divide_and_conquer_multiply -> karatsuba, one thing at a time), thu is the recursion tree analysis plus the benchmark and plot - good because the recursion tree part actually gets its own dedicated day instead of getting crammed in at the end like it probably would with the other two options, bad because it's a rigid schedule and if any day runs long everything after it gets squeezed
 - Insight/Answer: 
-    - I inintally favored option 2 because I'm seeing more material more quickly. The plan would be to try working a different recursion-tree problem on my own first, then come back to the concrete worked example we did in class - the understanding should compound, and I'll have more success concretizing the idea that way.
+    - I inintally favored option 2 because I'm seeing more  material more quickly. The plan would be to try working a different recursion-tree problem on my own first, then come back to the concrete worked example we did in class - the understanding should compound, and I'll have more success concretizing the idea that way.
     - But I also like that option 3 lays out the daily steps to get there. When goals are more thought out - the when, how, why, how long are answered they are more likley to happen -- so i like that this specific strategy has my ultimate goal for this week broken down to smaller tasks by the day. This is also good. 
     - If I combined the two strategies I would still have a day/days to do list, but I would still try having some code that I worked through myself before getting heavy into math - which i think is very valauble and a superior way to do it. 
     - I think this hybrid strategy could look like this: 
@@ -640,10 +640,10 @@ if not(lst):
 
 ## Sunday 9/13/2026 : Learning Log 5
 
-- Question/Problem: How do I go from a recursion tree picture to a Big-O bound — recognizing whether level totals are decreasing, equal, or increasing, and why that's what determines the answer?
-- When Identified: 10:00pm 9/13/2026
-- start time: 10:00pm 9/13/2026
-- end time: 11:00pm 9/13/2026
+- Question/Problem: How do I go from a recursion tree picture to a big O bound and why does recognizing whether level totals are decreasing, equal, or increasing, determine the answer?
+- When Identified: 5:00pm 9/13/2026
+- start time: 10:00pm 9/14/2026
+- end time: 7:30pm 9/13/2026
 - Importance: 5
 - How to Learn: read JEA 1.6-1.7, then practice deriving T(n) recurrences from hand-drawn recursion trees of varying shapes (balanced, unbalanced, different branching factors) and classifying each as decreasing/equal/increasing
 - Insight/Answer:
@@ -651,88 +651,169 @@ if not(lst):
     - practiced this on a few shapes: r=2,c=2 (mergesort, T(n)=2T(n/2)+O(n)), r=3,c=3 (T(n)=3T(n/3)+O(n)), and an unbalanced one with two unequal children (T(n)=T(n/4)+T(n/2)+O(n))
     - mergesort is the "Equal" case: every level totals n (2^i nodes * n/2^i work each = n), so T(n) = O(n log n)
     - worked through T(n)=3T(n/2)+O(n) (Karatsuba's recurrence) as an "Increasing" example: level totals go n, 1.5n, 2.25n... growing by a constant factor each level, so the leaves dominate and T(n) = O(n^log2(3)) ≈ O(n^1.585)
-    - key insight on why the level-by-level classification determines the whole answer: T(n) is the sum of all level totals. If levels are flat, sum = (one level's value) × (number of levels). If shrinking, the top level alone is basically the whole sum (rest is a tiny geometric tail). If growing, the bottom level alone is basically the whole sum (it outweighs everything above it combined). So whichever level dominates, that's the answer — no need to add up every level individually, just spot the pattern and take the dominant term
+    - key insight on why the level-by-level classification determines the whole answer: T(n) is the sum of all level totals. If levels are flat, sum = (one level's value) × (number of levels). If shrinking, the top level alone is basically the whole sum, thats where all the work happens. If growing, the bottom level alone is basically the whole sum (it outweighs everything above it combined). So whichever level dominates, that's the answer there is no need to add up every level individually, just spot the pattern and take the dominant term
     - still shaky: haven't actually worked a "Decreasing" case by hand yet (T(n) = T(n/2) + O(n)), and want more reps recognizing the Increasing case since that's the one that'll show up with Karatsuba on the actual assignment
-- Hours Spent Learning: 1
+- Hours Spent Learning: 2.5
 - Minutes Spent Documenting: 15
 - Confidence: 4 because I still haven't looked much at the cases when levels are increasing like karatsuba
 
-## 
+## Monday 9/14/2026 : Learning Log 5
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: I watched a YouTube video on Karatsuba multiplication before touching the assignment code, and wondered how does the algorithm's break up numbers especially when two are different lengths like say one number is 9 digits and the other is 3 - what then?
+- When Identified: 9/14/2026
+- start time: 3:45pm 9/14/2026
+- end time: 5:35pm 9/14/2026
+- Importance: 4
+- How to Learn: I watched a walkthrough video of Karatsuba, then I will research how the same high/low block split applies when the two numbers aren't the same length
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - the algorithm works by breaking each number into a high block and a low block, then recursing on those smaller blocks instead of multiplying the whole numbers directly
+    - I correctly identified that the recursion has to bottom out at single digits, where the multiplication can just be looked up/done directly instead of split further -- I got this right without prompting because it's the same base-case instinct from my recursion learning log entry (9/1): the base case is "the smallest version of the problem you already know the answer to," and for digit multiplication that's a single digit - and you return that single digit similar to merge sort's single digit list.
+    - update although there could be some way to make the base case i chose work, upon further reflection I got it wrong. the base case is going ot be more complex than I had first anticipated 
+    - the payoff for only doing 3 recursive multiplications instead of 4 is that you trade a costly fourth multiplication for a couple of extra additions/subtractions. in other words its not just a multiplication, its also another recursion. 
+    - broader question this raised for me: how do divide-and-conquer strategies in general get their speedup? What are all the ways you can speed up a divide and conquer strategy?
+    - last insight (unfortunately): I didn't notice that this assingment's 4 recrusive split multiple doesn't require me to do
+- Hours Spent Learning: 0.83
+- Minutes Spent Documenting: 25
+- Confidence: 3, solid on why the trick saves a multiplication, still unsure about the mechanism of recursion - i think a recursion tree analysis would probably concrete this
 
-## 
+## Monday 9/14/26 : Learning Log 5
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: Based on this assignment, how would divide_and_conquer_multiply and karatsuba each actually work as recursive functions  and how does the difference in how many recursive multiplications they make (four vs. three) change what the code for each one has to look like? What else do we have to do to accomadate the non multiplation arithmetic ops. 
+- When Identified: 4:27pm 9/14
+- start time: 7:00pm 9/14/2026
+- end time: 9:30pm
+- Importance: 5
+- How to Learn: - try to derive base cases from contraints, then look it up - if anything is unexpected record it as an insight 
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - Well the first thing I realized that was cool, is that since these are essentially very similar algorithms my first instinct is that they will share a super similar base case because the base case only cares about how small the inputs are, not about how many recursive multiplications happen after it.
+    - second insight is that because we are doing padding I dont have to worry about having different lengths like I was previously worried about, but this also means they will each shrink exactly the same as far as digits go
+    - divide_and_conquer_multiply calls itself 4 times and looks like xhi*yhi, xhi*ylo, xlo*yhi, xlo*ylo karatsuba calls itself only 3 times and looks like xhi*yhi, xlo*ylo, and (xhi+xlo)*(yhi+ylo). 
+    - karatsuba gets the middle value algebraically from the 3rd and last product: middle number = (xhi+xlo)*(yhi+ylo) - xhi*yhi - xlo*lo
+    - karatsuba's combine step needs an extra to do those two subtracts after the multiply - but we are given a function for that.
+- Hours Spent Learning: 1.15
+- Minutes Spent Documenting: 25
+- Confidence: 3, still need to just sit down and impelment this, didnt code as much as I wanted to here.
 
-## 
+## 9/15/2026 : Learning Log 6
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: Just finished with divide_and_conquer_multiply, but for Karatsuba, after reusing the same base case, padding, and split from divide_and_conquer_multiply, how do I combine the three recursive products using n_digit_add, n_digit_subtract, and left_shift?  
+- When Identified: 9/15/2026 10:30am
+- start:  9/15/2026 10:30am
+- end time:  9/15/2026 8:30pm
+- Importance: 5
+- How to Learn: Break down all the compents that need to happen, then determine the chronological order keeping in mind that I will need to subtract before shifting the middle product.
+- Insight/Answer: 
+    - to determine the optimal place to left shift we have to uinderstand what left shift is supposed to do - and that is to just allow us to add things correctly. 
+    - so lets take karatsuba's first recursion which is basically hi * hi, this is just like the first one in divide n conquer so it gets shifted 2 * splitted_index
+    - next we have low * low, in divide_and_conquer we didn't shift it at all because it already the lowest digit in the string
+    - then we have the middle which is a bit nuanced in karatsuba: 
+       - first the mult part of middle: prod = (hi1 + lo1) * (hi2 + lo2) = prod
+       - then the subtracts: prod -  rec1( which was hi * hi) - rec2 (which was lo * lo)
+    - essentially id have something like: n_digit_add(n_digit_add(left_shift(rec1, 2*splitted_index), left_shift(n_digit_subtract(n_digit_subtract(prod, rec1), rec2), splitted_index)), rec2)
+- Hours Spent Learning: 2
+- Minutes Spent Documenting: 30
+- Confidence: 4
+
+## 9/16/2026 : Learning Log 6
+
+- Question/Problem: I still dont understand all the concepts/variables of recursion tree analysis (which I'm assuming is where you go from T(n) = something -> buildiing a treee doing maths -> you prove O(n) somehow), so in this learning log i will understand all the variables
+- When Identified: 9/16/2026 9:00pm
+- start time: 9/16/2026 9:00pm
+- end time: 9/16/2026 10:15pm
+- Importance: 5
+- How to Learn: Ask the internet for a recursion tree analysis variable roster
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+  - n = algorithm input size
+  - r = branching factor
+        - this means how many new branches created at each necursive call
+  - c = shrink factor
+        - How much smaller the input gets in refernec to the last input
+  - i = index level   root node is always i == 0
+  - d = how many levels before base case   d is always the maximum value i takes
+  - number of nodes at level i   ==      r^i
+  - work per node at level i     ==   O(n/c^i)
+  - total work at level i        ==   r^i * O(n/c^i)
+  - leaves = nodes on the final level 
+  - leaves = r^d
+  - T(n) equation = total work as a function of n 
+  - O(n) the end result after T(n) simplifies after levels are summed or bounded
 
-## 
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 15
+- Confidence: 4
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+## 9/17/2026 : Learning Log 6 
+
+- Question/Problem: How do I do recrusion tree analysis on karatsuba using these variables I learned? 
+- When Identified: 5:30pm 9/17
+- start time: 5:30 9/17/2026
+- end time: 7:20pm 9/17/2026
+- Importance: 5
+- How to Learn: Work through the tree and derive each variable, understand logarithmic magic that always trips you up whenever you re-encounter it
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - the biggest insight was depth for depth, which i understand is the max i starting at i = 0
+        - to calculate karatsuba's i max, (d), you have to understand you are halfing n at each iteration
+        - you also have to understand the base case of karatsuba which for us is when the input string hits one char
+        - so if n is 32 what is d
+        - well you would have to keep cutting it in half until it reaches the base case 1
+        - 32 i=0, 16 i=1, 8 i=2, 4 i=3, 2 i=4, 1 i=5 it takes exactly 5 halvings, so d = 5
+        - if only there was some log trick we could do 
+        - oh we can, this is log(base 2) n.   2 to the what == n? answer is log(base 2)n
+        - log(base2)32 = 5, great that works 
+    - once we have depth we can figure out how many leaves we'll have with respect to n 3 ^ d
+    - and because by definition of our base case being 1, each leaf has constant work O(1), it is no longer looping through stuff because its working with just 1 value and our base case says thats when we stop doing everything but a return of that final thing. 
+    - so 3 ^ d = nodes and d = logb2 n is the same as saying n ^ logb2 3 amount of work at the end
+    - when the leaves dominate total work and you have a lenth ==1 base case like karatsuba:
+    - bottom work = leaves * O(1)
+    - and O(n) work = bottom work
+- Hours Spent Learning: 1.2
+- Minutes Spent Documenting: 15
+- Confidence: 5
 
-## 
+## 9/17/2026 : Learning Log 6
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: How do I do my divide_and_conquer_multiply analysis
+- When Identified: 7:20pm
+- start time: 7:20pm
+- end time: 8:20pm
+- Importance: 5 
+- How to Learn: Work through it exactly like I did karatsuba understanting points of divergence with this less efficient algorithm
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - recurrence is T(n) = 4T(n/2) + O(n), because this one makes 4 recursive multiplications on half sized inputs, so r = 4 and c = 2
+    - first thing is depth is the same as karatsuba, we are still halving n until we hit the one digit base case
+        - so d = log(base 2)n in the clean half sized tree, same question as before: 2 to the what == n?
+        - making 4 branches instead of 3 doesn't make the tree deeper, it makes it wider
+    - at level i there are 4^i nodes, and the work per node is O(n/2^i)
+    - so the level total is 4^i * O(n/2^i), which simplifies to O(n * (4/2)^i) = O(n * 2^i)
+        - drawing it out helped here: the level totals go n, 2n, 4n, 8n etc
+        - karatsuba's went n, 1.5n, 2.25n, 3.375n, so both are increasing but this one doubles with each new level
+    - increasing by that constant factor means the leaves dominate, the sum of all the levels is within a constant factor of the bottom level's work
+    - once we have depth we can figure out how many leaves: 4^d = 4^(log(base 2)n)
+        - same log trick from karatsuba, swap the 4 and n: 4^(log(base 2)n) = n^(log(base 2)4)
+        - 2 to the what == 4? thats 2, so we have n^2 leaves
+    - each leaf has O(1) work because we hit the one digit base case, so bottom work = n^2 * O(1), and the final bound is O(n^2)
+    - so splitting the numbers up recursively didn't improve the growth rate over grade school multiply, which is also O(n^2). the difference with karatsuba is saving that fourth recursive multiplication at every split, which is why its exponent is log(base 2)3 instead of log(base 2)4
+    
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 25
+- Confidence: 5
 
-## 
+## Saturday 9/19/2026 : Learning Log 7
 
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
+- Question/Problem: What is a good plan/order for tackling this week's learning logs, assigned readings, and assignment due Wednesday?
+- When Identified: 9/19/2026
+- Importance: 4
+- How to Learn: lay out a few different sequencing strategies for the week (reading vs. coding first, when to write the log entry) and weigh them against what's actually worked for me before, then pick one
 - Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
-
-## 
-
-- Question/Problem:
-- When Identified:
-- Importance:
-- How to Learn:
-- Insight/Answer:
-- Hours Spent Learning:
-- Minutes Spent Documenting:
-- Confidence:
+    - the week's real shape: Backtracking for Optimal BSTs (5 staged parts: warm-up recurrence, refactor to closure, retrieve tree structure, derive a leftPenalty variation, implement that variation) due Wed 9/23, with §2.5 as Monday's class reading and §12.1-12.3 as Wednesday's class reading, plus this log entry due Mon 9/21
+    - plan A: read both §2.5 and §12.1-12.3 up front over the weekend, write the log entry off that reading, then do all 5 assignment parts Mon-Wed once the reading's already done. Pro: walk into every class already prepped, no surprises going into Wednesday. Con: writing the log before touching any code makes it read thinner, and it's not how my best entries (karatsuba, locator-heap) actually happened
+    - plan B: skip reading and start Part 1 straight off the given pseudocode since it's self-contained, then circle back to §2.5 afterward and let the assignment itself drive when I actually read. Pro: mirrors how karatsuba went for me, code-first grounds the abstract stuff. Con: if the spec publishes late or Part 1 takes longer than expected, reading gets squeezed in later than ideal
+    - plan C: split by day like my Project 3 hybrid strategy, with Tuesday reserved as a dedicated buffer/derivation day specifically for Part 4 (the leftPenalty variation), since that's the piece most likely to be this assignment's "recursion trees didn't click" moment. Pro: insurance against a repeat of last week's crunch. Con: a more rigid schedule, less room to lean into whichever mode (reading or coding) is actually working that day
+    - plan G (the hybrid I landed on): read §2.5 tonight (Saturday) only, and start this log entry off that reading same night. Tomorrow (Sunday), open the assignment and do Part 1 cold off the pseudocode, then come back and finish this log entry tomorrow night using both the reading and whatever Part 1's coding surfaced. Monday is class + Parts 2-3, Tuesday is Part 4 derivation + implementation, Wednesday morning is Part 5 plus a quick read of §12.1-12.3 before class, then screenshot/reflection/submit Wednesday
+    - ultimately I think G is best: it keeps A's advantage of not walking into Monday's class cold, but the log entry itself doesn't get written until it has real code-contact behind it (B's advantage), which is closer to how my strongest past entries actually got written. It also still leaves Tuesday free enough to absorb overflow if Part 4 turns out to be the hard part, without needing to name that in advance the way plan C does
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 20
+- Confidence: 4, confident in the plan, less confident yet in Part 4 since I haven't seen the incomplete pseudocode I have to complete myself
 
 ## 
 
