@@ -1,0 +1,1655 @@
+Algorithms by Jeff Erickson — Chapter 3: Dynamic Programming — Exercises (1–54)
+Source: JEA - Algorithms textbook (Erickson).pdf, printed pages 123–157.
+Plain-text extraction; diagrams and other visual elements are represented only by their extracted captions.
+
+For all of the following exercises—and more generally when developing any
+new dynamic programming algorithm—I strongly recommend following the
+steps outlined in Section 3.4. In particular, don’t even start thinking about
+tables or for-loops until you have a complete recursive solution, including a clear
+English specification of the recursive subproblems you are actually solving.18
+First make it work, then make it fast.
+
+Sequences/Arrays
+
+ 1. In a previous life, you worked as a cashier in the lost Antarctican colony
+    of Nadiria, spending the better part of your day giving change to your
+    customers. Because paper is a very rare and valuable resource in Antarctica,
+    cashiers were required by law to use the fewest bills possible whenever
+    they gave change. Thanks to the numerological predilections of one of its
+    founders, the currency of Nadiria, called Dream-Dollars, was available in
+    the following denominations: $1, $4, $7, $13, $28, $52, $91, and $365.19
+    (a) The greedy change algorithm repeatedly takes the largest bill that does
+        not exceed the target amount. For example, to make $122 using the
+        greedy algorithm, we first take a $91 bill, then a $28 bill, and finally
+        three $1 bills. Give an example where this greedy algorithm uses more
+        Dream-Dollar bills than the minimum possible. [Hint: It may be easier
+        to write a small program than to work this out by hand.]
+   (b) Describe and analyze a recursive algorithm that computes, given an
+       integer k, the minimum number of bills needed to make k Dream-
+       Dollars. (Don’t worry about making your algorithm fast; just make sure
+       it’s correct.)
+      (c) Describe a dynamic programming algorithm that computes, given an
+          integer k, the minimum number of bills needed to make k Dream-Dollars.
+          (This one needs to be fast.)
+    18
+       In my algorithms classes, any dynamic programming solution that does not include an
+English specification of the underlying recursive subproblems automatically gets a score of
+zero, even if the solution is otherwise perfect. Introducing this policy significantly improved
+students’ grades, because it significantly reduced the number of times they submitted incorrect
+(or incoherent) dynamic programming algorithms.
+    19
+       For more details on the history and culture of Nadiria, including images of the various
+denominations of Dream-Dollars, see http://moneyart.biz/dd/.
+
+
+
+
+
+       2. Describe efficient algorithms for the following variants of the text segmen-
+          tation problem. Assume that you have a subroutine IsWord that takes
+          an array of characters as input and returns True if and only if that string
+          is a “word”. Analyze your algorithms by bounding the number of calls to
+          IsWord.
+         (a) Given an array A[1 .. n] of characters, compute the number of partitions
+             of A into words. For example, given the string ARTISTOIL, your algorithm
+             should return 2, for the partitions ARTIST·OIL and ART·IS·TOIL.
+         (b) Given two arrays A[1 .. n] and B[1 .. n] of characters, decide whether A
+             and B can be partitioned into words at the same indices. For example,
+             the strings BOTHEARTHANDSATURNSPIN and PINSTARTRAPSANDRAGSLAP
+             can be partitioned into words at the same indices as follows:
+                                 BOT·HEART·HAND·SAT·URNS·PIN
+                                 PIN·START·RAPS·AND·RAGS·LAP
+         (c) Given two arrays A[1 .. n] and B[1 .. n] of characters, compute the number
+             of different ways that A and B can be partitioned into words at the same
+             indices.
+
+       3. Suppose you are given an array A[1 .. n] of numbers, which may be positive,
+          negative, or zero, and which are not necessarily integers.
+         (a) Describe and analyze an algorithm that finds the largest sum of elements
+             in a contiguous subarray A[i .. j].
+         (b) Describe and analyze an algorithm that finds the largest product of
+             elements in a contiguous subarray A[i .. j].
+          For example, given the array [−6, 12, −7, 0, 14, −7, 5] as input, your first
+          algorithm should return 19, and your second algorithm should return 504.
+                                                  sum=19
+                                       z            }|     {
+                               −6      12         −7 0     14   −7   5
+                               |       {z          }
+                                    product=504
+
+
+
+          Given the one-element array [−374] as input, your first algorithm should
+          return 0, and your second algorithm should return 1. (The empty interval is
+          still an interval!) For the sake of analysis, assume that comparing, adding,
+          or multiplying any pair of numbers takes O(1) time.
+               [Hint: Part (a) has been a standard computer science interview question
+          since at least the mid-1980s. You can find many correct solutions on the
+          web; the problem even has its own Wikipedia page! But at least in 2016, a
+          significant fraction of the solutions I found on the web for part (b) were
+          either slower than necessary or actually incorrect.]
+
+
+
+
+4. This exercise explores variants of the maximum-subarray problem (Prob-
+   lem 3). In all cases, your input consists of an array A[1 .. n] of real numbers
+   (which could be positive, negative, or zero) and possibly an additional
+   integer X ≥ 0.
+  (a) Wrapping around: Suppose A is a circular array. In this setting, a
+      “contiguous subarray” can be either an interval A[i .. j] or a suffix followed
+      by a prefix A[i .. n] · A[1 .. j]. Describe and analyze an algorithm that
+      finds a contiguous subarray of A with the largest sum.
+  (b) Long subarrays only: Describe and analyze an algorithm that finds a
+      contiguous subarray of A of length at least X that has the largest sum.
+      (Assume X ≤ n.)
+  (c) Short subarrays only: Describe and analyze an algorithm that finds a
+      contiguous subarray of A of length at most X that has the largest sum.
+  (d) The Price Is Right: Describe and analyze an algorithm that finds a
+      contiguous subarray of A with the largest sum less than or equal to X .
+  (e) Describe a faster algorithm for Problem 4(d) when every number in the
+      array A is non-negative.
+
+5. This exercise asks you to develop efficient algorithms to find optimal subse-
+   quences of various kinds. A subsequence is anything obtained from a sequence
+   by extracting a subset of elements, but keeping them in the same order; the
+   elements of the subsequence need not be contiguous in the original sequence.
+   For example, the strings C, DAMN, YAIOAI, and DYNAMICPROGRAMMING are all
+   subsequences of the string DYNAMICPROGRAMMING.
+      [Hint: Exactly one of these problems can be solved in O(n) time using a
+   greedy algorithm.]
+  (a) Let A[1 .. m] and B[1 .. n] be two arbitrary arrays. A common sub-
+      sequence of A and B is another sequence that is a subsequence of both
+      A and B. Describe an efficient algorithm to compute the length of the
+      longest common subsequence of A and B.
+  (b) Let A[1 .. m] and B[1 .. n] be two arbitrary arrays. A common super-
+      sequence of A and B is another sequence that contains both A and B as
+      subsequences. Describe an efficient algorithm to compute the length of
+      the shortest common supersequence of A and B.
+  (c) Call a sequence X [1 .. n] of numbers bitonic if there is an index i with
+      1 < i < n, such that the prefix X [1 .. i] is increasing and the suffix
+      X [i .. n] is decreasing. Describe an efficient algorithm to compute the
+      length of the longest bitonic subsequence of an arbitrary array A of
+      integers.
+
+
+
+
+         (d) Call a sequence X [1 .. n] of numbers oscillating if X [i] < X [i + 1] for
+             all even i, and X [i] > X [i + 1] for all odd i. Describe an efficient
+             algorithm to compute the length of the longest oscillating subsequence
+             of an arbitrary array A of integers.
+         (e) Describe an efficient algorithm to compute the length of the shortest
+             oscillating supersequence of an arbitrary array A of integers.
+         (f) Call a sequence X [1 .. n] of numbers convex if 2·X [i] < X [i−1]+X [i+1]
+             for all i. Describe an efficient algorithm to compute the length of the
+             longest convex subsequence of an arbitrary array A of integers.
+         (g) Call a sequence X [1 .. n] of numbers weakly increasing if each element
+             is larger than the average of the two previous elements; that is, 2 · X [i] >
+             X [i − 1] + X [i − 2] for all i > 2. Describe an efficient algorithm to
+             compute the length of the longest weakly increasing subsequence of an
+             arbitrary array A of integers.
+         (h) Call a sequence X [1 .. n] of numbers double-increasing if X [i] > X [i −2]
+             for all i > 2. (In other words, a double-increasing sequence is a perfect
+             shuffle of two increasing sequences.) Describe an efficient algorithm to
+             compute the length of the longest double-increasing subsequence of an
+             arbitrary array A of integers.
+          (i) Recall that a sequence X [1 .. n] of numbers is increasing if X [i] < X [i +1]
+              for all i. Describe an efficient algorithm to compute the length of the
+              longest common increasing subsequence of two given arrays of integers. For
+              example, 〈1, 4, 5, 6, 7, 9〉 is the longest common increasing subsequence
+              of the sequences 〈3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3〉 and 〈1, 4, 1, 4, 2,
+              1, 3, 5, 6, 2, 3, 7, 3, 0, 9, 5〉.
+
+       6. A shuffle of two strings X and Y is formed by interspersing the characters
+          into a new string, keeping the characters of X and Y in the same order.
+          For example, the string BANANAANANAS is a shuffle of the strings BANANA and
+          ANANAS in several different ways.
+                      BANANAANANAS           BANANAANANAS            BANANAANANAS
+          Similarly, the strings PRODGYRNAMAMMIINCG and DYPRONGARMAMMICING are
+          both shuffles of DYNAMIC and PROGRAMMING:
+                      PRODGYRNAMAMMIINCG                    DYPRONGARMAMMICING
+
+         (a) Given three strings A[1 .. m], B[1 .. n], and C[1 .. m + n], describe and
+             analyze an algorithm to determine whether C is a shuffle of A and B.
+         (b) A smooth shuffle of X and Y is a shuffle of X and Y that never uses
+             more than two consecutive symbols of either string. For example,
+
+
+
+
+          • PRDOYGNARAMMMIICNG is a smooth shuffle of the strings DYNAMIC and
+            PROGRAMMING.
+          • DYPRNOGRAAMMMICING is a shuffle of DYNAMIC and PROGRAMMING, but
+            it is not a smooth shuffle (because of the substrings OGR and ING).
+          • XXXXXXXXXXXXXXXXXXX is a smooth shuffle of the strings XXXXXXX
+            and XXXXXXXXXXX.
+          • There is no smooth shuffle of the strings XXXX and XXXXXXXXXXXX.
+         Describe and analyze an algorithm to decide, given three strings X , Y ,
+         and Z, whether Z is a smooth shuffle of X and Y .
+
+7. For each of the following problems, the input consists of two arrays X [1 .. k]
+   and Y [1 .. n] where k ≤ n.
+  (a) Describe and analyze an algorithm to decide whether X is a subsequence
+      of Y . For example, the string PPAP is a subsequence of the string
+      PENPINEAPPLEAPPLEPEN.
+  (b) Describe and analyze an algorithm to find the smallest number of symbols
+      that can be removed from Y so that X is no longer a subsequence.
+      Equivalently, your algorithm should find the longest subsequence of Y
+      that is not a supersequence of X . For example, after removing removing
+      two symbols from the string PENPINEAPPLEAPPLEPEN, the string PPAP is
+      no longer a subsequence.
+     (c) Describe and analyze an algorithm to determine whether X occurs as
+         two disjoint subsequences of Y . For example, the string PPAP appears as
+         two disjoint subsequences in the string PENPINEAPPLEAPPLEPEN.
+  (d) Suppose the input also includes a third array C[1 .. n] of numbers, which
+      may be positive, negative, or zero, where C[i] is the cost of Y [i]. Describe
+      and analyze an algorithm to compute the minimum-cost occurrence of
+      X as a subsequence of Y . That is, we want to find an array I[1 .. k] such
+      that I[ j] < I[ j + 1] and X [I[ j]] = Y [ j] for every index j, and the total
+           Pk
+      cost j=1 C[ j] is as small as possible.
+  (e) Describe and analyze an algorithm to compute the total number of
+      (possibly overlapping) occurrences of X as a subsequence of Y . For
+      purposes of analysis, assume that we can add two arbitrary integers in
+      O(1) time. For example, the string PPAP appears exactly 23 times as a
+      subsequence of the string PENPINEAPPLEAPPLEPEN. If all characters in X
+                                                     n
+      and Y are equal, your algorithm should return k .
+     (f) What is the running time of your algorithm for part (d) if adding two
+         `-bit integers requires O(`) time?
+
+
+
+
+       8. Describe and analyze an efficient algorithm to find the length of the longest
+          contiguous substring that appears both forward and backward in an input
+          string T [1 .. n]. The forward and backward substrings must not overlap.
+          Here are several examples:
+           • Given the input string ALGORITHM, your algorithm should return 0.
+           • Given the input string RECURSION, your algorithm should return 1, for
+             the substring R.
+           • Given the input string REDIVIDE, your algorithm should return 3, for the
+             substring EDI. (The forward and backward substrings must not overlap!)
+           • Given the input string DYNAMICPROGRAMMINGMANYTIMES, your algorithm
+             should return 4, for the substring YNAM. (In particular, it should not
+             return 6, for the subsequence YNAMIR).
+
+       9. A palindrome is any string that is exactly the same as its reversal, like I, or
+          DEED, or RACECAR, or AMANAPLANACATACANALPANAMA.
+         (a) Describe and analyze an algorithm to find the length of the longest
+             subsequence of a given string that is also a palindrome.
+                 For example, the longest palindrome subsequence of the string
+             MAHDYNAMICPROGRAMZLETMESHOWYOUTHEM is MHYMRORMYHM; thus, given
+             that string as input, your algorithm should return 11.
+         (b) Describe and analyze an algorithm to find the length of the shortest
+             supersequence of a given string that is also a palindrome. For example,
+             the shortest palindrome supersequence of TWENTYONE is TWENTOYOTNEWT,
+             so given the string TWENTYONE as input, your algorithm should return 13.
+         (c) Any string can be decomposed into a sequence of palindromes. For
+             example, the string BUBBASEESABANANA (“Bubba sees a banana.”) can be
+             broken into palindromes in the following ways (and 65 others):
+
+                                       BUB • BASEESAB • ANANA
+                                   B • U • BB • ASEESA • B • ANANA
+                                  BUB • B • A • SEES • ABA • N • ANA
+                            B • U • BB • A • S • EE • S • A • B • A • NAN • A
+                         B•U•B•B•A•S•E•E•S•A•B•A•N•A•N•A
+
+              Describe and analyze an efficient algorithm to find the smallest number
+              of palindromes that make up a given input string. For example, given
+              the input string BUBBASEESABANANA, your algorithm should return 3.
+         (d) Describe and analyze an efficient algorithm to find the largest integer k
+             such that a given string can be split into palindromes of length at least k.
+             For example:
+
+
+
+
+           • Given the string PALINDROME, your algorithm should return 1.
+           • Given the string BUBBASEESABANANA, your algorithm should return 3,
+             for the partition BUB • BASEESAB • ANANA.
+           • Given a string of n identical symbols, your algorithm should return n.
+   (e) Describe and analyze an efficient algorithm to find the number of
+       different ways that a given string can be decomposed into palindromes.
+       For example:
+        • Given the string PALINDROME, your algorithm should return 1.
+        • Given the string BUBBASEESABANANA, your algorithm should return
+           70.
+        • Given a string of n identical symbols, your algorithm should return
+           2n−1 .
+      (f) A metapalindrome is a decomposition of a string into a sequence of
+          palindromes, such that the sequence of palindrome lengths is itself a
+          palindrome. For example:
+
+                            BOB • S • MAM • ASEESA • UKU • L • ELE
+
+         is a metapalindrome for the string BOBSMAMASEESAUKULELE, whose length
+         sequence is the palindrome (3, 1, 3, 6, 3, 1, 3). Describe and analyze an
+         efficient algorithm to find the length of the shortest metapalindrome for a
+         given string. For example, given the input string BOBSMAMASEESAUKULELE,
+         your algorithm should return 11.
+
+10. Suppose you are given an array A[1 .. n] of positive integers. An increas-
+    ing back-and-forth subsequence is an sequence of indices I[1 .. `] with the
+    following properties:
+       • 1 ≤ I[ j] ≤ n for all j.
+       • A[I[ j]] < A[I[ j + 1]] for all j < `.
+       • If I[ j] is even, then I[ j + 1] > I[ j].
+       • If I[ j] is odd, then I[ j + 1] < I[ j].
+   Less formally, suppose we are given an array of n squares, each containing a
+   positive integer. Suppose we place a token on one of the squares, and then
+   repeatedly move the token left (if it’s on an odd-indexed square) or right
+   (if it’s on an even-indexed square), always moving from a smaller number
+   to a larger number. Then the sequence of token positions is an increasing
+   back-and-forth subsequence.
+        Describe an algorithm to compute the length of the longest increasing
+   back-and-forth subsequence of a given array of n integers. For example,
+   given the input array
+
+
+
+
+              1 1 8 7 5 6 3 6 4 4 8 3 9 1 2 2 3 9 4 0
+              1<   2>   3<   4>   5<   6>    7<        8>   9<   10> 11< 12> 13< 14> 15< 16> 17< 18> 19< 20>
+
+          your algorithm should return the integer 9, which is the length of the
+          following increasing back-and-forth subsequence:
+                                            0 1 2 3 4 6 7 8 9
+                                        20>       1<    15< 18> 10>    6>   4>   3<   13<
+
+
+      11. Suppose we want to typeset a paragraph of text onto a piece of paper (or if
+          you insist, a computer screen). The text consists of a sequence of n words,
+          where the ith word has length `[i]. We want to break the paragraph into
+          several lines of total length exactly L. For example, according to TEX, the
+          program used to typeset these notes, the paragraph you are reading right
+          now is approximately 11.94794 cm ≈ 4.7055 inches wide.
+              Depending on how the paragraph is broken into lines of text, we must
+          insert different amounts of white space between the words. The paragraph
+          should be fully justified, meaning that the first character on each line starts
+          at the left margin, and except for the last line, the last character on each line
+          ends at the right margin. There must be at least one unit of white space
+          between any two words on the same line. See the paragraph you are reading
+          right now? Just like that.
+              Define the slop of a paragraph layout as the sum over all lines, except
+          the last, of the cube of the amount of extra white-space in each line, not
+          counting the one unit of required space between each adjacent pair of words.
+          Specifically, if a line contains words i through j, then the slop of that line is
+                                        Pj        3
+          defined to be L − j + i − k=i `[k] . Describe a dynamic programming
+          algorithm to print the paragraph with minimum slop.
+
+      12. You and your eight-year-old nephew Elmo decide to play a simple card
+          game. At the beginning of the game, the cards are dealt face up in a long
+          row. Each card is worth a different number of points. After all the cards are
+          dealt, you and Elmo take turns removing either the leftmost or rightmost
+          card from the row, until all the cards are gone. At each turn, you can decide
+          which of the two cards to take. The winner of the game is the player that
+          has collected the most points when the game ends.
+              Having never taken an algorithms class, Elmo follows the obvious greedy
+          strategy—when it’s his turn, Elmo always takes the card with the higher
+          point value. Your task is to find a strategy that will beat Elmo whenever
+          possible. (It might seem mean to beat up on a little kid like this, but Elmo
+          absolutely hates it when grown-ups let him win.)
+         (a) Prove that you should not also use the greedy strategy. That is, show
+             that there is a game that you can win, but only if you do not follow the
+             same greedy strategy as Elmo.
+
+
+
+
+   (b) Describe and analyze an algorithm to determine, given the initial se-
+       quence of cards, the maximum number of points that you can collect
+       playing against Elmo.
+   (c) When Elmo was four, he used an even simpler strategy—on his turn,
+       he always chose his next card uniformly at random. That is, if there
+       was more than one card left on his turn, he would take the leftmost
+       card with probability 1/2, and the rightmost card with probability 1/2.
+       Describe an algorithm to determine, given the initial sequence of cards,
+       the maximum expected number of points you can collect playing against
+       four-year-old-Elmo.
+   (d) Five years later, thirteen-year-old Elmo has become a much stronger
+       player. Describe and analyze an algorithm to determine, given the initial
+       sequence of cards, the maximum number of points that you can collect
+       playing against a perfect opponent.
+
+13. It’s almost time to show off your flippin’ sweet dancing skills! Tomorrow is
+    the big dance contest you’ve been training for your entire life, except for that
+    summer you spent with your uncle in Alaska hunting wolverines. You’ve
+    obtained an advance copy of the list of n songs that the judges will play
+    during the contest, in chronological order. Yessssssssss!
+         You know all the songs, all the judges, and your own dancing ability
+    extremely well. For each integer k, you know that if you dance to the kth
+    song on the schedule, you will be awarded exactly Score[k] points, but then
+    you will be physically unable to dance for the next Wait[k] songs (that is,
+    you cannot dance to songs k + 1 through k + Wait[k]). The dancer with the
+    highest total score at the end of the night wins the contest, so you want your
+    total score to be as high as possible.
+         Describe and analyze an efficient algorithm to compute the maximum
+    total score you can achieve. The input to your sweet algorithm is the pair of
+    arrays Score[1 .. n] and Wait[1 .. n].
+
+14. The new swap-puzzle game Candy Swap Saga XIII involves n cute animals
+    numbered from 1 to n. Each animal holds one of three types of candy:
+    circus peanuts, Heath bars, and Cioccolateria Gardini chocolate truffles. You
+    also have a candy in your hand; at the start of the game, you have a circus
+    peanut.
+        To earn points, you visit each of the animals in order from 1 to n. For
+    each animal, you can either keep the candy in your hand or exchange it
+    with the candy the animal is holding.
+      • If you swap your candy for another candy of the same type, you earn
+        one point.
+
+
+
+
+              • If you swap your candy for a candy of a different type, you lose one point.
+                (Yes, your score can be negative.)
+              • If you visit an animal and decide not to swap candy, your score does not
+                change.
+            You must visit the animals in order, and once you visit an animal, you can
+            never visit it again.
+               Describe and analyze an efficient algorithm to compute your maximum
+            possible score. Your input is an array C[1 .. n], where C[i] is the type of
+            candy that the ith animal is holding.
+
+      15. Lenny Rutenbar, the founding dean of the new Maksymilian R. Levchin
+          College of Computer Science, has commissioned a series of snow ramps on
+          the south slope of the Orchard Downs sledding hill20 and challenged Bill
+          Kudeki, head of the Department of Electrical and Computer Engineering, to
+          a sledding contest. Bill and Lenny will both sled down the hill, each trying to
+          maximize their air time. The winner gets to expand their department/college
+          into both Siebel Center and the new ECE Building; the loser has to move
+          their entire department/college in the Boneyard culvert next to Loomis Lab.
+                Whenever Lenny or Bill reaches a ramp while on the ground, they can
+            either use that ramp to jump through the air, possibly flying over one or
+            more ramps, or sled past that ramp and stay on the ground. Obviously, if
+            someone flies over a ramp, they cannot use that ramp to extend their jump.
+         (a) Suppose you are given a pair of arrays Ramp[1 .. n] and Length[1 .. n],
+             where Ramp[i] is the distance from the top of the hill to the ith ramp,
+             and Length[i] is the distance that any sledder who takes the ith ramp will
+             travel through the air. Describe and analyze an algorithm to determine
+             the maximum total distance that Lenny or Bill can spend in the air.
+         (b) The university lawyers heard about Lenny and Bill’s little bet and
+             immediately objected. To protect the university from either lawsuits
+             or sky-rocketing insurance rates, they impose an upper bound on the
+             number of jumps that either sledder can take. Describe and analyze
+             an algorithm to determine the maximum total distance that Lenny or
+             Bill can spend in the air with at most k jumps, given the original arrays
+             Ramp[1 .. n] and Length[1 .. n] and the integer k as input.
+         (c) When the lawyers realized that imposing their restriction didn’t immedi-
+             ately shut down the contest, they added a new restriction: No ramp can
+             be used more than once! Disgusted by the legal interference, Lenny and
+             Bill give up on their bet and decide to cooperate to put on a good show
+         20
+              The north slope is faster, but too short for an interesting contest.
+
+
+
+
+
+        for the spectators. Describe and analyze an algorithm to determine the
+        maximum total distance that Lenny and Bill can spend in the air, each
+        taking at most k jumps (so at most 2k jumps total), and with each ramp
+        used at most once.
+
+16. Farmers Boggis, Bunce, and Bean have set up an obstacle course for Mr. Fox.
+    The course consists of a long row of booths, each with a number painted on
+    the front with bright red paint. Formally, Mr. Fox is given an array A[1 .. n],
+    where A[i] is the number painted on the front of the ith booth. Each number
+    A[i] could be positive, negative, or zero. Everyone agrees with the following
+    rules:
+     • At each booth, Mr. Fox must say either “Ring!” or “Ding!”.
+     • If Mr. Fox says “Ring!” at the ith booth, he earns a reward of A[i]
+       chickens. (If A[i] < 0, Mr. Fox pays a penalty of −A[i] chickens.)
+     • If Mr. Fox says “Ding!” at the ith booth, he pays a penalty of A[i] chickens.
+       (If A[i] < 0, Mr. Fox earns a reward of −A[i] chickens.)
+     • Mr. Fox is forbidden to say the same word more than three times in a
+       row. For example, if he says “Ring!” at booths 6, 7, and 8, then he must
+       say “Ding!” at booth 9.
+     • All accounts will be settled at the end, after Mr. Fox visits every booth
+       and the umpire calls “Hot box!” Mr. Fox does not actually have to carry
+       chickens through the obstacle course.
+     • Finally, if Mr. Fox violates any of the rules, or if he ends the obstacle
+       course owing the farmers chickens, the farmers will shoot him.
+    Describe and analyze an algorithm to compute, the largest number of
+    chickens that Mr. Fox can earn by running the obstacle course, given the
+    array A[1 .. n] of numbers as input. [Hint: Watch out for the burning pine
+    cone!]
+
+17. Dance Dance Revolution is a dance video game, first introduced in Japan
+    by Konami in 1998. Players stand on a platform marked with four arrows,
+    pointing forward, back, left, and right, arranged in a cross pattern. During
+                                                                          Ü
+                                                                              Ü
+                                                                                Ü
+
+
+
+
+    play, the game plays a song and scrolls a sequence of n arrows ( , , ,
+    or Ü) from the bottom to the top of the screen. At the precise moment
+    each arrow reaches the top of the screen, the player must step on the
+    corresponding arrow on the dance platform. (The arrows are timed so that
+    you’ll step with the beat of the song.)
+        You are playing a variant of this game called “Vogue Vogue Revolution”,
+    where the goal is to play perfectly but move as little as possible. When an
+    arrow reaches the top of the screen, if one of your feet is already on the
+
+
+
+
+          correct arrow, you are awarded one style point for maintaining your current
+          pose. If neither foot is on the right arrow, you must move one (and only one)
+          foot from its current location to the correct arrow on the platform. If you
+          ever step on the wrong arrow, or fail to step on the correct arrow, or move
+          more than one foot at a time, or move either foot when you are already
+          standing on the correct arrow, all your style points are taken away and you
+          lose the game.
+              How should you move your feet to maximize your total number of style
+          points? For purposes of this problem, assume you always start with your left
+                          Ü
+          foot on   and your right foot on Ü, and that you’ve memorized the entire
+                                                                                                                       Ü          Ü
+
+
+
+
+                                                                                                       Ü
+                                                                                                       Ü     Ü
+                                                                                                             Ü
+          sequence of arrows. For example, if the sequence is            Ü Ü, you
+          can earn 5 style points by moving your feet as shown below:
+                                                                                             ➜                         ➜
+                                   ➜➜
+
+
+                                                 ➜➜
+
+
+
+
+                                                                                                       ➜                                   ➜
+                                                                ➜
+
+
+                                                                             ➜
+
+                                   L             L
+                  ➜
+
+
+
+
+                                                                ➜
+
+
+                                                                              ➜
+
+
+                                                                                             ➜
+
+
+                                                                                                       ➜
+
+
+                                                                                                                       ➜
+
+
+                                                                                                                                          ➜
+             L         R                R             R             R             R L            R L       R L              R L                R
+            ➜                  ➜             ➜              ➜            ➜              ➜          ➜                               ➜
+
+
+
+
+                                                                                                                   ➜
+                       ➜                ➜             ➜             ➜             ➜              ➜         ➜                ➜                  ➜
+                                                                L             L
+                                                                ➜
+
+
+                                                                              ➜
+                 ➜
+
+
+                                   ➜
+
+
+                                                 ➜
+
+
+
+
+                                                                                             ➜
+
+
+                                                                                                       ➜
+
+
+                                                                                                                       ➜
+
+
+                                                                                                                                          ➜
+                 Begin!                      Style point!                Style point!              Style point!    Style point!        Style point!
+
+
+
+         (a) Prove that for any sequence of n arrows, it is possible to earn at least
+             n/4 − 1 style points.
+         (b) Describe an efficient algorithm to find the maximum number of style
+             points you can earn during a given VVR routine. The input to your
+             algorithm is an array Arrow[1 .. n] containing the sequence of arrows.
+
+      18. Consider the following solitaire form of Scrabble. We begin with a fixed,
+          finite sequence of tiles; each tile has both a letter and a numerical value. At
+          the start of the game, we draw the first seven tiles from the sequence and
+          put them into our hand. In each turn, we form an English word from some
+          or all of the tiles in our hand, place those tiles on the table, and receive the
+          total value of those tiles as points. (If no English word can be formed from
+          the tiles in our hand, the game immediately ends.) Then we repeatedly draw
+          the next tile from the start of the sequence until either (a) we have seven
+          tiles in our hand, or (b) the sequence is empty. (Sorry, no double/triple
+          word/letter scores, bingos, blanks, or passing.) Our goal is to obtain as
+          many points as possible.
+                For example, consider the following sequence of 20 tiles:
+
+           I2     N2      X8       A1   N2     A1      D3   U5      D3   I2       D3    K8   U5   B4    L2        A1   K8         H5      A1      N2
+
+          Given this sequence of tiles at the beginning of the game, we can earn 68
+          points as follows:
+           • We initially draw I2 N2 X8 A1 N2 A1 D3 .
+           • Play the word N2 A1 I2 A1 D3 for 9 points, leaving N2 X8 in hand.
+
+
+
+
+    • Draw the next five tiles U5 D3 I2 D3 K8 .
+    • Play the word U5 N2 D3 I2 D3 for 15 points, leaving K8 X8 in hand.
+    • Draw the next five tiles U5 B4 L2 A1 K8 .
+    • Play the word B4 U5 L2 K8 for 19 points, leaving K8 X8 A1 in hand.
+    • Draw the last three tiles H5 A1 N2 .
+    • Play the word A1 N2 K8 H5 for 16 points, leaving X8 A1 in hand.
+    • Play the word A1 X8 for 9 points, emptying our hand and ending the
+      game.
+   (a) Suppose the sequence of tiles is represented by two arrays Letter[1 .. n],
+       containing a sequence of letters between A and Z, and Value[A .. Z], where
+       Value[`] is the value of any tile with letter `. Design and analyze an
+       efficient algorithm to compute the maximum number of points that can
+       be earned from the given sequence of tiles.
+   (b) Now suppose two tiles with the same letter might have different values.
+       Now the tile sequence is represented by two arrays Letter[1 .. n] and
+       Value[1 .. n], where Value[i] is the value of the ith tile. Design and
+       analyze an efficient algorithm to compute the maximum number of
+       points that can be earned from the given sequence of tiles.
+   In both problems, the output is a single number: the maximum possible
+   score. Assume (because it’s true) that you can find all English words that
+   can be made from any set of at most seven tiles, along with the point values
+   of those words, in O(1) time.
+
+19. Suppose we are given a set L of n line segments in the plane, where each
+    segment has one endpoint on the line y = 0 and one endpoint on the line
+    y = 1, and all 2n endpoints are distinct.
+   (a) Describe and analyze an algorithm to compute the largest subset of L in
+       which no pair of segments intersects.
+   (b) Describe and analyze an algorithm to compute the largest subset of L in
+       which every pair of segments intersects.
+   Now suppose we are given a set L of n line segments in the plane, where
+   both endpoints of each segment lie on the unit circle x 2 + y 2 = 1, and all
+   2n endpoints are distinct.
+   (c) Describe and analyze an algorithm to compute the largest subset of L in
+       which no pair of segments intersects.
+   (d) Describe and analyze an algorithm to compute the largest subset of L in
+       which every pair of segments intersects.
+
+
+
+
+      20. Let P be a set of n points evenly distributed on the unit circle, and let S
+          be a set of m line segments with endpoints in P. The endpoints of the m
+          segments are not necessarily distinct; n could be significantly smaller than
+          2m.
+         (a) Describe an algorithm to find the size of the largest subset of segments
+             in S such that every pair is disjoint. Two segments are disjoint if they do
+             not intersect even at their endpoints.
+         (b) Describe an algorithm to find the size of the largest subset of segments
+             in S such that every pair is interior-disjoint. Two segments are interior-
+             disjoint if their intersection is either empty or an endpoint of both
+             segments.
+         (c) Describe an algorithm to find the size of the largest subset of segments
+             in S such that every pair intersects.
+         (d) Describe an algorithm to find the size of the largest subset of segments
+             in S such that every pair crosses. Two segments cross if they intersect
+             but not at their endpoints.
+          For full credit, all four algorithms should run in O(mn) time.
+
+      21. You are driving a bus along a highway, full of rowdy, hyper, thirsty students
+          and a soda fountain machine. Each minute that a student is on your bus,
+          that student drinks one ounce of soda. Your goal is to drop the students
+          off quickly, so that the total amount of soda consumed by all students is as
+          small as possible.
+               You know how many students will get off of the bus at each exit. Your
+          bus begins somewhere along the highway (probably not at either end)
+          and moves at a constant speed of 37.4 miles per hour. You must drive the
+          bus along the highway; however, you may drive forward to one exit then
+          backward to an exit in the opposite direction, switching as often as you like.
+          (You can stop the bus, drop off students, and turn around instantaneously.)
+               Describe an efficient algorithm to drop the students off so that they drink
+          as little soda as possible. Your input consists of the bus route (a list of the
+          exits, together with the travel time between successive exits), the number of
+          students you will drop off at each exit, and the current location of your bus
+          (which you may assume is an exit).
+
+      22. Let’s define a summary of two strings A and B to be a concatenation of
+          substrings of the following form:
+           • ÎSNA indicates a substring SNA of only the first string A.
+           • FOO indicates a common substring FOO of both strings.
+           • ÈBAR indicates a substring BAR of only the second string B.
+
+
+
+
+    A summary is valid if we can recover the original strings A and B by
+    concatenating the appropriate substrings of the summary in order and
+    discarding the delimiters Î, , and È. Each regular character has length 1,
+    and each delimiter Î, , or È has some fixed non-negative length ∆. The
+    length of a summary is the sum of the lengths of its symbols.
+        For example, each of the following strings is a valid summary of the
+    strings KITTEN and KNITTING:
+     • KÈNITTÎEÈINÈG has length 9 + 7∆.
+     • KÈNITTÎENÈING has length 10 + 5∆.
+     • KÎITTENÈNITTING has length 13 + 3∆.
+     • ÎKITTENÈKNITTING has length 14 + 2∆.
+        Describe and analyze an algorithm that computes the length of the
+    shortest summary of two given strings A[1 .. m] and B[1 .. n]. The delimiter
+    length ∆ is also part of the input to your algorithm. For example:
+     • Given strings KITTEN and KNITTING and ∆ = 0, your algorithm should
+       return 9.
+     • Given strings KITTEN and KNITTING and ∆ = 1, your algorithm should
+       return 15.
+     • Given strings KITTEN and KNITTING and ∆ = 2, your algorithm should
+       return 18.
+
+23. Vankin’s Mile is an American solitaire game played on an n × n square grid.
+    The player starts by placing a token on any square of the grid. Then on
+    each turn, the player moves the token either one square to the right or one
+    square down. The game ends when player moves the token off the edge of
+    the board. Each square of the grid has a numerical value, which could be
+    positive, negative, or zero. The player starts with a score of zero; whenever
+    the token lands on a square, the player adds its value to his score. The
+    object of the game is to score as many points as possible.
+        For example, given the grid below, the player can score 8−6+7−3+4 =
+    10 points by placing the initial token on the 8 in the second row, and then
+    moving down, down, right, down, down. (This is not the best possible score
+    for this grid of numbers.)
+
+                               −1    7 −8     10 −5
+                               −4 −9  8 −6  0
+                                      ⇓
+                                5 −2 −6 −6  7
+                                      ⇓
+                               −7  4  7⇒−3 −3
+                                         ⇓
+                                7  1 −6  4 −9
+                                         ⇓
+
+
+
+
+            (a) Describe and analyze an efficient algorithm to compute the maximum
+                possible score for a game of Vankin’s Mile, given the n × n array of values
+                as input.
+            (b) In the European version of this game, appropriately called Vankin’s
+                Kilometer, the player can move the token either one square down, one
+                square right, or one square left in each turn. However, to prevent infinite
+                scores, the token cannot land on the same square more than once.
+                Describe and analyze an efficient algorithm to compute the maximum
+                possible score for a game of Vankin’s Kilometer, given the n × n array of
+                values as input.21
+
+      24. Suppose you are given an m × n bitmap as an array M [1 .. n, 1 .. n] of 0s
+          and 1s. A solid block in M is a subarray of the form M [i .. i 0 , j .. j 0 ] in which
+          all bits are equal. A solid block is square if it has the same number of rows
+          and columns.
+            (a) Describe an algorithm to find the maximum area of a solid square block
+                in M in O(n2 ) time.
+            (b) Describe an algorithm to find the maximum area of a solid block in M
+                in O(n3 ) time.
+            (c) Describe an algorithm to find the maximum area of a solid block in M
+                in O(n2 log n) time. [Hint: Divide and conquer.]
+            (d) Describe an algorithm to find the maximum area of a solid block in M
+                in O(n2 ) time.
+
+      25. Suppose you are given an array M [1 .. n, 1 .. n] of numbers, which may be
+          positive, negative, or zero, and which are not necessarily integers. Describe
+          an algorithm to find the largest sum of elements in any rectangular subarray
+          of the form M [i .. i 0 , j .. j 0 ]. For full credit, your algorithm should run in
+          O(n3 ) time. [Hint: See problem 3.]
+
+      26. Describe and analyze an algorithm that finds the maximum-area rectangular
+          pattern that appears more than once in a given bitmap. Specifically, given
+          a two-dimensional array M [1 .. n, 1 .. n] of bits as input, your algorithm
+          should output the area of the largest repeated rectangular pattern in M .
+          For example, given the bitmap shown on the left in the figure below, your
+          algorithm should return the integer 195, which is the area of the 15 × 13
+          doggo. (Although it doesn’t happen in this example, the two copies of the
+          repeated pattern might overlap.)
+         21
+            If we also allowed upward movement, the resulting game (Vankin’s Fathom?) would be
+      NP-hard.
+
+
+
+
+
+
+       (a) For full credit, describe an algorithm that runs in O(n5 ) time.
+       (b) For extra credit, describe an algorithm that runs in O(n4 ) time.
+       (c) For extra extra credit, describe an algorithm that runs in O(n3 polylog n)
+           time.
+
+    27. Let P be a set of points in the plane in convex position. Intuitively, if a
+        rubber band were wrapped around the points, then every point would touch
+        the rubber band. More formally, for any point p in P, there is a line that
+        separates p from the other points in P. Moreover, suppose the points are
+        indexed P[1], P[2], . . . , P[n] in counterclockwise order around the “rubber
+        band”, starting with the leftmost point P[1].
+            This problem asks you to solve a special case of the traveling salesman
+        problem, where the salesman must visit every point in P, and the cost of
+        moving from one point p ∈ P to another point q ∈ P is the Euclidean distance
+        |pq|.
+       (a) Describe a simple algorithm to compute the shortest cyclic tour of P.
+       (b) A simple tour is one that never crosses itself. Prove that the shortest tour
+           of P must be simple.
+       (c) Describe and analyze an efficient algorithm to compute the shortest tour
+           of P that starts at the leftmost point P[1] and ends at the rightmost
+           point P[r].
+       (d) Describe and analyze an efficient algorithm to compute the shortest tour
+           of P, with no restrictions on the endpoints.
+
+    28. Describe and analyze an algorithm to solve the traveling salesman problem
+        in O(2n poly(n)) time. Given an undirected n-vertex graph G with weighted
+        edges, your algorithm should return the weight of the lightest cycle in G
+        that visits every vertex exactly once, or ∞ if G has no such cycles. [Hint:
+        The obvious recursive backtracking algorithm takes O(n!) time.]
+
+29. Let W = {w1 , w2 , . . . , w n } be a finite set of strings over some fixed alphabet Σ.
+    An edit center for W is a string C ∈ Σ∗ such that the maximum edit distance
+
+
+
+
+              from C to any string in W is as small as possible. The edit radius of W is the
+              maximum edit distance from an edit center to a string in W . A set of strings
+              may have several edit centers, but its edit radius is unique.
+
+                                   EditRadius(W ) := min∗ max Edit(w, C)
+                                                           C∈Σ w∈W
+
+                                   EditCenter(W ) := arg min max Edit(w, C)
+                                                             C∈Σ∗     w∈W
+
+              (a) Describe and analyze an efficient algorithm to compute the edit radius
+                  of three given strings.
+              (b) Describe and analyze an efficient algorithm to approximate the edit
+                  radius of an arbitrary set of strings within a factor of 2. (Computing the
+                  exact edit radius is NP-hard unless the number of strings is fixed.)
+
+30. Let D[1 .. n] be an array of digits, each an integer between 0 and 9. A digital
+              subsequence of D is a sequence of positive integers composed in the usual
+              way from disjoint substrings of D. For example, the sequence 3, 4, 5, 6, 8,
+              9, 32, 38, 46, 64, 83, 279 is a digital subsequence of the first several digits
+              of π:
+
+                 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3, 3, 8, 3, 2, 7, 9
+
+              The length of a digital subsequence is the number of integers it contains, not
+              the number of digits; the preceding example has length 12. As usual, a digital
+              subsequence is increasing if each number is larger than its predecessor.
+                  Describe and analyze an efficient algorithm to compute the longest
+              increasing digital subsequence of D. [Hint: Be careful about your com-
+              putational assumptions. How long does it take to compare two k-digit
+              numbers?]
+                  For full credit, your algorithm should run in O(n4 ) time; faster algorithms
+              are worth extra credit. The fastest algorithm I know for this problem runs in
+              O(n3/2 log n) time; achieving this bound requires several tricks, both in the
+              design of the algorithm and in its analysis, but nothing outside the scope of
+              this class.22
+
+31. Consider the following variant of the classical Tower of Hanoi problem. As
+              usual, there are n disks with distinct sizes, placed on three pegs numbered
+              0, 1, and 2. Initially, all n disks are on peg 0, sorted by size from smallest
+              on top to largest on bottom. Our goal is to move all the disks to peg 2. In
+              a single step, we can move the highest disk on any peg to a different peg,
+           22
+              With more advanced techniques, I believe the running time can be reduced to
+        O(n3/2 log log n), but I haven’t worked through the details.
+
+
+
+
+
+    provided we satisfy two constraints. First, we must never place a smaller
+    disk on top of a larger disk. Second—and this is the non-standard part—we
+    must never move a disk directly from peg 0 to peg 2.
+        Describe and analyze an algorithm to compute the exact number of
+    moves required to move all n disks from peg 0 to peg 2, subject to the
+    stated restrictions. For full credit, your algorithm should use only O(log n)
+    arithmetic operations in the worst case. For the sake of analysis, assume
+    that adding or multiplying two k-digit numbers requires O(k) time. [Hint:
+    Matrices!]
+
+Splitting Sequences/Arrays
+
+32. A basic arithmetic expression is composed of characters from the set
+    {1, +, ×} and parentheses. Almost every integer can be represented by more
+    than one basic arithmetic expression. For example, all of the following basic
+    arithmetic expression represent the integer 14:
+
+            1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1
+                ((1 + 1) × (1 + 1 + 1 + 1 + 1)) + ((1 + 1) × (1 + 1))
+                        (1 + 1) × (1 + 1 + 1 + 1 + 1 + 1 + 1)
+                       (1 + 1) × (((1 + 1 + 1) × (1 + 1)) + 1)
+
+   Describe and analyze an algorithm to compute, given an integer n as input,
+   the minimum number of 1s in a basic arithmetic expression whose value is
+   equal to n. The number of parentheses doesn’t matter, just the number of
+   1s. For example, when n = 14, your algorithm should return 8, for the final
+   expression above. The running time of your algorithm should be bounded
+   by a small polynomial function of n.
+
+33. Suppose you are given a sequence of integers separated by + and − signs;
+    for example:
+                            1+3−2−5+1−6+7
+    You can change the value of this expression by adding parentheses in
+    different places. For example:
+
+                           1 + 3 − 2 − 5 + 1 − 6 + 7 = −1
+                         (1 + 3 − (2 − 5)) + (1 − 6) + 7 = 9
+                      (1 + (3 − 2)) − (5 + 1) − (6 + 7) = −17
+
+    Describe and analyze an algorithm to compute, given a list of integers
+    separated by + and − signs, the maximum possible value the expression
+
+
+
+
+          can take by adding parentheses. Parentheses must be used only to group
+          additions and subtractions; in particular, do not use them to create implicit
+          multiplication as in 1 + 3(−2)(−5) + 1 − 6 + 7 = 33.
+
+      34. Suppose you are given a sequence of integers separated by + and × signs;
+          for example:
+                                  1+3×2×0+1×6+7
+
+          You can change the value of this expression by adding parentheses in
+          different places. For example:
+
+                              (1 + (3 × 2)) × 0 + (1 × 6) + 7 = 13
+                              ((1 + (3 × 2 × 0) + 1) × 6) + 7 = 19
+                              (1 + 3) × 2 × (0 + 1) × (6 + 7) = 104
+
+         (a) Describe and analyze an algorithm to compute the maximum possible
+             value the given expression can take by adding parentheses, assuming all
+             integers in the input are positive. [Hint: This is easy.]
+         (b) Describe and analyze an algorithm to compute the maximum possible
+             value the given expression can take by adding parentheses, assuming all
+             integers in the input are non-negative.
+         (c) Describe and analyze an algorithm to compute the maximum possible
+             value the given expression can take by adding parentheses, with no
+             restrictions on the input numbers.
+          Assume any arithmetic operation takes O(1) time.
+
+      35. After graduating from Sham-Poobanana University, you decide to interview
+          for a position at the Wall Street bank Long Live Boole. The managing
+          director of the bank, Eloob Egroeg, poses a ’solve-or-die’ problems to each
+          new employee, which they must solve within 24 hours. Those who fail to
+          solve the problem are fired immediately!
+              Entering the bank for the first time, you notice that the employee offices
+          are organized in a straight row, with a large T or F printed on the door of
+          each office. Furthermore, between each adjacent pair of offices, there is a
+          board marked by one of the symbols ∧, ∨, or ⊕. When you ask about these
+          arcane symbols, Eloob confirms that T and F represent the boolean values
+          True and False, and the symbols on the boards represent the standard
+          boolean operators And, Or, and Xor. He also explains that these letters
+          and symbols describe whether certain combinations of employees can work
+          together successfully. At the start of any new project, Eloob hierarchically
+          clusters his employees by adding parentheses to the sequence of symbols, to
+
+
+
+
+    obtain an unambiguous boolean expression. The project is successful if this
+    parenthesized boolean expression evaluates to T .
+        For example, if the bank has three employees, and the sequence of
+    symbols on and between their doors is T ∧ F ⊕ T , there is exactly one
+    successful parenthesization scheme: (T ∧ (F ⊕ T )). However, if the list of
+    door symbols is F ∧ T ⊕ F , there is no way to add parentheses to make the
+    project successful.
+        Eloob finally poses your solve-or-die interview question: Describe an
+    algorithm to decide whether a given sequence of symbols can be parenthe-
+    sized so that the resulting boolean expression evaluates to T . Your input is
+    an array S[0 .. 2n], where S[i] ∈ {T, F } when i is even, and S[i] ∈ {∨, ∧, ⊕}
+    when i is odd.
+
+
+36. Every year, as part of its annual meeting, the Antarctican Snail Lovers of
+    Upper Glacierville hold a Round Table Mating Race. Several high-quality
+    breeding snails are placed at the edge of a round table. The snails are
+    numbered in order around the table from 1 to n. During the race, each snail
+    wanders around the table, leaving a trail of slime behind it. The snails have
+    been specially trained never to fall off the edge of the table or to cross a
+    slime trail, even their own. If two snails meet, they are declared a breeding
+    pair, removed from the table, and whisked away to a romantic hole in the
+    ground to make little baby snails. Note that some snails may never find a
+    mate, even if the race goes on forever.
+                                                     1
+
+
+                                    8                                2
+                                             8
+
+                                                     1
+                                                 7
+
+                                                         6
+                              7                                          3
+
+                                           5 2                   3
+                                                             4
+
+
+                                    6                                4
+
+
+                                                     5
+
+Figure 3.6. The end of a typical Antarctican SLUG race. Snails 6 and 8 never ﬁnd mates. The organizers
+must pay M [3, 4] + M [2, 5] + M [1, 7].
+
+
+       For every pair of snails, the Antarctican SLUG race organizers have
+    posted a monetary reward, to be paid to the owners if that pair of snails
+    meets during the Mating Race. Specifically, there is a two-dimensional
+
+
+
+
+          array M [1 .. n, 1 .. n] posted on the wall behind the Round Table, where
+          M [i, j] = M [ j, i] is the reward to be paid if snails i and j meet.
+              Describe and analyze an algorithm to compute the maximum total
+          reward that the organizers could be forced to pay, given the array M as
+          input.
+
+      37. You have mined a large slab of marble from a quarry. For simplicity, suppose
+          the marble slab is a rectangle measuring n inches in height and m inches
+          in width. You want to cut the slab into smaller rectangles of various sizes—
+          some for kitchen counter tops, some for large sculpture projects, others for
+          memorial headstones. You have a marble saw that can make either horizontal
+          or vertical cuts across any rectangular slab. At any time, you can query the
+          spot price P[x, y] of an x-inch by y-inch marble rectangle, for any positive
+          integers x and y. These prices depend on customer demand, and people
+          who buy marble counter tops are weird, so don’t make any assumptions
+          about them; in particular, larger rectangles may have significantly smaller
+          spot prices. Given the array of spot prices and the integers m and n as input,
+          describe an algorithm to compute how to subdivide an n × m marble slab to
+          maximize your profit.
+
+      38. This problem asks you to design efficient algorithms to construct optimal
+          binary search trees that satisfy additional balance constraints. Your input
+          consists of a sorted array A[1 .. n] of search keys and an array f [1 .. n] of
+          frequency counts, where f [i] is the number of searches for A[i]. This is
+          exactly the same cost function as described in Section 3.9. But now your
+          task is to compute an optimal tree that satisfies some additional constraints.
+         (a) AVL trees were the earliest self-balancing balanced binary search trees,
+             first described in 1962 by Georgy Adelson-Velsky and Evgenii Landis. An
+             AVL tree is a binary search tree where for every node v, the height of
+             the left subtree of v and the height of the right subtree of v differ by at
+             most one.
+                  Describe and analyze an algorithm to construct an optimal AVL tree
+             for a given set of search keys and frequencies.
+         (b) Symmetric binary B-trees are another self-balancing binary trees, first
+             described by Rudolf Bayer in 1972; these are better known by the name
+             red-black trees, after a somewhat simpler reformulation by Leo Guibas
+             and Bob Sedgwick in 1978. A red-black tree is a binary search tree with
+             the following additional constraints:
+              • Every node is either red or black.
+              • Every red node has a black parent.
+              • Every root-to-leaf path contains the same number of black nodes.
+
+
+
+
+         Describe a recursive backtracking algorithm to construct an optimal
+         red-black tree for a given set of search keys and frequencies.
+    (c) AA trees were proposed by proposed by Arne Andersson in 1993 and
+        slightly simplified (and named) by Mark Allen Weiss in 2000. AA trees are
+        also known as left-leaning red-black trees, after a symmetric reformulation
+        (with different rebalancing algorithms) by Bob Sedgewick in 2006. An
+        AA tree is a red-black tree with one additional constraint:
+          • No left child is red.23
+         Describe and analyze an algorithm to construct an optimal AA tree for a
+         given set of search keys and frequencies.
+
+39. Suppose you are given an m × n bitmap as an array M [1 .. m, 1 .. n] of 0s
+    and 1s. A solid block in M is a subarray of the form M [i .. i 0 , j .. i 0 ] in which
+    all bits are equal. Suppose you want to decompose M into as few disjoint
+    blocks as possible.
+         One natural recursive partitioning strategy is called a guillotine sub-
+     division. If the entire bitmap M is a solid block, there is nothing to do.
+     Otherwise, we cut M into two smaller bitmaps along a horizontal or vertical
+     line, and then recursively decompose the two smaller bitmaps into solid
+     blocks.
+         Any guillotine subdivision can be represented as a binary tree, where
+     each internal node stores the position and orientation of a cut, and each
+     leaf stores a single but 0 or 1 indicting the contents of the corresponding
+     block. The size of a guillotine subdivision is the number of leaves in the
+     corresponding binary tree (that is, the final number of solid blocks), and the
+     depth of a guillotine subdivision is the depth of the corresponding binary
+     tree.
+    (a) Describe and analyze an algorithm to compute a guillotine subdivision
+        of M of minimum possible size.
+    (b) Show that a guillotine subdivision does not always yield a partition into
+        the smallest number of solid blocks.
+    (c) Describe and analyze an algorithm to compute a guillotine subdivision
+        for M with the smallest possible depth.
+    (d) Describe and analyze an algorithm to determine M [i, j], given the tree
+        representing a guillotine decomposition for M and two indices i and j.
+    23
+     Sedgwick’s reformulation requires that no right child is red. Whatever. Andersson and
+Sedgewick are strangely silent about whether to measure angles clockwise or counterclockwise,
+whether Pluto is a planet, whether “lower rank” means “better” or “worse”, and whether it’s
+better to fight a hundred duck-sized horses or a single horse-sized duck.
+
+
+
+
+
+
+                         Figure 3.7. A guillotine subdivision with size 8 and depth 5.
+
+
+          (e) Define the depth of a pixel M [i, j] in a guillotine subdivision to be the
+              depth of the leaf that contains that pixel. Describe and analyze an
+              algorithm to compute a guillotine subdivision for M such that the sum
+              of the depths of the pixels as small as possible.
+          (f) Describe and analyze an algorithm to compute a guillotine subdivision
+              for M such that the sum of the depths of the black pixels as small as
+              possible.
+
+      40. Congratulations! You’ve been hired by the giant online bookstore DeNile
+          (“Not just a river in Egypt!”) to optimize their warehouse robots. Each book
+          that DeNile sells has a unique ISBN (International Standard Book Number),
+          which is just a numerical value. Each of DeNile’s warehouses contains a
+          long row of bins, each containing multiple copies of a single book. These
+          bins are arranged in sorted order by ISBN; each bin’s ISBN is printed on the
+          front of the bin in machine-readable form. Books are retrieved from these
+          bins by robots, which run along rails parallel to the row of bins.
+              DeNile does not maintain a list of which bins contain which ISBN
+          numbers; that would be too simple! Instead, to retrieve a desired book,
+          the robot must first find that book’s bin using a binary search. Because the
+          search requires physical motion by the robot, we can no longer assume that
+          each step of the binary search requires O(1) time. Specifically:
+           • The robot always starts at the “0th bin” (where the books are loaded
+             into boxes to ship to customers).
+
+
+
+
+            • Moving the robot from the ith bin to the jth bin requires α|i − j| seconds
+              for some constant α.
+            • The robot must be directly in front of a bin in order to read that bin’s
+              ISBN. Reading an ISBN requires β seconds, for some constant β.
+            • Reversing the robot’s direction of motion (from increasing to decreasing
+              or vice versa) requires γ additional seconds, for some constant γ.
+            • When the robot finds the target bin, it extracts one book from that bin
+              and returns to “the 0th bin”.
+        Design and analyze an algorithm to compute a binary search tree over the
+        bins that minimizes the total time the robot spends searching for books.
+        Your input is an array f [1 .. n] of integers, where f [i] is the number of times
+        that the robot will be asked to retrieve a book from the ith bin, along with
+        the time parameters α, β, and γ.
+
+41. A standard method to improve the cache performance of search trees is to
+    pack more search keys and subtrees into each node. A B-tree is a rooted
+    tree in which each internal node stores up to B keys and pointers to up to
+    B + 1 children, each the root of a smaller B-tree. Specifically, each node v
+    stores three fields:
+            • a positive integer v.d ≤ B,
+            • a sorted array v.key[1 .. v.d], and
+            • an array v.child[0 .. v.d] of child pointers.
+        In particular, the number of child pointers is always exactly one more than
+        the number of keys.24
+            Each pointer v.child[i] is either Null or a pointer to the root of a B-
+        tree whose keys are all larger than v.key[i] and smaller than v.key[i + 1].
+        In particular, all keys in the leftmost subtree v.child[0] are smaller than
+        v.key[1], and all keys in the rightmost subtree v.child[v.d] are larger than
+        v.key[v.d].
+              Intuitively, you should have the following picture in mind:
+
+                    [ •· < key[1] < •· < key[2] < •·        ···    •·   < key[d] < •· ]
+
+                                                                                 
+                     T0               T1              T2    · · · Td−1              Td
+       24
+         Normally, B-trees are required to satisfy two additional constraints, which guarantee a
+    worst-case search cost of O(logB n): Every leaf must have exactly the same depth, and every node
+    except possibly the root must contain at least B/2 keys. However, in this problem, we are not
+    interested in optimizing the worst-case search cost, but rather the total cost of a sequence of
+    searches, so we will not impose these additional constraints.
+
+
+
+
+
+            Here Ti is the subtree pointed to by child[i].
+                 The cost of searching for a key x in a B-tree is the number of nodes in
+            the path from the root to the node containing x as one of its keys. A 1-tree
+            is just a standard binary search tree.
+                Fix an arbitrary positive integer B > 0. (I suggest B = 8.) Suppose
+            your are given a sorted array A[1, . . . , n] of search keys and a corresponding
+            array F [1, . . . , n] of frequency counts, where F [i] is the number of times
+            that we will search for A[i]. Your task is to describe and analyze an efficient
+            algorithm to find a B-tree that minimizes the total cost of searching for the
+            given keys with the given frequencies.
+         (a) Describe a polynomial-time algorithm for the special case B = 2.
+         (b) Describe an algorithm for arbitrary B that runs in O(nB+c ) time for some
+             fixed integer c.
+            (c) Describe an algorithm for arbitrary B that runs in O(nc ) time for some
+                fixed integer c that does not depend on B.
+
+      42. A string w of parentheses ( and ) and brackets [ and ] is balanced if it
+          satisfies one of the following conditions:
+             • w is the empty string.
+             • w = ( x ) for some balanced string x
+             • w = [ x ] for some balanced string x
+             • w = x y for some balanced strings x and y
+            For example, the string
+
+                                      w = ([()][]()) [()()] ()
+
+            is balanced, because w = x y, where
+
+                         x = ( [()] [] () )       and        y = [ () () ] ().
+
+         (a) Describe and analyze an algorithm to determine whether a given string
+             of parentheses and brackets is balanced.
+         (b) Describe and analyze an algorithm to compute the length of a longest
+             balanced subsequence of a given string of parentheses and brackets.
+            (c) Describe and analyze an algorithm to compute the length of a shortest
+                balanced supersequence of a given string of parentheses and brackets.
+         (d) Describe and analyze an algorithm to compute the minimum edit distance
+             from a given string of parentheses and brackets to a balanced string of
+             parentheses and brackets.
+
+
+
+
+          (e) Describe and analyze an algorithm to compute the longest common
+              balanced subsequence of two given strings of parentheses and brackets.
+          (f) Describe and analyze an algorithm to compute the longest palindromic
+              balanced subsequence of a given string of parentheses and brackets.
+          (g) Describe and analyze an algorithm to compute the longest common
+              palindromic balanced subsequence (whew!) of two given strings of
+              parentheses and brackets.
+           For each problem, your input is an array w[1 .. n], where w[i] ∈ {(, ), [, ]}
+           for every index i. (You may prefer to use different symbols instead of
+           parentheses and brackets—for example, L, R, l, r or Ã, Â, Ê, É—but please
+           tell your grader what symbols you’re using!)
+
+    43. Congratulations! Your research team has just been awarded a $50M multi-
+        year project, jointly funded by DARPA, Google, and McDonald’s, to produce
+        DWIM: The first compiler to read programmers’ minds! Your proposal and
+        your numerous press releases all promise that DWIM will automatically
+        correct errors in any given piece of code, while modifying that code as little
+        as possible. Unfortunately, now it’s time to start actually making the damn
+        thing work.
+               As a warmup exercise, you decide to tackle the following necessary
+           subproblem. Recall that the edit distance between two strings is the minimum
+           number of single-character insertions, deletions, and replacements required
+           to transform one string into the other. An arithmetic expression is a string w
+           such that
+            • w is a string of one or more decimal digits,
+            • w = ( x ) for some arithmetic expression x, or
+            • w = x  y for some arithmetic expressions x and y and some binary
+              operator .
+           Suppose you are given a string of tokens from the alphabet {#, , (, )},
+           where # represents a decimal digit and  represents a binary operator.
+           Describe and analyze an algorithm to compute the minimum edit distance
+           from the given string to an arithmetic expression.
+
+44. Ribonucleic acid (RNA) molecules are long chains of millions of nucleotides
+    or bases of four different types: adenine (A), cytosine (C), guanine (G), and
+    uracil (U). The sequence of an RNA molecule is a string b[1 .. n], where
+    each character b[i] ∈ {A, C, G, U} corresponds to a base. In addition to the
+    chemical bonds between adjacent bases in the sequence, hydrogen bonds
+    can form between certain pairs of bases. The set of bonded base pairs is
+    called the secondary structure of the RNA molecule.
+
+
+
+
+              We say that two base pairs (i, j) and (i 0 , j 0 ) with i < j and i 0 < j 0
+          overlap if i < i 0 < j < j 0 or i 0 < i < j 0 < j. In practice, most base pairs are
+          non-overlapping. Overlapping base pairs create so-called pseudoknots in the
+          secondary structure, which are essential for some RNA functions, but are
+          more difficult to predict.
+              Suppose we want to predict the best possible secondary structure for
+          a given RNA sequence. We will adopt a drastically simplified model of
+          secondary structure:
+            • Each base can bond with at most one other base.
+            • Only A–U pairs and C–G pairs can bond.
+            • Pairs of the form (i, i + 1) and (i, i + 2) cannot bond.
+            • Bonded base pairs cannot overlap.
+          The last (and least realistic) restriction allows us to visualize RNA secondary
+          structure as a sort of fat tree, as shown below.
+                                           C
+                                       G       U
+                                       A           U
+                                       U           G
+                                           U C         A
+                                                   U       G
+                                                       C       U
+                                                                       U   A
+                                                           A       G
+                                                                               C
+                                                               C
+                                                                                   C             C A
+                                     U A C U C A U                                                     C
+                                                                                   U U   A C A
+                                     A U G A G U A                                                         C
+                                 C                                                 A A   U G U
+                             G                                 U
+                                                                               A                 C U U
+                                                                   A
+                                                                       A   U
+                                                                       G   C
+                                                                       U   A
+                                                                       U   A
+                                                                   A           A
+                                                                   A           U
+                                                                   U           U
+                                                                       G   G
+
+
+      Figure 3.8. Example RNA secondary structure with 21 bonded base pairs, indicated by heavy red lines.
+      Gaps are indicated by dotted curves. This structure has score 22 + 22 + 82 + 12 + 72 + 42 + 72 = 187.
+
+
+          (a) Describe and analyze an algorithm that computes the maximum possible
+              number of bonded base pairs in a secondary structure for a given RNA
+              sequence.
+         (b) A gap in a secondary structure is a maximal substring of unpaired bases.
+             Large gaps lead to chemical instabilities, so secondary structures with
+             smaller gaps are more likely. To account for this preference, let’s define
+             the score of a secondary structure to be the sum of the squares of the gap
+             lengths; see Figure 3.8. (This score function is utterly fictional; real RNA
+             structure prediction requires much more complicated scoring functions.)
+                 Describe and analyze an algorithm that computes the minimum
+             possible score of a secondary structure for a given RNA sequence.
+
+
+
+
+    45. (a) Describe and analyze an efficient algorithm to determine, given a string
+            w and a regular expression R, whether w ∈ L(R).
+       (b) Generalized regular expressions allow the binary operator ∩ (intersection)
+           and the unary operator ¬ (complement), in addition to the usual
+           • (concatenation), + (or), and ∗ (Kleene closure) operators. NFA
+           constructions and Kleene’s theorem imply that any generalized regular
+           expression E represents a regular language L(E).
+               Describe and analyze an efficient algorithm to determine, given a
+           string w and a generalized regular expression E, whether w ∈ L(E).
+        In both problems, assume that you are actually given a parse tree for the
+        (generalized) regular expression, not just a string.
+
+    Trees and Subtrees
+
+46. You’ve just been appointed as the new organizer of the first annual mandatory
+    holiday party at Giggle (a subsidiary of Abugida). Giggle employees are
+    organized into a strict hierarchy—a tree with the company president at the
+    root. The all-knowing oracles in Human Resources have assigned a real
+    number to each employee measuring how “fun” the employee is. To keep
+    things social, there is one restriction on the guest list: an employee cannot
+    attend the party if their immediate supervisor is also present. On the other
+    hand, the president of the company must attend the party, even though she
+    has a negative fun rating; it’s her company, after all. Give an algorithm that
+    makes a guest list for the party that maximizes the sum of the “fun” ratings
+    of the guests.
+
+    47. Since so few people came to last year’s holiday party, the president of Giggle
+        decides to give each employee a present instead this year. Specifically,
+        each employee must receive on the three gifts: (1) an all-expenses-paid six-
+        week vacation anywhere in the world, (2) an all-the-pancakes-you-can-sort
+        breakfast for two at Jumping Jack Flash’s Flapjack Stack Shack, or (3) a
+        burning paper bag full of dog poop. Corporate regulations prohibit any
+        employee from receiving exactly the same gift as his/her direct supervisor.
+        Any employee who receives a better gift than his/her direct supervisor will
+        almost certainly be fired in a fit of jealousy.
+            As Giggle’s official party czar, it’s your job to decide which gift each
+        employee receives. Describe an algorithm to distribute gifts so that the
+        minimum number of people are fired. Yes, you may send the president a
+        flaming bag of dog poop.
+            More formally, you are given a rooted tree T , representing the company
+        hierarchy, and you want to label the nodes of T with integers 1, 2, or 3, so
+
+
+
+
+            that every node has a different label from its parent. The cost of an labeling
+            is the number of nodes with smaller labels than their parents. See Figure
+            3.9 for an example. Describe and analyze an algorithm to compute the
+            minimum-cost labeling of T .
+                                                                 1
+
+                                             2           3           3       2
+
+
+                                             3       1       2       2   3       3
+
+                                         2       1           1       1   3       1
+
+
+                                                 3           3               2       2
+
+
+                                                                             1
+
+      Figure 3.9. A tree labeling with cost 9. The nine bold nodes have smaller labels than their parents. This
+      is not the optimal labeling for this tree.
+
+
+
+      48. After the Flaming Dog Poop Holiday Debacle, you were strongly encouraged
+          to seek other employment, and so you left Giggle for rival company Twitbook.
+          Unfortunately, the new president of Twitbook just decided to imitate Giggle
+          by throwing her own holiday party, and in light of your past experience,
+          appointed you as the official party organizer. The president demands that
+          you invite exactly k employees, including the president herself, and everyone
+          who is invited is required to attend. Yeah, that’ll be fun.
+                Just like at Giggle, employees at Twitbook are organized into a strict
+            hierarchy: a tree with the company president at the root. The all-knowing
+            oracles in Human Resources have assigned a real number to each employee
+            indicating the awkwardness of inviting both that employee and their imme-
+            diate supervisor; a negative value indicates that the employee and their
+            supervisor actually like each other. Your goal is to choose a subset of
+            exactly k employees to invite, so that the total awkwardness of the resulting
+            party is as small as possible. For example, if the guest list does not include
+            both an employee and their immediate supervisor, the total awkwardness
+            is zero. The input to your algorithm is the tree T , the integer k, and the
+            awkwardness of each node in T .
+            (a) Describe an algorithm that computes the total awkwardness of the least
+                awkward subset of k employees, assuming the company hierarchy is
+                described by a binary tree. That is, assume that each employee directly
+                supervises at most two others.
+            (b) Describe an algorithm that computes the total awkwardness of the least
+                awkward subset of k employees, with no restrictions on the company
+                hierarchy.
+
+
+
+
+49. Suppose we need to broadcast a message to all the nodes in a rooted tree.
+    Initially, only the root node knows the message. In a single round, any node
+    that knows the message can forward it to at most one of its children. See
+    Figure 3.10 for an example.
+      (a) Design an algorithm to compute the minimum number of rounds required
+          to broadcast the message to all nodes in a binary tree.
+   (b) Design an algorithm to compute the minimum number of rounds required
+       to broadcast the message to all nodes in an arbitrary rooted tree. [Hint:
+       You may find techniques in the next chapter useful to prove your
+       algorithm is correct, even though it’s not a greedy algorithm.]
+
+
+
+
+               Figure 3.10. A message being distributed through a tree in ﬁve rounds.
+
+
+
+50. One day, Alex got tired of climbing in a gym and decided to take a very large
+    group of climber friends outside to climb. The climbing area where they
+    went, had a huge wide boulder, not very tall, with various marked hand
+    and foot holds. Alex quickly determined an “allowed” set of moves that her
+    group of friends can perform to get from one hold to another.
+          The overall system of holds can be described by a rooted tree T with n
+      vertices, where each vertex corresponds to a hold and each edge corresponds
+      to an allowed move between holds. The climbing paths converge as they go
+      up the boulder, leading to a unique hold at the summit, represented by the
+      root of T .25
+          Alex and her friends (who are all excellent climbers) decided to play a
+      game, where as many climbers as possible are simultaneously on the boulder
+      and each climber needs to perform a sequence of exactly k moves. Each
+      climber can choose an arbitrary hold to start from, and all moves must move
+      away from the ground. Thus, each climber traces out a path of k edges
+      in the tree T , all directed toward the root. However, no two climbers are
+      allowed to touch the same hold; the paths followed by different climbers
+      cannot intersect at all.
+         Describe and analyze an efficient algorithm to compute the maximum
+      number of climbers that can play this game. More formally, you are given a
+      rooted tree T and an integer k, and you want to find the largest possible
+   25
+      Q: Why do computer science professors think trees have their roots at the top?
+      A: Because they’ve never been outside!
+
+
+
+
+
+          number of disjoint paths in T , where each path has length k. Do not assume
+          that T is a binary tree. For example, given the tree T below and k = 3 as
+          input, your algorithm should return the integer 8.
+
+
+
+
+      Figure 3.11. Seven disjoint paths of length k = 3. This is not the largest such set of paths in this tree.
+
+
+      51. Let T be a rooted binary tree with n vertices, and let k ≤ n be a positive
+          integer. We would like to mark k vertices in T so that every vertex has a
+          nearby marked ancestor. More formally, we define the clustering cost of any
+          subset K of vertices as
+
+                                                    cost(K) = max cost(v, K),
+                                                                                v
+
+          where the maximum is taken over all vertices v in the tree, and cost(v, K) is
+          the distance from v to its nearest ancestor in K:
+                           
+                           0
+                                                  if v ∈ K
+               cost(v, K) = ∞                      if v is the root of T and v 6∈ K
+                           1 + cost(parent(v)) otherwise
+                           
+
+
+          In particular, cost(K) = ∞ if K excludes the root of T .
+
+
+                                                    1                                   1
+
+                                                                2           2                       2
+
+                                    1               1                                                               3
+
+                                2       2       2       2               1                               1
+
+                                    3       3                                       2                           2
+
+                                                            1       1                   3   1       1       3       3
+
+                                                        2       2       1           1           2       2
+
+                                                                    2       2   2       2   3       3
+
+                   Figure 3.12. A subset of ﬁve vertices in a binary tree, with clustering cost 3.
+
+
+
+
+
+
+   (a) Describe a dynamic programming algorithm to compute, given the tree
+       T and an integer k, the minimum clustering cost of any subset of k
+       vertices in T . For full credit, your algorithm should run in O(n2 k2 ) time.
+   (b) Describe a dynamic programming algorithm to compute, given the tree
+       T and an integer r, the size of the smallest subset of vertices whose
+       clustering cost is at most r. For full credit, your algorithm should run in
+       O(nr) time.
+      (c) Show that your solution for part (b) implies an algorithm for part (a)
+          that runs in O(n2 log n) time.
+
+52. This question asks you to find efficient algorithms to compute the largest
+    common rooted subtree of two given rooted trees. Recall that a rooted
+    tree is a connected acyclic graph with a designated node called the root.
+    A rooted subtree of a rooted tree consists of an arbitrary node and all its
+    descendants. The precise definition of “common” depends on which pairs of
+    rooted trees we consider isomorphic.
+   (a) Recall that a binary tree is a rooted tree in which every node has a
+       (possibly empty) left subtree and a (possibly empty) right subtree. Two
+       binary trees are isomorphic if and only if they are both empty, or their
+       left subtrees are isomorphic and their right subtrees are isomorphic.
+       Describe an algorithm to find the largest common binary subtree of two
+       given binary trees.
+
+
+
+
+        Figure 3.13. Two binary trees, with their largest common (rooted) subtree emphasized.
+
+
+   (b) In an ordered rooted tree, each node has a sequence of children, which
+       are the roots of ordered rooted subtrees. Two ordered rooted trees are
+       isomorphic if they are both empty, or if their ith subtrees are isomorphic
+       for every index i. Describe an algorithm to find the largest common
+       ordered subtree of two ordered trees T1 and T2 .
+      (c) In an unordered rooted tree, each node has an unordered set of children,
+          which are the roots of unordered rooted subtrees. Two unordered rooted
+          trees are isomorphic if they are both empty, or the subtrees of each root
+          can be ordered so that their ith subtrees are isomorphic for every index i.
+          Describe an algorithm to find the largest common unordered subtree of
+          two unordered trees T1 and T2 .
+
+
+
+
+      53. This question asks you to find efficient algorithms to compute optimal
+          subtrees in unrooted trees—connected acyclic undirected graphs. A subtree
+          of an unrooted tree is any connected subgraph.
+
+            (a) Suppose you are given an unrooted tree T with weights on its edges,
+                which may be positive, negative, or zero. Describe an algorithm to find
+                a path in T with maximum total weight.
+            (b) Suppose you are given an unrooted tree T with weights on its vertices,
+                which may be positive, negative, or zero. Describe an algorithm to find
+                a subtree of T with maximum total weight. [This was a 2016 Google
+                interview question.]
+            (c) Let T1 and T2 be arbitrary ordered unrooted trees, meaning that the
+                neighbors of every node have a well-defined cyclic order. Describe an
+                algorithm to find the largest common ordered subtree of T1 and T2 .
+         (d) Let T1 and T2 be arbitrary unordered unrooted trees. Describe an
+             algorithm to find the largest common unordered subtree of T1 and T2 .
+
+      54. Rooted minors of rooted trees are a natural generalization of subsequences.
+          A rooted minor of a rooted tree T is any tree obtained by contracting one or
+          more edges. When we contract an edge u v, where u is the parent of v, the
+          children of v become new children of u and then v is deleted. In particular,
+          the root of T is also the root of every rooted minor of T .
+
+
+
+
+                          Figure 3.14. A rooted tree and one of its rooted minors.
+
+
+            (a) Let T be a rooted tree with labeled nodes. We say that T is boring
+                if, for each node x, all children of x have the same label; children of
+                different nodes may have different labels. Describe an algorithm to find
+                the largest boring rooted minor of a given labeled rooted tree.
+            (b) Suppose we are given a rooted tree T whose nodes are labeled with
+                numbers. Describe an algorithm to find the largest heap-ordered rooted
+                minor of T . That is, your algorithm should return the largest rooted
+                minor M such that every node in M has a smaller label than its children
+                in M .
+
+
+
+
+    (c) Suppose we are given a binary tree T whose nodes are labeled with
+        numbers. Describe an algorithm to find the largest binary-search-ordered
+        rooted minor of T . That is, your algorithm should return a rooted
+        minor M such that every node in M has at most two children, and
+        an inorder traversal of M is an increasing subsequence of an inorder
+        traversal of T .
+ (d) Recall that a rooted tree is ordered if the children of each node have a
+     well-defined left-to-right order. Describe an algorithm to find the largest
+     binary-search-ordered minor of an arbitrary ordered tree T whose nodes
+     are labeled with numbers. Again, the left-to-right order of nodes in M
+     should be consistent with their order in T .
+  (e) Describe an algorithm to find the largest common ordered rooted minor
+      of two ordered labeled rooted trees.
+  (f) Describe an algorithm to find the largest common unordered rooted
+      minor of two unordered labeled rooted trees. [Hint: Combine dynamic
+      programming with maximum flows.]
