@@ -1,7 +1,7 @@
 # Learning Log 6
 
 - **Type:** Assignment (Canvas)
-- **Due:** Wed 9/16/2026, 11:59pm (available until Sep 16, 2026 11:59pm)
+- **Due:** Tue 9/29/2026, 11:59pm (current availability cutoff not reverified)
 - **Points:** 5 (ungraded pass/fail against rubric)
 - **Canvas link:** https://snow.instructure.com/courses/1254074/assignments/19206955
 
@@ -19,7 +19,10 @@ See the [[Learning Logs]] page for full instructions and examples. Paste your en
 | At least 50 combined points | 5 pts | 0 pts |
 
 ## Status
-Missing on Canvas as of 9/17/2026 — student has emailed the professor about it, so this is being handled directly and doesn't need agent follow-up.
+
+Submitted October 1, 2026 at 1:58pm; Canvas marks late; ungraded. Due date now September 29, 2026 at 11:59pm. Earlier missing/emailed-professor status is superseded.
 
 ## Notes
 Unlimited attempts allowed. See `learning log.md` in the repo root for the actual running log content — this file is just the assignment spec/tracker.
+
+**Status verified:** 2026-10-03 via ChatGPT in Chrome (Canvas Grades).

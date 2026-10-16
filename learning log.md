@@ -803,19 +803,519 @@ if not(lst):
 - Question/Problem: What is a good plan/order for tackling this week's learning logs, assigned readings, and assignment due Wednesday?
 - When Identified: 9/19/2026
 - Importance: 4
-- How to Learn: lay out a few different sequencing strategies for the week (reading vs. coding first, when to write the log entry) and weigh them against what's actually worked for me before, then pick one
+- How to Learn: lay out a few possible plans for the week, compare them to what has actually worked for me before, then pick one
 - Insight/Answer:
-    - the week's real shape: Backtracking for Optimal BSTs (5 staged parts: warm-up recurrence, refactor to closure, retrieve tree structure, derive a leftPenalty variation, implement that variation) due Wed 9/23, with §2.5 as Monday's class reading and §12.1-12.3 as Wednesday's class reading, plus this log entry due Mon 9/21
-    - plan A: read both §2.5 and §12.1-12.3 up front over the weekend, write the log entry off that reading, then do all 5 assignment parts Mon-Wed once the reading's already done. Pro: walk into every class already prepped, no surprises going into Wednesday. Con: writing the log before touching any code makes it read thinner, and it's not how my best entries (karatsuba, locator-heap) actually happened
-    - plan B: skip reading and start Part 1 straight off the given pseudocode since it's self-contained, then circle back to §2.5 afterward and let the assignment itself drive when I actually read. Pro: mirrors how karatsuba went for me, code-first grounds the abstract stuff. Con: if the spec publishes late or Part 1 takes longer than expected, reading gets squeezed in later than ideal
-    - plan C: split by day like my Project 3 hybrid strategy, with Tuesday reserved as a dedicated buffer/derivation day specifically for Part 4 (the leftPenalty variation), since that's the piece most likely to be this assignment's "recursion trees didn't click" moment. Pro: insurance against a repeat of last week's crunch. Con: a more rigid schedule, less room to lean into whichever mode (reading or coding) is actually working that day
-    - plan G (the hybrid I landed on): read §2.5 tonight (Saturday) only, and start this log entry off that reading same night. Tomorrow (Sunday), open the assignment and do Part 1 cold off the pseudocode, then come back and finish this log entry tomorrow night using both the reading and whatever Part 1's coding surfaced. Monday is class + Parts 2-3, Tuesday is Part 4 derivation + implementation, Wednesday morning is Part 5 plus a quick read of §12.1-12.3 before class, then screenshot/reflection/submit Wednesday
-    - ultimately I think G is best: it keeps A's advantage of not walking into Monday's class cold, but the log entry itself doesn't get written until it has real code-contact behind it (B's advantage), which is closer to how my strongest past entries actually got written. It also still leaves Tuesday free enough to absorb overflow if Part 4 turns out to be the hard part, without needing to name that in advance the way plan C does
+    - The week has three moving pieces: Learning Log 7, the Optimal BST assignment due Wednesday, and the assigned reading.
+    - Plan A: do all the reading first, then start the assignment after class.
+    - Problem with A: my best learning logs usually come from wrestling with code, not only reading before coding.
+    - Plan B: start Part 1 from the pseudocode, then read once I know what is confusing me.
+    - Problem with B: if Part 1 takes too long, the reading gets pushed too late.
+    - Plan C: split the assignment by day and keep Tuesday open for the hardest derivation piece.
+    - Problem with C: it is organized, but maybe too rigid if one part takes longer than expected.
+    - My actual plan: read JEA 2.5 Saturday, start Part 1 Sunday, then use the coding struggle to finish this log.
+    - Then Monday is Parts 2-3, Tuesday is the hard derivation piece, and Wednesday is final cleanup and submission.
+    - This plan feels best because it gives me some reading context without making the log feel detached from actual problem solving.
 - Hours Spent Learning: 0.5
 - Minutes Spent Documenting: 20
 - Confidence: 4, confident in the plan, less confident yet in Part 4 since I haven't seen the incomplete pseudocode I have to complete myself
 
-## 
+## Sunday 9/20/2026 : Learning Log 7
+
+- Question/Problem: How do I figure out what an optimal Binary Search Tree is actually optimizing, and why do key frequency, root choice, and left/right subproblems change the total cost?
+- When Identified: 9/20/2026 7:30am
+- start time: 7:30am 9/20/2026
+- Importance: 5
+- How to Learn:
+    - I tried to do this as an audio-first lesson, but I realized pretty quickly that binary search trees are too visual for me to understand time-effectively only through voice.
+    - I used a tiny anchor example with keys A B C D E and frequencies 2 1 1 2 3, then worked through what happens when different keys are chosen as the root at first through an audio conversation with ai.
+    - When the voice lesson was not clicking, I switched modes and had ai make it visual by generating a pdf with diagrams: tree diagrams, left/right split tables, a cost table, and then code. I had ai voice enabled so it could answer questions as I looked at the pdf it generated.
+    - I found this questioning / visual document strategy extremely effective and cost efficient for my learning. Very excited about the implications of this learning strategy!
+    - I compared what I learned back to the textbook section after the idea was more concrete. JEA section 2.8 has the recurrence and the formal explanation, but it is not slow/visual enough for the exact part I was confused about.
+- Insight/Answer:
+    - The first big thing that clicked is that Optimal BST is not asking me to search for one particular key right now. It is asking me to design a tree that will be used for many future searches.
+    - I originally thought frequency might mean there are multiple copies of the same key in the tree. That was wrong. Each key appears once. Frequency means how often that key is searched for in the workload. So A with frequency 2 means one A node, searched twice, not two A nodes.
+    - Another thing that clicked is that we start with sorted keys plus their frequencies, not with a finished BST. The sorted order is fixed, but the shape of the tree is not fixed.
+    - The BST rule I need here is simple: for any root, smaller keys go somewhere in the left subtree and larger keys go somewhere in the right subtree. "Somewhere" is important. If A is the root, B C D E are in A's right subtree, but that does not mean every edge after A has to be a right edge. Inside that right subtree, those keys can still branch left or right as long as the BST rule is preserved.
+    - SL 1 finally made sense as: try every possible root. For each root, split the keys into a left subproblem and a right subproblem, recursively solve both, add the cost, and keep the cheapest result.
+    - The cost idea clicked when I stopped thinking about the tree as just shape and started thinking about repeated searches. Cost is frequency times comparisons. A frequent key deep in the tree is expensive because I pay that extra depth over and over because you have to start at the root node and do more comparisons to get to the bottom of the tree where is high frequency node lives (in a place it shouldn't actually live)
+    - For the anchor example:
+
+        keys:        A B C D E
+        frequencies: 2 1 1 2 3
+
+      the optimal tree from the visual walkthrough was:
+
+          D
+         / \
+        B   E
+       / \
+      A   C
+
+      The cost is 19:
+        - D: 2 searches * 1 comparison = 2
+        - B: 1 search * 2 comparisons = 2
+        - E: 3 searches * 2 comparisons = 6
+        - A: 2 searches * 3 comparisons = 6
+        - C: 1 search * 3 comparisons = 3
+        - total = 19
+    - The part that helped most was realizing that D as root can beat a more obviously "balanced-looking" idea because E is searched often and D/E staying near the top matters. The optimal tree is not necessarily the prettiest balanced tree; it is the one with the lowest weighted search cost.
+    - The recurrence now has a meaning instead of just being symbols:
+
+        OptCost(start, end)
+        =
+        best left subtree cost
+        + best right subtree cost
+        + sum of frequencies in the current range
+
+      The sum of frequencies gets added because every key in the current range pays one comparison at this level before the recursive subtrees account for deeper comparisons.
+    - The biggest meta-insight is that some algorithm topics are not good audio-only lessons for me at first. For tree problems especially, I may need a visual anchor before the recurrence or code will feel real.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 20
+- Confidence: 4, because the basic root/frequency/cost idea finally clicked, but I still need to implement the recursive function and then extend it to returning the actual tree structure.
+
+## Sunday 9/20/2026 : Learning Log 7
+
+- Question/Problem: Is JEA 2.5's Text Segmentation algorithm rearranging letters to find words (like Scrabble), or something else?
+- When Identified: 9/20/2026 8:30pm
+- Importance: 2
+- How to Learn: worked through it in conversation while reproducing the Splittable algorithm from the reading in code
+- Insight/Answer:
+    - I had it backwards: the algorithm never rearranges anything. The letters stay locked in their original left-to-right order the whole time.
+    - The only thing the algorithm is choosing is where to cut the string into consecutive pieces, not which letters go together out of order.
+    - This connects back to the reading's suffix-independence point: past decisions (which cuts you already made) stop mattering, only how far into the string you've gotten does, and that only makes sense if the string's order is fixed to begin with.
+- Hours Spent Learning: 0.25
+- Minutes Spent Documenting: 5
+- Confidence: 2, marked weak on purpose, planning to rewrite this entry
+
+## Monday 9/21/2026 : Learning Log 7
+
+- Question/Problem: Why is the base case in the Optimal BST recursive function start > end instead of start == end?
+- When Identified: 9/21/2026 4:15pm
+- end time:9/21/2026 5:15pm
+- Importance: 5
+- How to Learn:
+    - Work through the smallest confusing case by hand instead of staying abstract.
+    - Use the A B C slice with indices 0, 1, 2 and choose A as the root.
+    - Plug those values into the recursive left call solve(start, root - 1).
+    - Compare what start > end catches versus what start == end catches.
+- Insight/Answer:
+    - The key step was plugging in the numbers. If the slice is A B C and A is chosen as the root, the left recursive call is solve(0, -1).
+    - I first thought solve(0, -1) might mean the same thing as solve(0, 0), because in Python a[-1] means the last item. That was wrong here. The function is not using -1 as a list lookup. It is using start and end as boundaries for a slice of keys.
+    - solve(0, -1) means "the slice that starts at index 0 and ends before index 0." There are no keys in that slice. It is an empty subtree.
+    - start == end would only catch a one-key slice, like solve(2, 2). It would not catch solve(0, -1), because 0 == -1 is false.
+    - Empty child slices happen whenever the chosen root is at one end of the current slice. For example, choosing A has no left subtree, and choosing C has no right subtree.
+    - That is why the required base case is:
+
+        if start > end:
+            return 0
+
+      An empty subtree has cost 0.
+    - A start == end case can be added as a shortcut, but it is not required. If solve(2, 2) runs normally, the only root is index 2, the left and right calls are empty and return 0, and the total becomes 0 + 0 + freqs[2]. That is exactly the cost of a one-key tree.
+    - The simple way I understand it now is: start > end means "no keys left," so return 0. start == end means "one key left," which the normal loop can already handle.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 10
+- Confidence: 4, because the empty-slice case finally makes sense, but I still want more practice recognizing this pattern without help.
+
+## Monday 9/21/2026 : Learning Log 7
+
+- Question/Problem: Can I find the cheapest Optimal BST with a shortcut formula instead of trying every possible root?
+- When Identified: 9/21/2026 5:45pm
+- Importance: 5
+- How to Learn:
+    - Start with tiny three-key examples where every possible tree can be checked by hand.
+    - Test the formula I came up with against different frequency layouts.
+    - Compare frequency-by-depth cost against the recursive "pay sum_slice_freqs, then solve the subtrees" view.
+- Insight/Answer:
+    - I came up with a possible shortcut for three keys: sum_slice_freqs + (sum_slice_freqs - max_freq). My thought was that the highest-frequency key should be the root, and then the other two keys would each be one level below it.
+    - That shortcut works for frequencies 1, 5, 1. The biggest frequency is in the middle, so B can be the root with A on the left and C on the right:
+
+          B
+         / \
+        A   C
+
+      The cost is 5 * 1 + 1 * 2 + 1 * 2 = 9, and the shortcut also gives 7 + (7 - 5) = 9.
+    - But the shortcut does not always work. With frequencies 1, 1, 5, the biggest frequency is C, which is on the end. If C is the root, both A and B have to go on C's left side because both are smaller than C:
+
+          C
+         /
+        A
+         \
+          B
+
+    - In that tree, A and B cannot both be immediately below C. One of them has to be one more level down. The real cost is C at depth 1, A at depth 2, and B at depth 3:
+
+        5 * 1 + 1 * 2 + 1 * 3 = 10
+
+      My shortcut would give 7 + (7 - 5) = 9, which is too low.
+    - The insight is that frequency is not the only thing that decides depth. The BST ordering rule also matters. If the highest-frequency key is on the end of the sorted list, the other keys may all be forced onto one side, which can push one key deeper.
+    - I also found a useful way to check a finished tree: start with sum_slice_freqs for the root level, then add i * freq for each key below the root, where i is how many extra levels below the root the key sits. For the C-A-B example, sum_slice_freqs is 7, A is 1 extra level down, and B is 2 extra levels down, so 7 + 1 + 2 = 10.
+    - This helps me understand why the recursion works. Each recursive call pays the next layer's sum_slice_freqs. A key that is deeper appears in more nested slices, so it gets charged once per level without the code needing to track depth directly.
+    - The final answer is that there is not a reliable shortcut formula. The algorithm tries every possible root because the best root depends on both frequency and where the key sits in sorted order.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 12
+- Confidence: 4, because I understand why my formula failed and why the recursive try-every-root structure is necessary.
+
+
+## Monday 9/21/2026 : Learning Log 8 
+
+- Question/Problem: How do I return the tree, not just its cost? (The assignment due friday)
+- When Identified: 9/21/2026 10:00pm
+- End Time: 9/21/2026 11:00pm
+- Importance: 5
+- How to Learn: I made sure I understood this particular recursion, return values, and how tuples represent a tree.
+- Insight/Answer:
+    - I do not need another algorithm. The same recursion can return the tree.
+    - Each call returns (bestCost, bestTree)
+    - A tree is (root, leftTree, rightTree). An empty subtree would be null/none.
+    - An empty range returns (0, None) kinda like cdr
+    - I started with appending only nodes. Each call actually nests a root around two returned subtrees.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 15
+- Confidence: 4, because I understand the root/left/right tuple idea now, but I still need to keep practicing reading nested tuple output without getting overwhelmed, I think im scared of the weeds here. 
+
+## Monday 9/21/2026 : Learning Log 8 
+
+- Question/Problem: How do I add left penalty, and can it change the best tree?
+- When Identified: 9/21/2026 11:00pm
+- End Time: 9/21/2026 11:30pm
+- Importance: 5
+- How to Learn: I made sure I understood search frequencies, left subtrees, and worked through a polynomial list of plausibele places to add the cost too in my head. 
+- Insight/Answer:
+    - I first thought L was added once if a left child exists.
+    - Actually, every search into the left subtree pays the per L cost
+    - So the extra cost is L * sum(frequencies[start:root]).
+    - Add that cost when comparing possible roots.
+    - Changing L can change which tree wins, not just its cost. Obviously. If you are paying a left cost it will skew trees to more right branching shapes. This has a ton of implications, it kind of makes me wonder if you could do tree animations similar to game of life. It prbably wouldn't work. 
+    - Each recursive call charges its left subtree, so searches pay L for every left turn down the tree.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 10
+- Confidence: 4, because I understand where the L * sum_left_slice term comes from
+
+## Monday 9/28/2026 : Learning Log 8
+
+- Question/Problem: Now that Friday's final-project assignment is unlocked and my canvas account is unlocked too, how should I plan this week's readings, learning logs, and presentation so we find an optimal order and streategy? [I tried to delete azure resources with claude-in-chrome and it locked me out of my school microsoft account - had to get it unblocked]
+- When Identified: 9/28/2026 1:30pm
+- start time: 9/28/2026 1:30pm
+- end time: 9/28/25 7:35pm
+- Importance: 5
+- How to Learn: Understand what this week's readings cover and what Friday's deliverable requires, then find tasks that advance both.
+- Insight/Answer:
+    - Reading first: pros: builds NP basics and helps compare topics; con: delays the time i spend sitting with the problem i am choosing for this assingment.
+    - Project first: pros: claims early and gives examples; cons: I risk jumping into a problem without undestanding np/np-hard/np-complete in general, maybe underlying concepts that would help the presentation go better friday
+    - Hybrid: choose and claim a problem, then read the NP sections needed to explain it.
+    - Best path: look at and claim a problem first
+    - I looked for a few minutes and found optimal facility location - this is something i am really interested in - particulalry how scale.ai is finding optimal locations for military assets based on millions of data points and sensors
+    - Figure out what faciliti4es and weights would be good to introduce the optimal facility location as a not too technical example
+    - Use JEA 3.4-3.5 and 3.9 as a primer to get into some juicy logs wednesday
+- Hours Spent Learning: 2
+- Minutes Spent Documenting: 25
+- Confidence: 5
+
+## Monday 9/28/2026 : Learning Log 8
+
+- Question/Problem: Why would a solver for NP-hard problems need a router? If we think of an NP hard problem solution as some magic black box solver what would it actually do, especially in refernce to routing to an NP problem? 
+- When Identified: 5:35pm 9/28/26
+- start time: same as when identified
+- end time 7:40pm
+- Importance: 5
+- How to Learn: Compare one fixed problem the box accepts with a different problem translated into that format.
+- Insight/Answer:
+    - The black box was a useful abstraction for my fuzzy understanding of NP-hardness.
+    - A 3-SAT box takes a Boolean formula and answers whether any assignment makes it true.
+    - It answers one fixed kind of question and the reduction translates other questions into that form - but what does that even mean? 
+    - I still do not fully understand why that translation establishes hardness or a good example of what translation looks like since all these problems are so tough. 
+- Hours Spent Learning: 1.5
+- Minutes Spent Documenting: 15
+- Confidence: 3: this is hard stuff
+
+## Monday 9/28/2026 : Learning Log 8
+
+- Question/Problem: Does "polynomial calls" mean the box (the oracle) loops through every kind of NP problem?
+- When Identified: 4:30pm 9/28/26
+- start time: same
+- end time 8:00pm
+- Importance: 4
+- How to Learn: Separate the wrapper's work, its number of calls, and the oracle's assumed response time. oracle means our black box, the magic np-hard solver.
+- Insight/Answer:
+    - In the oracle model, "polynomial calls" bounds how often the wrapper asks its fixed oracle a question.
+      - wrapper means the program trying to sovle the original problem
+        - oracle means the imaginary helper function
+       - problem a (algorithm for A) must call the imaginary function for problem B a polynomial amount of times
+        - And this algotrithm must both ask/formulate the questions and do its other work in polynomial time - the work is not all just the questions to that imaginary helper  
+    - The wrapper must also construct its questions within polynomial time.
+    - I had placed the adapting and looping inside the box; they belong to the surrounding algorithm.
+- Hours Spent Learning: 2
+- Minutes Spent Documenting: 15
+- Confidence 3: It is keeping track of all these metaphors that is extremely confusing, and makes learning slow but I am slowly getting this I think. 
+
+#
+
+## [extract_from_gpt_chat] : Learning Log [fill in]
+
+- Question/Problem: How can a problem be both NP-hard and NP-complete, and how can every NP problem reduce to it?
+- When Identified: [fill in]
+- Importance: [fill in]
+- How to Learn: Trace the chain from an NP verifier to SAT, then from SAT to another problem.
+- Insight/Answer:
+    - NP-hard means every NP problem can be translated into this problem in polynomial time.
+    - NP-complete means NP-hard and its proposed solutions can be checked in polynomial time.
+    - I treated the labels as competing ranks; NP-complete satisfies both conditions.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence: [fill in]
+
+# 10/02/2026 : Learning Log 9
+
+- Question/Problem: When complexity theory says "fast," does it always mean O(1)?
+- When Identified: 10/02/26
+- Importance: 4
+- How to Learn: Compare an ideal oracle call with the runtime required of actual solver.
+- Insight/Answer:
+    - 'Fast' here means polynomial time, including O(n) or O(n^2).
+    - The oracle's instant answer is an assumption used to study the surrounding work.
+    - I confused the oracle's imagined O(1) response with the requirement for a real fast algorithm.
+- Hours Spent Learning: .75
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## 10/02/2026 : Learning Log 9
+
+- Question/Problem: In JEA 12.7 (Maximum Independent Set), some pairs of people can't be together. I must never include two such people, and I want the largest group possible. In graph terms, people are vertices, a conflict is an edge, and an independent set has no edges between its members. Why call choosing the largest compatible group impractical when I could guess, check, and backtrack?
+- When Identified: 10/02/26
+- Importance: 5
+- How to Learn: Trace choices with 40 people, then consider what changes when the required group size grows.
+- Insight/Answer:
+    - Checking 5 proposed people requires checking only their ten pairs.
+    - Finding a group with no conflicts may require undoing choices 
+    - Backtracking builds a group one person at a time. If the group so far already contains a conflict, it stops and undoes the last choice.
+    - Biggest insight: checking a proposed group stays cheap, but the number of possible groups explodes as the list grows.
+    - With a fixed group size of five, 40 people give only 658,008 possible groups, which is manageable.
+    - If the group size can grow with the list, 40 people allow about a trillion possible groups.
+    - My 5 person example hid this. Worst-case growth shows up only when the group size grows with the list.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## Saturday 10/3/2026 : Learning Log 9
+
+- Question/Problem: What is my best route to Friday's robot-BST project and Monday's log?
+- When Identified: 10/3/2026 3:45pm
+- Importance: 5
+- How to Learn: Understand what this week's readings cover and what Friday's deliverable requires, then find tasks that advance both.
+- Insight/Answer:
+    - Reading-first option: builds DP vocabulary and prepares multiple quiz examples; con: delays validating the robot's cost model.
+    - Project-first option: exposes modeling mistakes early and creates screenshot milestones; con: leaves Monday's assigned DP examples underprepared.
+    - Best path: combine project work with targeted reading, starting by hand-checking the three smallest provided robot cases.
+    - Use JEA 3.4 and 3.9 to identify the project's subproblem questions.
+    - Read JEA 3.1 and 3.6–3.8, comparing states, base cases, choices, and repeated work.
+    - Use a real cost-model or subproblem confusion for Monday's log.
+    - Practice DP explanations before Wednesday's in-class quiz.
+    - Finish backtracking, memoization, and tree reconstruction before Friday, with one passing-test screenshot per part.
+    - Keep greedy and MST prep scheduled, but prioritize the DP work.
+    - Recheck class notes after meetings; test my understanding Friday after submitting the project.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 25
+- Confidence: 5
+
+## 10/05/26 : Learning Log 9
+
+- Question/Problem: In the robot book-retrieval problem, how does a binary search tree relate to a flat shelf of bins? Why jump past bins without scanning them? Is getting to the root a climb up the tree that could need direction changes?
+- When Identified:(Google Meet call with Harry, Oct 5, 2026, 3:41pm)
+- Importance: 5
+- How to Learn: Asked Harry in the meeting, then restated it myself ("the tree is just a way to pick better than scanning every book").  walk one robot retrieval by hand using only bin indexes.
+- Insight/Answer:
+  - The shelf is a flat array of bins. The BST is only instructions saying which bin to check next.
+  - Directions mean toward or away from bin 0, not up or down tree levels.
+  - Going left or right in the tree means facing negative or positive on the shelf.
+  - The robot can pass bins without scanning them. It scans only at tree nodes, always at the root first.
+  - Skipping a layer saves scan cost but not movement cost, because distance is measured in bin indexes.
+  - I kept picturing the robot climbing the tree. Harry corrected this, and I recognated into something I can understand.
+- Hours Spent Learning: 0.75
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## 10/05/26 : Learning Log 9
+
+- Question/Problem: How many rotations does one delivery cost? Does "move 5 units" mean 5 tree levels? Do you only move one way to reach the root?
+- When Identified: 4:35pm
+- Importance: 5
+- How to Learn: Reviewed canvas spec's rules. Discuss with Harry
+  - The robot starts at bin 0 facing negative, so a root at bin 0 needs no rotation or movement and incurs no cost from either. 
+  - Units are bin-index distance, not tree levels. A root at bin 5 means moving five bins. This is the simple rule
+  - Reaching a root above bin 0 takes one rotation to face positive, then one move.
+  - After finding the book, the robot needs at most one rotation to face negative and return to 0.
+  - open for tuesday: during the search, each left or right step may need another rotation. We didn't hand check an example of this.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/05/26 : Learning Log 10 : Robot BST
+
+- Question/Problem: Why is the optimal cost for [5] equal to 10 when no target is given? Why scan the root five times? How do frequencies and the cost parameters fit in?
+- When Identified: 10/05/2026
+- Importance: 5
+- How to Learn: Worked test case 1 with Harry and reread the spec's hint about total frequency. Suggested next test: hand-compute the [4, 3] and [4, 30] cases.
+- Insight/Answer:
+  - Frequencies are expected requests per day. Optimal cost is the total cost of all of them.
+  - Each request pays its own scan, movement and rotation costs, so costs are weighted by frequency.
+  - Every request passes through the root, so root cost uses the span's total frequency (the spec's hint).
+  - The tests list the cost parameters (rotation, move, scan) next to the frequencies. Optimal cost depends on them, so it needs no target.
+  - I thought the cost belonged to one search for one target. It is the whole day's cost. For one bin, that is 5 × scan cost of 2 = 10.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/05/2026 : Learning Log 10 : Robot BST
+
+- Question/Problem: Is the recursive optimal-cost function top-down or bottom-up, and what do those terms mean?
+- When Identified: 10/05/2026
+- Importance: 4
+- How to Learn: Harry looked up the definitions during the meeting and we worked through them
+- Insight/Answer:
+  - Top-down is recursion plus memoization: start with the whole problem, split it, cache each subproblem's answer.
+  - Bottom-up starts from base cases and fills a table until it reaches the original problem.
+  - Picking a root first, then solving the left and right spans, is top-down; memoizing makes each span solved once.
+  - I thought "base case hits the bottom first" meant bottom-up. Recursion order isn't the test; caching versus table-filling is.
+- Hours Spent Learning: 0.6
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/07/2026 : Learning Log 10 : Robot BST
+
+- Question/Problem: What parameters does the nested recursive function need, versus what the top-level function already holds?
+- When Identified: 10/07/2026
+- Importance: 5
+- How to Learn: Discuss with Harry
+- Insight/Answer:
+  - A nested Python function can read the outer function's variables, so it doesn't need them passed in.
+  - Frequencies and the rotation, move and scan costs stay fixed, so only the subproblem's span (low, high) is needed.
+  - The top-level function has no start or end index. The nested one needs them to name a subproblem.
+  - I first thought the nested function needed frequencies too. It doesn't, because it inherits them from the enclosing scope.
+- Hours Spent Learning: 0.3
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/07/2026 : Learning Log 10 : Robot BST
+
+- Question/Problem: Does the memoized subproblem need position and direction, or is the robot always at the root?
+- When Identified: 10/07/2026
+- Importance: 5
+- How to Learn: Harry's example was a root of 10 with children 6 and 7. He was passing in position and direction. As I worked through this problem with my cousin Joel, we arrived at a solution that could derive both from parent index and grandparent index. Clever
+- Insight/Answer:
+  - A memoized subproblem is identified by everything that changes its answer, not only its index range.
+  - Harry's claim: movement and turning costs depend on where the robot is and which way it faces.
+  - Facing matters to me, since turning around costs extra. Position is still unconvincing; I haven't resolved it.
+  - Open question: when entering a subtree, is the robot's position fixed by the parent's root or variable?
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 15
+- Confidence: 3
+
+
+## 10/12/2026 : Learning Log 10 : Krustkal's post-class analysis
+
+- Question/Problem: If we switched edge D–E with cost 6 with H–F cost of 9, what does Kruskal's do right after skipping A–B (5)? https://drive.google.com/file/d/1Xz7vL1IgmySbF-xGg5nMJiWf1GYr0Dj1/view?usp=sharing
+- When Identified: 10/12/2026 
+- Importance: 5
+- How to Learn: Re-trace Kruskal's by hand after swapping the two edge weights. https://drive.google.com/file/d/1Xz7vL1IgmySbF-xGg5nMJiWf1GYr0Dj1/view?usp=sharing
+- Insight/Answer:
+  - Kruskal's follows the sorted weight list, not whichever edge touches the tree built so far.
+  - D–E (6) gets added as its own tree {D, E}, separate from {A, B, C, H}.
+  - So the forest can hold several growing trees that only merge later.
+  - I thought the example mostly goes in order. There was confusion about what happens when i can't connect the edge that is next up in lowest cost. 
+- Hours Spent Learning: 0.33 
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/12/2026 : Learning Log 10 : Krustkal's post-class analysis
+
+- Question/Problem: When union merges two trees, does it matter which vertex becomes the root (why C and not A)?
+- When Identified: 10/12/2026 
+- Importance: 5
+- How to Learn: Think about what responsibilites a root has in a krustkals mst solution
+- Insight/Answer:
+  - The root is just a name tag for the group; any member can be it.
+  - In other words, the only question union-find ever answers is "are these two in the same group?" It answers by checking whether both lead to the same root. 
+  - Any member can be that shared root, and the answer comes out the same.
+  - Picking B or C flips the pointer direction, so internal shape does differ.
+  - In other words, the pointers are the actual arrows in memory. If C is the root, B points to C. If B is the root, C points to B. 
+  - The accept/skip decisions stay the same, because Find only checks "same root or not."
+  - I assumed you would try both roots and recurse; it is one arbitrary choice with no backtracking.
+  - The assumption was that the root choice could change the answer. It can't, so there is nothing to compare by trying both.
+- Hours Spent Learning: 0.42 
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## 10/12/2026 : Learning Log 10 : Krustkal's post-class analysis
+
+- Question/Problem: If Kruskal's just skips edge A–B, how does A still end up in the MST?
+- When Identified: 10/12/2026 4:30pm
+- Importance: 5
+- How to Learn: Unfart brain
+- Insight/Answer:
+  - An MST has zero loops; loops are not minimized, they are never allowed.
+  - From example Adam drew on board monday: https://drive.google.com/file/d/1Xz7vL1IgmySbF-xGg5nMJiWf1GYr0Dj1/view?usp=sharing
+  - Find(A) and Find(B) both return C, so A–B would close the A–B–C loop.
+  - Skipping an edge never drops a vertex; A was already connected through A–C (3).
+  - I was mixing up skipping an edge with skipping a vertex; the output is a list of kept edges.
+- Hours Spent Learning: 0.05 
+- Minutes Spent Documenting: 10
+- Confidence: 5
+
+## 10/12/2026 : Learning Log 10 : Krustkal's post-class analysis
+
+- Question/Problem: Is a union-find tree always one level deep?
+- When Identified: 10/12/2026 
+- Importance: 5
+- How to Learn: Draw parent pointers for a deep tree, then compress it.
+- Insight/Answer:
+  - No; attaching one root under another can stack up multiple levels.
+  - Path compression is occuring here and it means if we run Find(x), every node on the path from x to the root has its parent pointer set directly to the root of the tree that x is in, and also what find(x) returns
+  - Every node it passed on the way gets re-pointed straight at the root.
+  - So one slow Find makes later Finds on those nodes a single hop.
+  - What caught my interest: union-find keeps shortening each node's path of parent pointers to its root, so later Finds stay fast.
+  - Union by rank attaches the shorter tree under the taller one to stop long chains.
+  - unions make trees deeper, Finds make the paths they touch shallower.
+  - Every union in our trace went directly under C, so it looked flat; I have not yet traced a deep one.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 30
+- Confidence: 4
+
+## 10/13/26 : Learning Log 10 : Huffman
+
+- Question/Problem: In Huffman after we do a merge it seems like we have to put the merged sum back in order to select the next smallest pair? It seems like this introduces oppurtunities to be slow/inefficient if I'm not careful, so what is the best approach to select the next best 2. is using min first on the first min and then min again on all the other elements good enouigh to find the smallest two? 
+- When Identified: 10/13/2026 5:45pm
+- Importance: 5
+- How to Learn: Code Huffman with two mins and then use heapq. Understand time/space complecity of each
+- Insight/Answer:
+    - short answer is while my two min idea could work it is slow.
+    - each min would be scanning the whole array twice O(2n) -> then we figure you have to do n-1 total merges so that ends up being O(n^2)
+    - also figure that our alphabet has 26 letters but emojis / other alphabets are bigger. As n grows it gets more inefficient. 
+    - the other option is resorting after every merge; this is worse by my calculations? n log n * n-1 merges = n^2 log n
+    - we can do better with a min-heap using python's heapq
+    - if i had read the assignment I would have understood that this approach was chosen and we are to use our Project 2's min-heap priority queue with a locator dict (neat!)
+- Hours Spent Learning:
+- Minutes Spent Documenting:
+- Confidence:
+
+## 10/13/26 : Learning Log 10
+
+- Question/Problem: How can I remember what is a min-heap, what is a priority queue, and what is a locator dict, at a simple high level? Does a priority queue inherently need some way to measure what is more important, and in our case is that the min? Also, can a valid min-heap also be a valid binary search tree (as a visualization or structure)?
+- When Identified: 10/13/2026 
+- Importance: 5
+- How to Learn: Ask for a plain, high-level refresher on each of the three terms.
+- Insight/Answer:
+    - Priority queue: a line where the most important thing always goes next, no matter when it showed up. Think of an ER waiting room: the sickest person is seen first.
+    - Min-heap: one way to build that line. It is a pile arranged so the smallest thing is always sitting on top, and adding or removing something only takes a little reshuffling.
+    - In the heap array, the children of the item at index i sit at 2i + 1 and 2i + 2.
+    - Locator dict: a cheat sheet that says where each thing currently sits in the pile, so you can grab a specific one without digging for it.
+    - A valid min-heap cannot also be a valid binary search tree, except for a tree with one node.
+    - The rules clash on the left child. A min-heap says the parent is less than or equal to both children. A binary search tree says the left child is less than the parent. 
+    - The heap shape forces a left child. A heap fills each level left to right, so any heap with two or more nodes has a left child, and the clash is unavoidable.
+- Hours Spent Learning: 0.25
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## [date] : Learning Log [number]
 
 - Question/Problem:
 - When Identified:
@@ -826,9 +1326,64 @@ if not(lst):
 - Minutes Spent Documenting:
 - Confidence:
 
+## [date] : Learning Log [number]
 
+- Question/Problem:
+- When Identified:
+- Importance:
+- How to Learn:
+- Insight/Answer:
+- Hours Spent Learning:
+- Minutes Spent Documenting:
+- Confidence:
 
+## [date] : Learning Log [number]
 
+- Question/Problem:
+- When Identified:
+- Importance:
+- How to Learn:
+- Insight/Answer:
+- Hours Spent Learning:
+- Minutes Spent Documenting:
+- Confidence:
 
+## Monday 10/12/2026 : Learning Log 10
 
+- Question/Problem: What is my best route to Wednesday's greedy quiz and Thursday's Huffman assignment?
+- When Identified: 10/12/2026 [time: fill in]
+- Importance: [fill in]
+- How to Learn: Understand this week's readings and end-of-week deliverable, then find a small number of tasks that advance both.
+- Insight/Answer:
+    - Reading-first option: pros?builds exchange-proof foundations and covers assigned stable matching; con?delays codec work before Thursday.
+    - Assignment-only option: pros?targets rubric requirements and exposes Project 2 integration gaps; con?neglects Wednesday's MST quiz preparation.
+    - Best path: assignment-centered hybrid; first hand-trace the six-symbol example alongside JEA 4.4.
+    - Monday: understand prefix-free codes and weighted depths; inspect my Project 2 graph and priority-queue interfaces.
+    - Tuesday: analyze alternative selection methods and representation costs; independently implement the codec and write original tests.
+    - Before Wednesday's quiz: practice greedy proofs, Huffman, Prim, Kruskal, and union-find without notes.
+    - Read assigned JEA 4.1 and 4.4?4.5; use 4.2?4.3 as proof bridges and 7.2/7.4?7.5 for MST review.
+    - The tentative Wednesday reading is JEA 5.5?5.6; preview traversal variants before class and revisit afterward.
+    - Wednesday: complete Learning Log 10 requirements and submit it and the quiz before 11:59pm Mountain.
+    - Thursday: finish required explanations, codec, and original tests; submit before 11:59pm Mountain, before considering bonus work.
+    - Volume 2 benchmarking is optional troubleshooting; prioritize JEA and targeted Volume 1 heap or graph refreshers.
+    - Possible next question: why must a newly merged Huffman node compete with all remaining nodes?
+    - Friday: distinguish union-find parent pointers from selected MST edges; explain one safe-edge exchange on a fresh graph.
+    - October 14 and 16 class-note headings are currently empty; reread after class before choosing additional review topics.
+    - This is a proposed study plan, not a claim that the readings, implementation, or understanding checks are complete.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence: [fill in]
 
+## 10/13/2026 : Learning Log 11 : Huffman code length and tree depth
+
+- Question/Problem: Does the number of bits in a letter's Huffman code correspond to its level in the tree?
+- When Identified: 10/13/2026 [time: fill in]
+- Importance: [fill in]
+- How to Learn: Pause the Huffman tree video and count the edges from the root to each letter; compare that count with the letter's bit code.
+- Insight/Answer:
+    - Each edge on the path from the root to a letter's leaf contributes one bit, either 0 or 1. So the number of bits in that letter's code equals the leaf's depth (the number of edges from the root).
+    - In the practice tree, P and Q are three edges down and have three-bit codes. R, S, and T are two edges down and have two-bit codes.
+    - I first thought of this as the leaf's height or level. "Depth" is the more precise word: height is usually measured downward from a node, while depth is measured from the root. If the root is called level 0, level and depth match.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence: [fill in]

@@ -304,3 +304,9 @@ For fun: use [networkx](https://networkx.org/documentation/stable/reference/gene
 | Correct + efficient Priority Queue ADT, passing provided tests + your own `get_priority` test | 8 pts |
 | Effective tests showing the ADTs work with the provided Prim's MST algorithm, with a passing screenshot | 4 pts |
 | Screenshots + reflection in the text box or PDF | 4 pts |
+
+## Status
+
+Submitted September 11, 2026 at 1:11am. Current Grades page displays a file-submission icon, not a numeric score.
+
+**Status verified:** 2026-10-03 via ChatGPT in Chrome (Canvas Grades).

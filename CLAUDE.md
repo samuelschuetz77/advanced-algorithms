@@ -247,6 +247,13 @@ even without the word "framework" attached. Output goes to
 `LLWaterfall.md` in this repo, always for whichever learning log is next
 due — it's scratch candidate space, not `learning log.md` itself.
 
+### `Learning Log Extraction` / `extract learning logs`
+
+For extracting a few reviewable learning-log entries from a pasted chat or the
+current agent conversation, follow `learning-log-extraction-framework.md`.
+Draft in chat first; edit `learning log.md` only when the student asks to write
+the chosen entry there.
+
 ## Class notes
 
 Whenever "class notes" come up, see `class-notes-fetching.md` — it points to

@@ -20,7 +20,10 @@ See the [[Learning Logs]] page for full instructions and examples. Paste your en
 | At least 50 combined points | 5 pts | 0 pts |
 
 ## Status
-Not started as of 9/7/2026 — due in 2 days.
+
+Submitted September 9, 2026 at 11:44pm. Current Grades page displays a text-entry submission icon, not a numeric score; prior 5/5 status cannot be reverified.
 
 ## Notes
 Unlimited attempts allowed. See `learning log.md` in the repo root for my actual running log content — this file is just the assignment spec/tracker.
+
+**Status verified:** 2026-10-03 via ChatGPT in Chrome (Canvas Grades).

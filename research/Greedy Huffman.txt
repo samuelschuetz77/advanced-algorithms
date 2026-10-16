@@ -1,0 +1,11 @@
+Greedy Huffman - working notes
+
+Part 2
+1. Slower (still produces an optimal tree). O(n^2 log n).
+   Where the time goes: Sorting all remaining nodes after each merge.
+2. Slower (still produces an optimal tree). O(n^2) expected overall.
+   Where the time goes: Quickselect scans remaining nodes after each merge.
+3. Wrong: the merged node may outweigh two unmerged nodes, which should merge first.
+   Counterexample: a=3, b=8, c=10, d=14, e=17, f=42.
+   Third merge: one-time-sort takes 21+14=35; Huffman takes 14+17=31.
+   Tree costs: one-time-sort = 213; Huffman = 209.

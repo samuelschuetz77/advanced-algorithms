@@ -5,7 +5,13 @@
 >
 > Reading links below point to Canvas pages (`module_item_id=32874738`), which in turn link out to the actual reading. PDFs downloaded from those links are saved locally in `Reading for Prep/`, named to match the "Reading for Prep" column values below and tagged with the class date they're due.
 
-**Last synced:** 2026-08-27 (from text pasted by Samuel)
+**Last synced:** 2026-10-03 via ChatGPT in Chrome. Live tentative schedule unchanged from the prior copy. Assignment-specific readings can differ; see the note below.
+
+**Note changes on Canvas as of 2026-09-23** (applied to the table below): 8/28 is "No class meeting" (was Unconference); 9/16 "Reductions and Simplify-and-Delegate (Ch. 1 exercises)"; 9/23 "Game Trees and Intro to NP-Completeness"; 11/2 "Graph Applications and Reductions Preview"; 11/20 "NP-hard problem presentations in class"; 12/11 "Exam 2 in class"; new row 12/16 Final Exam 9:30-11:30 AM (same room).
+
+## Assignment-specific reading update (October 3)
+
+Learning Log 9, due October 5, explicitly assigns **JEA 3.1 and 3.6–3.8**. This is additional to the unchanged tentative schedule below. The October 7 quiz covers backtracking and dynamic programming; the October 9 project is the robot optimal-BST problem. No Wednesday learning log is currently published.
 
 ## Office Hours (Adam)
 
@@ -15,17 +21,17 @@ open to reviewing/practicing ideas outside those hours if asked.
 | Wk | Module | Day | Date | Reading for Prep | Notes |
 |----|--------|-----|------|-------------------|-------|
 | 1 | 1 Foundations | Wed | 8/26 | [JEA Preface](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Intro |
-| 1 | . | Fri | 8/28 | — | Unconference |
+| 1 | . | Fri | 8/28 | — | No class meeting -- refresh Python and prereqs on your own |
 | 2 | . | Mon | 8/31 | [JEA Preface](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | 6 Sorts Refresh |
 | 2 | . | Wed | 9/2 | [Big O Page](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Big O / Benchmarking |
 | 2 | . | Fri | 9/4 | [Review](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graphs and Heaps |
 | 3 | . | Wed | 9/9 | [JEA 0.5-0.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Describing and Analyzing |
 | 3 | 2 Divide, Conquer, and Backtracking | Fri | 9/11 | [JEA 1.6-1.7](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Recursion Trees |
 | 4 | . | Mon | 9/14 | [JEA Induction.1-3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Induction |
-| 4 | . | Wed | 9/16 | [JEA Ch. 1 Exercises](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Exercises |
+| 4 | . | Wed | 9/16 | [JEA Ch. 1 Exercises](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Reductions and Simplify-and-Delegate (Ch. 1 exercises) |
 | 4 | . | Fri | 9/18 | [JEA 2.4, 2.8](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Backtracking |
 | 5 | . | Mon | 9/21 | [JEA 2.5](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | More Backtracking |
-| 5 | . | Wed | 9/23 | [JEA 12.1-12.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Intro to NP-Completeness |
+| 5 | . | Wed | 9/23 | [JEA 12.1-12.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Game Trees and Intro to NP-Completeness |
 | 6 | 3 Dynamic Programming and Greedy | Mon | 9/28 | [JEA 3.4, 3.5](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Dynamic Programming |
 | 6 | . | Wed | 9/30 | [JEA 3.9](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Dynamic Programming Examples |
 | 6 | . | Fri | 10/2 | — | More Examples |
@@ -39,7 +45,7 @@ open to reviewing/practicing ideas outside those hours if asked.
 | 10 | . | Mon | 10/26 | [JEA 6.5-6.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Strongly Connected Components |
 | 10 | . | Wed | 10/28 | [JEA Ch 6 Exercises](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Exercises |
 | 10 | . | Fri | 10/30 | [JEA 8.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Extensions |
-| 11 | . | Mon | 11/2 | [JEA 9.5-9.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Applications |
+| 11 | . | Mon | 11/2 | [JEA 9.5-9.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Applications and Reductions Preview |
 | 11 | 5 Max Flow and Linear Programming | Wed | 11/4 | [JEA 10.0-10.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Max Flow |
 | 11 | . | Fri | 11/6 | [JEA 11.0-11.4](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Linear Programming |
 | 12 | . | Mon | 11/9 | [JEA 11.5-11.7](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Flow Applications |
@@ -47,14 +53,15 @@ open to reviewing/practicing ideas outside those hours if asked.
 | 12 | . | Fri | 11/13 | [JEA Extra H.4-H.5](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | LP Extensions |
 | 13 | 6 NP-Hardness and Reductions | Mon | 11/16 | [JEA 12.0-12.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Reductions and Theory |
 | 13 | . | Wed | 11/18 | [JEA 12.5-12.6, 12.10](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | SAT Reductions |
-| 13 | . | Fri | 11/20 | [JEA 12.8, 12.13-12.14](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | NP-Hardness |
+| 13 | . | Fri | 11/20 | [JEA 12.8, 12.13-12.14](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | NP-Hardness -- NP-hard problem presentations in class |
 | 14 | 7 Emerging Algorithms & Final Project | Mon | 11/23 | [JEA Extra A](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Quantum Computing |
 | 15 | . | Mon | 11/30 | [QC 1-3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Quantum Foundations |
 | 15 | . | Wed | 12/2 | [QC 4-6, Q# in Y](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Quantum Programming |
 | 15 | . | Fri | 12/4 | [QFT](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Quantum Fourier Transform |
 | 16 | . | Mon | 12/7 | — | Learning and AutoDiff |
 | 16 | . | Wed | 12/9 | — | Final Project and Review |
-| 16 | . | Fri | 12/11 | — | Final Presentations |
+| 16 | . | Fri | 12/11 | — | Final Presentations -- Exam 2 in class |
+| 16 | . | Wed | 12/16 | — | Final Exam: 9:30–11:30 AM (same room as regular class) |
 
 ## Reading for Prep — which local file, which section, by date
 

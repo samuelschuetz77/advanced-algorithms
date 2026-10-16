@@ -1,3 +1,6 @@
-[submodule "projects or assignments i turn in live here/RobotBST"]
-	path = projects or assignments i turn in live here/RobotBST
+[submodule "projects or assignments i turn in live here/optBinSearchTree"]
+	path = projects or assignments i turn in live here/optBinSearchTree
 	url = https://github.com/dharryc/optBinSearchTree.git
+[submodule "projects or assignments i turn in live here/SamAndJoelAttemptRoboBST"]
+	path = projects or assignments i turn in live here/SamAndJoelAttemptRoboBST
+	url = https://github.com/samuelschuetz77/SamAndJoelAttemptRoboBST.git

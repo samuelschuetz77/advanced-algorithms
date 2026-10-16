@@ -8,8 +8,9 @@
 
 ## Details
 
-Based on JEA §2.8 (Optimal BSTs). Staged easy → medium → main. Use the
-non-AI-enabled Classwork Profile (no AI code generation/completion).
+Based on JEA §2.8 (Optimal BSTs). Staged easy → medium → main. Canvas update:
+AI assistance is allowed, but the submitted work must be understood and owned
+by the student.
 
 - **Part 1 (easy/warm-up):** Implement + test a plain recursive backtracking
   method for OptCost(start, end, frequencies) per the given pseudocode
@@ -37,4 +38,7 @@ non-AI-enabled Classwork Profile (no AI code generation/completion).
 
 ## Status
 
-Published as of 9/19/2026 (was unpublished as of 9/17 sync). Due 9/23.
+Published as of 9/19/2026 (was unpublished as of 9/17 sync). AI policy updated
+from Canvas on 9/21/2026 per latest student check. Due 9/23.
+
+Grades page (2026-09-28): File Upload Submission submitted Sep 23 at 11:58pm; Canvas due date now shows Sep 25 by 11:59pm. Ungraded (— / 24).
