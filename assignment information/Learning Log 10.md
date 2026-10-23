@@ -3,7 +3,7 @@
 - Canvas link: https://snow.instructure.com/courses/1254074/assignments/19262533
 - Due: Wed 10/14/2026, 11:59pm Mountain
 - Points: 5
-- Status: Published and available; not submitted as of 2026-10-12.
+- Status: Graded 5/5; submitted 10/13/2026 11:11pm (Canvas, as of 2026-10-20).
 - Available until: Wed 10/14/2026, 11:59pm Mountain.
 - Submission: Canvas text entry; unlimited attempts.
 - Turn-in path: `../learning log.md`.

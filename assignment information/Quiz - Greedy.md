@@ -1,5 +1,6 @@
 # Quiz - Greedy
 
+- Status: Graded 14.33/20; submitted 10/14/2026 10:50am (Canvas, as of 2026-10-20).
 - **Due / available until:** Wed 10/14/2026, 11:59pm Mountain
 - **Points:** 22
 - **Questions:** 7

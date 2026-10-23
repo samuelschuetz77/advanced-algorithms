@@ -1,0 +1,663 @@
+1
+00:00:00,378 --> 00:00:04,545
+Last time, we ran one short algorithm on a graph.
+
+2
+00:00:04,545 --> 00:00:06,589
+Take a token from the pile.
+
+3
+00:00:06,589 --> 00:00:08,777
+If its vertex is new, mark it.
+
+4
+00:00:08,777 --> 00:00:12,527
+Then add a token for every edge leaving that vertex.
+
+5
+00:00:12,527 --> 00:00:14,662
+Today we ask two questions.
+
+6
+00:00:14,662 --> 00:00:16,537
+How long does that take?
+
+7
+00:00:16,537 --> 00:00:19,111
+And what happens if we change the pile?
+
+8
+00:00:20,020 --> 00:00:22,689
+Here is a city metro map.
+
+9
+00:00:22,689 --> 00:00:27,702
+Each station is a vertex, and each track between two stations is an edge.
+
+10
+00:00:27,702 --> 00:00:29,421
+You begin at Arch.
+
+11
+00:00:29,421 --> 00:00:33,158
+A station counts as visited the first time you arrive there.
+
+12
+00:00:33,158 --> 00:00:36,817
+Every track you could still try is a token: from which station,
+
+13
+00:00:36,817 --> 00:00:37,859
+to which.
+
+14
+00:00:37,859 --> 00:00:41,319
+And the station you arrived from is that station's parent.
+
+15
+00:00:42,217 --> 00:00:44,691
+Before we count anything, guess.
+
+16
+00:00:44,691 --> 00:00:46,826
+The map has twelve tracks.
+
+17
+00:00:46,826 --> 00:00:51,901
+How many tokens get put in the pile in total,
+counting every track you could ever try?
+
+18
+00:00:58,800 --> 00:01:01,652
+Look at one track, between Arch and Bay.
+
+19
+00:01:01,652 --> 00:01:06,001
+When you arrive at Arch, you add a token to try this track toward Bay.
+
+20
+00:01:06,001 --> 00:01:10,350
+When you arrive at Bay, you add a token to try it back toward Arch.
+
+21
+00:01:10,350 --> 00:01:14,747
+So every track makes two tokens, one from each end.
+
+22
+00:01:15,630 --> 00:01:18,638
+Do that for all twelve tracks, one after another,
+
+23
+00:01:18,638 --> 00:01:20,678
+and we get twenty-four tokens.
+
+24
+00:01:21,609 --> 00:01:24,304
+Add the one token we start with, at Arch.
+
+25
+00:01:24,304 --> 00:01:26,401
+Twenty-five tokens in all.
+
+26
+00:01:26,401 --> 00:01:28,992
+Two times E, plus one.
+
+27
+00:01:28,992 --> 00:01:32,651
+Two times twelve, plus one, is twenty-five.
+
+28
+00:01:32,651 --> 00:01:35,238
+That is exactly the count from last time.
+
+29
+00:01:36,163 --> 00:01:40,226
+Every token is put in the pile once, and taken out once.
+
+30
+00:01:40,226 --> 00:01:43,950
+Call the time for one put, or one take, T.
+
+31
+00:01:43,950 --> 00:01:48,217
+Then all the tokens together cost about two E times T.
+
+32
+00:01:49,133 --> 00:01:54,146
+Each station is also marked only once, which adds about V more work.
+
+33
+00:01:54,146 --> 00:01:57,688
+So the total time is V plus E times T.
+
+34
+00:01:57,688 --> 00:01:59,446
+The V is the marking.
+
+35
+00:01:59,446 --> 00:02:02,085
+The E times T is the tokens.
+
+36
+00:02:02,991 --> 00:02:07,119
+With a stack, a put or a take only touches the top of the pile,
+
+37
+00:02:07,119 --> 00:02:10,491
+so T is a constant, however big the pile gets.
+
+38
+00:02:10,491 --> 00:02:12,770
+The total is V plus E.
+
+39
+00:02:12,770 --> 00:02:14,745
+We call that linear time.
+
+40
+00:02:15,634 --> 00:02:16,832
+One warning.
+
+41
+00:02:16,832 --> 00:02:21,168
+The book assumes the map is stored as a list of neighbors for each station.
+
+42
+00:02:21,168 --> 00:02:24,540
+If it were stored as a table of yes or no answers,
+
+43
+00:02:24,540 --> 00:02:28,577
+finding one station's neighbors would mean checking every cell in a row,
+
+44
+00:02:28,577 --> 00:02:33,104
+V steps each time, and the total would grow like V times V.
+
+45
+00:02:34,019 --> 00:02:35,425
+Now the pile.
+
+46
+00:02:35,425 --> 00:02:39,735
+The proof only needed somewhere to put tokens in and take tokens out.
+
+47
+00:02:39,735 --> 00:02:42,027
+It never said which one to take.
+
+48
+00:02:42,027 --> 00:02:45,608
+Here is one pile with four numbered tokens.
+
+49
+00:02:45,608 --> 00:02:47,925
+Take the newest, and that is a stack.
+
+50
+00:02:47,925 --> 00:02:50,399
+Take the oldest, and that is a queue.
+
+51
+00:02:50,399 --> 00:02:53,937
+Take the smallest number, and that is a priority queue.
+
+52
+00:02:54,835 --> 00:02:57,674
+Same algorithm, three behaviors.
+
+53
+00:02:57,674 --> 00:03:00,070
+A stack gives depth-first search.
+
+54
+00:03:00,070 --> 00:03:02,517
+A queue gives breadth-first search.
+
+55
+00:03:02,517 --> 00:03:05,473
+A priority queue gives best-first search.
+
+56
+00:03:05,473 --> 00:03:08,373
+Let us run the first two on the metro map.
+
+57
+00:03:09,336 --> 00:03:10,860
+First, the stack.
+
+58
+00:03:10,860 --> 00:03:13,736
+The newest token always goes first.
+
+59
+00:03:13,736 --> 00:03:15,599
+Watch how deep it goes.
+
+60
+00:03:15,599 --> 00:03:19,375
+From Arch, ride to Dock, then Fort, then Gate, then East,
+
+61
+00:03:19,375 --> 00:03:22,184
+then Cove, and last of all, Bay.
+
+62
+00:03:28,271 --> 00:03:31,735
+The came-from links form one long, skinny chain,
+
+63
+00:03:31,735 --> 00:03:33,232
+six tracks deep.
+
+64
+00:03:33,232 --> 00:03:38,805
+Bay is right next to Arch, yet in this tree,
+the route to Bay passes through five other
+
+65
+00:03:38,805 --> 00:03:39,947
+stations.
+
+66
+00:03:40,844 --> 00:03:42,198
+Now the queue.
+
+67
+00:03:42,198 --> 00:03:45,388
+From Arch, three tokens are in the pile.
+
+68
+00:03:45,388 --> 00:03:47,874
+This time we take the oldest token.
+
+69
+00:03:47,874 --> 00:03:49,954
+Which one comes out first?
+
+70
+00:03:54,862 --> 00:03:56,867
+Arch to Bay, the oldest.
+
+71
+00:03:56,867 --> 00:03:58,026
+Bay is new.
+
+72
+00:03:58,026 --> 00:04:00,722
+Then Arch to Cove, Cove is new.
+
+73
+00:04:00,722 --> 00:04:03,195
+Then Arch to Dock, Dock is new.
+
+74
+00:04:03,195 --> 00:04:06,985
+Every station next to Arch is reached before we go any further.
+
+75
+00:04:06,985 --> 00:04:08,817
+Those are one stop away.
+
+76
+00:04:09,741 --> 00:04:12,853
+Now the tokens from Bay, Cove, and Dock.
+
+77
+00:04:12,853 --> 00:04:16,629
+Most lead to stations already visited, so they are thrown away.
+
+78
+00:04:16,629 --> 00:04:18,908
+Bay to East: East is new.
+
+79
+00:04:18,908 --> 00:04:21,759
+Most of Cove's tokens are thrown away.
+
+80
+00:04:21,759 --> 00:04:24,572
+But Cove to Fort: Fort is new.
+
+81
+00:04:24,572 --> 00:04:27,641
+East and Fort are two stops from Arch.
+
+82
+00:04:28,541 --> 00:04:31,718
+Next come Dock's tokens, and then East's.
+
+83
+00:04:31,718 --> 00:04:33,255
+Most are thrown away.
+
+84
+00:04:33,255 --> 00:04:37,799
+At last, East to Gate: Gate is new, the final station.
+
+85
+00:04:37,799 --> 00:04:39,179
+Three stops.
+
+86
+00:04:39,179 --> 00:04:42,300
+Everything left in the pile is thrown away.
+
+87
+00:04:43,204 --> 00:04:45,730
+The queue gives a short, bushy tree.
+
+88
+00:04:45,730 --> 00:04:48,543
+Every station is at most three stops from Arch.
+
+89
+00:04:48,543 --> 00:04:52,215
+Put it next to the stack's tree, and the difference is clear:
+
+90
+00:04:52,215 --> 00:04:54,867
+depth six, against depth three.
+
+91
+00:04:55,779 --> 00:04:57,446
+That is no accident.
+
+92
+00:04:57,446 --> 00:05:02,016
+Each round reaches one stop further, so the
+number of stops at which a station is first
+
+93
+00:05:02,016 --> 00:05:04,907
+reached is the fewest tracks between it and Arch.
+
+94
+00:05:04,907 --> 00:05:07,003
+Bay: one stop.
+
+95
+00:05:07,003 --> 00:05:10,154
+Gate: three stops, and no route is shorter.
+
+96
+00:05:10,154 --> 00:05:13,735
+Breadth-first search finds the routes with the fewest stops.
+
+97
+00:05:13,735 --> 00:05:15,697
+Depth-first search does not.
+
+98
+00:05:16,621 --> 00:05:20,176
+The third rule puts a number on every track, say,
+
+99
+00:05:20,176 --> 00:05:23,652
+the minutes of travel, and always takes the smallest.
+
+100
+00:05:23,652 --> 00:05:25,371
+That is best-first search.
+
+101
+00:05:25,371 --> 00:05:29,720
+With the track times as the numbers, it builds a minimum spanning tree:
+
+102
+00:05:29,720 --> 00:05:33,379
+that is Jarník's algorithm, which most people call Prim's.
+
+103
+00:05:33,379 --> 00:05:38,418
+With the time so far as the number, it finds
+the fastest routes on a weighted map:
+
+104
+00:05:38,418 --> 00:05:40,514
+that is Dijkstra's algorithm.
+
+105
+00:05:40,514 --> 00:05:46,218
+A priority queue costs a little more per token, so the time is V plus E log E.
+
+106
+00:05:46,218 --> 00:05:48,571
+Later chapters return to both.
+
+107
+00:05:49,474 --> 00:05:50,906
+A new problem.
+
+108
+00:05:50,906 --> 00:05:55,177
+Across the water, a separate ferry network has three stations:
+
+109
+00:05:55,177 --> 00:05:57,404
+Mill, Nest, and Oak.
+
+110
+00:05:57,404 --> 00:05:59,630
+They connect only to each other.
+
+111
+00:05:59,630 --> 00:06:04,214
+Your search from Arch visits the whole metro, and the pile empties.
+
+112
+00:06:04,214 --> 00:06:05,711
+The search stops.
+
+113
+00:06:05,711 --> 00:06:09,002
+Mill, Nest, and Oak are never visited.
+
+114
+00:06:09,934 --> 00:06:12,265
+To reach everywhere, add a loop.
+
+115
+00:06:12,265 --> 00:06:14,413
+Go through every station.
+
+116
+00:06:14,413 --> 00:06:19,140
+If a station has not been visited yet, it belongs to a new network.
+
+117
+00:06:19,140 --> 00:06:22,118
+Count it, and start a fresh search from there.
+
+118
+00:06:23,022 --> 00:06:24,272
+In Python.
+
+119
+00:06:24,272 --> 00:06:28,100
+A set called visited remembers which stations we have seen.
+
+120
+00:06:28,100 --> 00:06:30,145
+Networks starts at zero.
+
+121
+00:06:30,145 --> 00:06:33,751
+For each station in the graph, if the station is not in visited,
+
+122
+00:06:33,751 --> 00:06:38,230
+we found a new network, so add one, and run the search from that station,
+
+123
+00:06:38,230 --> 00:06:39,815
+which fills in visited.
+
+124
+00:06:40,720 --> 00:06:41,593
+Run it.
+
+125
+00:06:41,593 --> 00:06:45,343
+Arch starts network one, and marks seven stations.
+
+126
+00:06:45,343 --> 00:06:48,481
+Mill starts network two, and marks three.
+
+127
+00:06:48,481 --> 00:06:49,757
+Two networks.
+
+128
+00:06:49,757 --> 00:06:53,389
+Every vertex and every edge is still visited only once,
+
+129
+00:06:53,389 --> 00:06:56,671
+so even with the loop, it is still V plus E.
+
+130
+00:06:56,671 --> 00:06:59,623
+The same loop counts the networks for free.
+
+131
+00:07:00,517 --> 00:07:02,666
+Now make some tracks one-way.
+
+132
+00:07:02,666 --> 00:07:07,223
+An arrow from Arch to Bay means trains only run from Arch to Bay.
+
+133
+00:07:07,223 --> 00:07:09,827
+The search code does not change at all.
+
+134
+00:07:09,827 --> 00:07:13,756
+A marked station just adds a token for each arrow leaving it.
+
+135
+00:07:14,626 --> 00:07:15,537
+Run it from Arch.
+
+136
+00:07:15,537 --> 00:07:19,366
+Bay, Cove, East, and Fort can all be reached.
+
+137
+00:07:19,366 --> 00:07:22,347
+Dock and Gate cannot, even though they are on the map,
+
+138
+00:07:22,347 --> 00:07:24,652
+because no arrow leads into them.
+
+139
+00:07:24,652 --> 00:07:27,695
+Reachability is no longer symmetric.
+
+140
+00:07:28,619 --> 00:07:33,294
+The came-from arrows still form a tree, pointing away from Arch.
+
+141
+00:07:33,294 --> 00:07:36,549
+But it is a tree of only the stations Arch can reach,
+
+142
+00:07:36,549 --> 00:07:39,075
+not a spanning tree of the whole map.
+
+143
+00:07:39,075 --> 00:07:43,238
+Stacks, queues, and priority queues all still work.
+
+144
+00:07:44,107 --> 00:07:45,539
+One more use.
+
+145
+00:07:45,539 --> 00:07:47,948
+The paint bucket in a drawing program.
+
+146
+00:07:47,948 --> 00:07:53,508
+Each pixel is a vertex, and two neighboring
+pixels with the same color share an edge.
+
+147
+00:07:53,508 --> 00:07:56,386
+Those edges form a graph on the pixels.
+
+148
+00:07:56,386 --> 00:08:01,151
+Click a pixel, and the bucket must recolor everything reachable from it.
+
+149
+00:08:01,151 --> 00:08:03,296
+That is reachability again.
+
+150
+00:08:04,244 --> 00:08:09,687
+So we run a search from the clicked pixel, and
+recolor each pixel the moment it is marked.
+
+151
+00:08:09,687 --> 00:08:15,403
+The other blob of the same color is untouched,
+because no chain of same-colored neighbors
+
+152
+00:08:15,403 --> 00:08:16,506
+leads to it.
+
+153
+00:08:17,402 --> 00:08:19,329
+This is called a reduction.
+
+154
+00:08:19,329 --> 00:08:23,926
+We solve the paint bucket problem by calling reachability as a black box.
+
+155
+00:08:23,926 --> 00:08:30,032
+A grid of n by n pixels has n squared
+vertices, and at most two n squared edges,
+
+156
+00:08:30,032 --> 00:08:32,897
+so the search runs in n squared time.
+
+157
+00:08:32,897 --> 00:08:36,100
+All that matters about the search is what it promises,
+
+158
+00:08:36,100 --> 00:08:37,555
+not how it works.
+
+159
+00:08:38,475 --> 00:08:39,842
+Let us retell it.
+
+160
+00:08:39,842 --> 00:08:44,973
+About two E plus one tokens, so a stack or queue search is linear.
+
+161
+00:08:44,973 --> 00:08:47,824
+Swap the pile, and you swap the search.
+
+162
+00:08:47,824 --> 00:08:51,874
+Loop over every station, to cover every network.
+
+163
+00:08:51,874 --> 00:08:55,051
+Arrows change who can be reached, not the code.
+
+164
+00:08:55,051 --> 00:08:58,289
+Next time: counting paths, from class.

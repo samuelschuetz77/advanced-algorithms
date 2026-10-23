@@ -1,0 +1,495 @@
+[
+ {
+  "id": "recap",
+  "narration": "Last time, we ran one short algorithm on a graph. [[c1]]Take a token from the pile. [[c2]]If its vertex is new, mark it. [[c3]]Then add a token for every edge leaving that vertex. Today we ask two questions. How long does that take? And what happens if we change the pile?",
+  "cues": {
+   "c1": 4.544791,
+   "c2": 6.589083,
+   "c3": 8.776583
+  },
+  "dur": 19.642000000000003,
+  "start": 0.0
+ },
+ {
+  "id": "world",
+  "narration": "Here is a city metro map. Each [[w1]]station is a vertex, and each [[w2]]track between two stations is an edge. [[start]]You begin at Arch. A station counts as [[w3]]visited the first time you arrive there. Every track you could still try is a [[w4]]token: from which station, to which. And the station you arrived from is that station's [[w5]]parent.",
+  "cues": {
+   "w1": 3.320833,
+   "w2": 5.44325,
+   "start": 8.060416,
+   "w3": 11.172416,
+   "w4": 15.273958,
+   "w5": 20.75575
+  },
+  "dur": 22.21,
+  "start": 19.642000000000003
+ },
+ {
+  "id": "predict_count",
+  "narration": "Before we count anything, guess. The map has twelve tracks. [[q]]How many tokens get put in the pile in total, counting every track you could ever try?",
+  "cues": {
+   "q": 4.9745
+  },
+  "dur": 16.570000000000004,
+  "start": 41.852000000000004
+ },
+ {
+  "id": "two_each",
+  "narration": "Look at one track, between Arch and Bay. When you arrive at Arch, [[t1]]you add a token to try this track toward Bay. When you arrive at Bay, [[t2]]you add a token to try it back toward Arch. So every track makes two tokens, one from each end.",
+  "cues": {
+   "t1": 4.7270829999999995,
+   "t2": 9.180208
+  },
+  "dur": 16.858,
+  "start": 58.42200000000001
+ },
+ {
+  "id": "all_edges",
+  "narration": "Do that for all twelve tracks, [[all]]one after another, and we get twenty-four tokens.",
+  "cues": {
+   "all": 2.4593749999999996
+  },
+  "dur": 5.938,
+  "start": 75.28000000000002
+ },
+ {
+  "id": "plus_one",
+  "narration": "Add the one token we start with, [[plus]]at Arch. [[total]]Twenty-five tokens in all. [[formula]]Two times E, plus one. [[eq]]Two times twelve, plus one, is twenty-five. That is exactly the count from last time.",
+  "cues": {
+   "plus": 2.552625,
+   "total": 3.086458,
+   "formula": 5.182833,
+   "eq": 7.7739579999999995
+  },
+  "dur": 14.554000000000002,
+  "start": 81.21800000000002
+ },
+ {
+  "id": "cost",
+  "narration": "[[one]]Every token is put in the pile once, [[two]]and taken out once. [[three]]Call the time for one put, or one take, T. [[four]]Then all the tokens together cost [[five]]about two E times T.",
+  "cues": {
+   "one": 0.391166,
+   "two": 2.695833,
+   "three": 4.453666,
+   "four": 8.177625,
+   "five": 10.117708
+  },
+  "dur": 12.97,
+  "start": 95.77200000000002
+ },
+ {
+  "id": "vertices",
+  "narration": "Each station is also [[mark]]marked only once, which adds about V more work. So the total time is [[v]]V plus E times T. [[w]]The V is the marking. [[w2]]The E times T is the tokens.",
+  "cues": {
+   "mark": 1.8625,
+   "v": 6.745333,
+   "w": 8.945833,
+   "w2": 10.703666
+  },
+  "dur": 13.858,
+  "start": 108.74200000000002
+ },
+ {
+  "id": "stackT",
+  "narration": "With a stack, a put or a take only touches [[top]]the top of the pile, so [[T]]T is a constant, however big the pile gets. The total is V plus E. [[linear]]We call that linear time.",
+  "cues": {
+   "top": 3.1255409999999997,
+   "T": 4.7270829999999995,
+   "linear": 10.169791
+  },
+  "dur": 12.682000000000002,
+  "start": 122.60000000000002
+ },
+ {
+  "id": "matrix",
+  "narration": "One warning. The book assumes the map is stored as [[lists]]a list of neighbors for each station. If it were stored as [[matrix]]a table of yes or no answers, [[scan]]finding one station's neighbors would mean checking every cell in a row, V steps each time, and the total would grow like [[square]]V times V.",
+  "cues": {
+   "lists": 3.56825,
+   "matrix": 6.875541,
+   "scan": 9.258333,
+   "square": 16.484916000000002
+  },
+  "dur": 18.346,
+  "start": 135.28200000000004
+ },
+ {
+  "id": "three_rules",
+  "narration": "Now the pile. The proof only needed somewhere to put tokens in and take tokens out. It never said which one to take. Here is one pile with four numbered tokens. [[stack]]Take the newest, and that is a stack. [[queue]]Take the oldest, and that is a queue. [[pq]]Take the smallest number, and that is a priority queue.",
+  "cues": {
+   "stack": 11.979708,
+   "queue": 14.297416,
+   "pq": 16.771375
+  },
+  "dur": 20.842000000000002,
+  "start": 153.62800000000004
+ },
+ {
+  "id": "names",
+  "narration": "Same algorithm, three behaviors. [[n1]]A stack gives depth-first search. [[n2]]A queue gives breadth-first search. [[n3]]A priority queue gives best-first search. Let us run the first two on the metro map.",
+  "cues": {
+   "n1": 3.2036659999999997,
+   "n2": 5.5995,
+   "n3": 8.047416
+  },
+  "dur": 14.410000000000002,
+  "start": 174.47000000000006
+ },
+ {
+  "id": "stack_run",
+  "narration": "First, the stack. The newest token always goes first. [[go]]Watch how deep it goes. From Arch, ride to Dock, then Fort, then Gate, then East, then Cove, and last of all, Bay.",
+  "cues": {
+   "go": 4.85625,
+   "take1": 4.85625,
+   "do1": 5.10625,
+   "push1": 5.30625,
+   "take2": 5.27625,
+   "do2": 5.52625,
+   "push2": 5.72625,
+   "take3": 5.69625,
+   "do3": 5.94625,
+   "push3": 6.14625,
+   "take4": 6.11625,
+   "do4": 6.36625,
+   "push4": 6.56625,
+   "take5": 6.53625,
+   "do5": 6.78625,
+   "push5": 6.98625,
+   "take6": 6.956250000000001,
+   "do6": 7.206250000000001,
+   "push6": 7.40625,
+   "take7": 7.376250000000001,
+   "do7": 7.626250000000001,
+   "push7": 7.82625,
+   "take8": 7.796250000000001,
+   "do8": 8.04625,
+   "push8": 8.24625,
+   "take9": 8.21625,
+   "do9": 8.46625,
+   "push9": 8.66625,
+   "take10": 8.63625,
+   "do10": 8.88625,
+   "push10": 9.08625,
+   "take11": 9.05625,
+   "do11": 9.30625,
+   "push11": 9.506250000000001,
+   "take12": 9.47625,
+   "do12": 9.72625,
+   "push12": 9.92625,
+   "take13": 9.89625,
+   "do13": 10.14625,
+   "push13": 10.346250000000001,
+   "take14": 10.31625,
+   "do14": 10.56625,
+   "push14": 10.76625,
+   "take15": 10.73625,
+   "do15": 10.98625,
+   "push15": 11.186250000000001,
+   "take16": 11.15625,
+   "do16": 11.40625,
+   "push16": 11.60625,
+   "take17": 11.57625,
+   "do17": 11.82625,
+   "push17": 12.026250000000001,
+   "take18": 11.99625,
+   "do18": 12.24625,
+   "push18": 12.44625,
+   "take19": 12.41625,
+   "do19": 12.66625,
+   "push19": 12.86625,
+   "take20": 12.83625,
+   "do20": 13.08625,
+   "push20": 13.286249999999999,
+   "take21": 13.256250000000001,
+   "do21": 13.506250000000001,
+   "push21": 13.70625,
+   "take22": 13.67625,
+   "do22": 13.92625,
+   "push22": 14.126249999999999,
+   "take23": 14.096250000000001,
+   "do23": 14.346250000000001,
+   "push23": 14.54625,
+   "take24": 14.51625,
+   "do24": 14.76625,
+   "push24": 14.966249999999999,
+   "take25": 14.936250000000001,
+   "do25": 15.186250000000001,
+   "push25": 15.38625
+  },
+  "dur": 19.0,
+  "start": 188.88000000000005
+ },
+ {
+  "id": "stack_tree",
+  "narration": "The came-from links form one long, skinny chain, six tracks deep. [[friend]]Bay is right next to Arch, yet [[ben]]in this tree, the route to Bay passes through five other stations.",
+  "cues": {
+   "friend": 5.3520829999999995,
+   "ben": 7.500541
+  },
+  "dur": 12.586000000000002,
+  "start": 207.88000000000005
+ },
+ {
+  "id": "predict_queue",
+  "narration": "Now the queue. From Arch, three tokens are in the pile. This time we take the oldest token. [[q]]Which one comes out first?",
+  "cues": {
+   "q": 7.408333
+  },
+  "dur": 14.018,
+  "start": 220.46600000000007
+ },
+ {
+  "id": "queue_run1",
+  "narration": "Arch to Bay, the oldest. [[take2]]Bay is new. Then Arch to Cove, [[take3]]Cove is new. Then Arch to Dock, [[take4]]Dock is new. Every station next to Arch is reached before we go any further. Those are one stop away.",
+  "cues": {
+   "take2": 2.383333,
+   "take3": 5.091666,
+   "take4": 7.6177079999999995,
+   "do2": 2.6833329999999997,
+   "push2": 2.933333,
+   "do3": 5.391666,
+   "push3": 5.641666,
+   "do4": 7.917707999999999,
+   "push4": 8.167708
+  },
+  "dur": 14.866000000000001,
+  "start": 234.48400000000007
+ },
+ {
+  "id": "queue_run2",
+  "narration": "Now the tokens from Bay, Cove, and Dock. Most lead to stations already visited, so they are thrown away. [[take7]]Bay to East: East is new. Most of Cove's tokens are thrown away. But [[take12]]Cove to Fort: Fort is new. East and Fort are two stops from Arch.",
+  "cues": {
+   "take7": 7.279166,
+   "take12": 12.565625,
+   "take5": 5.579166,
+   "do5": 5.879166,
+   "push5": 6.079166,
+   "take6": 6.379166,
+   "do6": 6.679166,
+   "push6": 6.879166,
+   "do7": 7.579166,
+   "push7": 7.829166,
+   "take8": 7.879166,
+   "do8": 8.179166,
+   "push8": 8.379166,
+   "take9": 8.479166,
+   "do9": 8.779166,
+   "push9": 8.979166,
+   "take10": 9.079166,
+   "do10": 9.379166,
+   "push10": 9.579166,
+   "take11": 9.679166,
+   "do11": 9.979166,
+   "push11": 10.179166,
+   "do12": 12.865625000000001,
+   "push12": 13.115625000000001
+  },
+  "dur": 18.826,
+  "start": 249.35000000000008
+ },
+ {
+  "id": "queue_run3",
+  "narration": "Next come Dock's tokens, and then East's. Most are thrown away. At last, [[take19]]East to Gate: Gate is new, the final station. Three stops. Everything left in the pile is thrown away.",
+  "cues": {
+   "take19": 5.703666,
+   "take13": 2.403666,
+   "do13": 2.7036659999999997,
+   "push13": 2.903666,
+   "take14": 2.953666,
+   "do14": 3.253666,
+   "push14": 3.453666,
+   "take15": 3.503666,
+   "do15": 3.8036659999999998,
+   "push15": 4.003666,
+   "take16": 4.053666,
+   "do16": 4.3536660000000005,
+   "push16": 4.553666,
+   "take17": 4.6036660000000005,
+   "do17": 4.903666,
+   "push17": 5.1036660000000005,
+   "take18": 5.153666,
+   "do18": 5.453666,
+   "push18": 5.653666,
+   "do19": 6.003666,
+   "push19": 6.253666,
+   "take20": 6.303666,
+   "do20": 6.6036660000000005,
+   "push20": 6.803666,
+   "take21": 6.903666,
+   "do21": 7.203666,
+   "push21": 7.403666,
+   "take22": 7.503666,
+   "do22": 7.803666,
+   "push22": 8.003665999999999,
+   "take23": 8.103666,
+   "do23": 8.403666,
+   "push23": 8.603666,
+   "take24": 8.703666,
+   "do24": 9.003665999999999,
+   "push24": 9.203666,
+   "take25": 9.303666,
+   "do25": 9.603666,
+   "push25": 9.803666
+  },
+  "dur": 14.650000000000002,
+  "start": 268.1760000000001
+ },
+ {
+  "id": "queue_tree",
+  "narration": "The queue gives a short, bushy tree. Every station is at most three stops from Arch. [[q]]Put it next to the stack's tree, and the difference is clear: depth six, against depth three.",
+  "cues": {
+   "q": 5.716666
+  },
+  "dur": 12.562000000000001,
+  "start": 282.8260000000001
+ },
+ {
+  "id": "shortest",
+  "narration": "That is no accident. Each round reaches one stop further, so the number of stops at which a station is first reached is the fewest tracks between it and Arch. [[route]]Bay: one stop. [[gus]]Gate: three stops, and no route is shorter. [[claim]]Breadth-first search finds the routes with the fewest stops. Depth-first search does not.",
+  "cues": {
+   "route": 9.51875,
+   "gus": 11.615125,
+   "claim": 14.766166
+  },
+  "dur": 20.842000000000002,
+  "start": 295.3880000000001
+ },
+ {
+  "id": "pq",
+  "narration": "The third rule puts a number on every track, [[w]]say, the minutes of travel, and always takes the smallest. That is best-first search. [[a]]With the track times as the numbers, it builds a minimum spanning tree: that is {Jarn\u00edk's|Yarnik's} algorithm, which most people call Prim's. [[b]]With the time so far as the number, it finds the fastest routes on a weighted map: that is {Dijkstra's|Dikestra's} algorithm. [[time]]A priority queue costs a little more per token, so the time is V plus E log E. [[later]]Later chapters return to both.",
+  "cues": {
+   "w": 3.073458,
+   "a": 9.141166,
+   "b": 17.148958,
+   "time": 24.284375,
+   "later": 29.9875
+  },
+  "dur": 32.86599999999999,
+  "start": 316.2300000000001
+ },
+ {
+  "id": "disc1",
+  "narration": "A new problem. Across the water, a separate ferry network has three stations: Mill, Nest, and Oak. They connect only to each other. [[run]]Your search from Arch visits the whole metro, and the pile empties. The search stops. [[never]]Mill, Nest, and Oak are never visited.",
+  "cues": {
+   "run": 10.534375,
+   "never": 16.615125
+  },
+  "dur": 20.434,
+  "start": 349.09600000000006
+ },
+ {
+  "id": "wrapper",
+  "narration": "To reach everywhere, add a loop. [[w1]]Go through every station. [[w2]]If a station has not been visited yet, it belongs to a new network. [[w3]]Count it, and start a fresh search from there.",
+  "cues": {
+   "w1": 2.7349159999999997,
+   "w2": 4.8833329999999995,
+   "w3": 9.609916
+  },
+  "dur": 13.114,
+  "start": 369.5300000000001
+ },
+ {
+  "id": "wrapper_code",
+  "narration": "In Python. [[c_set]]A set called visited remembers which stations we have seen. [[c_zero]]Networks starts at zero. [[c_for]]For each station in the graph, [[c_not]]if the station is not in visited, [[c_add]]we found a new network, so add one, [[c_call]]and run the search from that station, which fills in visited.",
+  "cues": {
+   "c_set": 1.628125,
+   "c_zero": 5.45625,
+   "c_for": 7.500541,
+   "c_not": 9.271375,
+   "c_add": 11.107291,
+   "c_call": 13.685416
+  },
+  "dur": 17.698,
+  "start": 382.64400000000006
+ },
+ {
+  "id": "count_result",
+  "narration": "Run it. [[g1]]Arch starts network one, and marks seven stations. [[g2]]Mill starts network two, and marks three. Two networks. Every vertex and every edge is still visited only once, so even with the loop, [[lin]]it is still V plus E. The same loop counts the networks for free.",
+  "cues": {
+   "g1": 1.250541,
+   "g2": 5.000541,
+   "lin": 14.427625
+  },
+  "dur": 19.810000000000002,
+  "start": 400.34200000000004
+ },
+ {
+  "id": "dir1",
+  "narration": "Now make some tracks one-way. [[ex]]An arrow from Arch to Bay means trains only run from Arch to Bay. [[same]]The search code does not change at all. A marked station just adds a token for each arrow leaving it.",
+  "cues": {
+   "ex": 2.513541,
+   "same": 7.0708329999999995
+  },
+  "dur": 14.122000000000002,
+  "start": 420.15200000000004
+ },
+ {
+  "id": "dir2",
+  "narration": "Run it from Arch. [[run]]Bay, Cove, East, and Fort can all be reached. [[never]]Dock and Gate cannot, even though they are on the map, because no arrow leads into them. [[sym]]Reachability is no longer symmetric.",
+  "cues": {
+   "run": 1.263041,
+   "never": 5.091666,
+   "sym": 10.378125
+  },
+  "dur": 13.954,
+  "start": 434.27400000000006
+ },
+ {
+  "id": "dir_tree",
+  "narration": "The came-from arrows still form a tree, [[tree]]pointing away from Arch. [[notspan]]But it is a tree of only the stations Arch can reach, not a spanning tree of the whole map. [[all]]Stacks, queues, and priority queues all still work.",
+  "cues": {
+   "tree": 3.190625,
+   "notspan": 5.065625,
+   "all": 10.846875
+  },
+  "dur": 15.514000000000001,
+  "start": 448.22800000000007
+ },
+ {
+  "id": "flood1",
+  "narration": "One more use. The paint bucket in a drawing program. Each [[pa]]pixel is a vertex, and two neighboring pixels [[pb]]with the same color share an edge. [[edges]]Those edges form a graph on the pixels. [[click]]Click a pixel, and the bucket must recolor everything reachable from it. [[pc]]That is reachability again.",
+  "cues": {
+   "pa": 4.4927079999999995,
+   "pb": 7.591666,
+   "edges": 9.766166,
+   "click": 12.64375,
+   "pc": 17.409375
+  },
+  "dur": 20.098000000000003,
+  "start": 463.7420000000001
+ },
+ {
+  "id": "flood2",
+  "narration": "So we run a search from the clicked pixel, and [[fill]]recolor each pixel the moment it is marked. [[other]]The other blob of the same color is untouched, because no chain of same-colored neighbors leads to it.",
+  "cues": {
+   "fill": 3.0474159999999997,
+   "other": 5.846875
+  },
+  "dur": 13.21,
+  "start": 483.8400000000001
+ },
+ {
+  "id": "flood3",
+  "narration": "This is called a reduction. We solve the paint bucket problem by calling reachability as a black box. [[r1]]A grid of n by n pixels has n squared vertices, [[r2]]and at most two n squared edges, so [[r3]]the search runs in n squared time. [[black]]All that matters about the search is what it promises, not how it works.",
+  "cues": {
+   "r1": 6.875541,
+   "r2": 10.430208,
+   "r3": 13.125541,
+   "black": 15.846875
+  },
+  "dur": 21.034000000000002,
+  "start": 497.05000000000007
+ },
+ {
+  "id": "recap2",
+  "narration": "Let us retell it. [[c1]]About two E plus one tokens, so a stack or queue search is linear. [[c2]]Swap the pile, and you swap the search. [[c3]]Loop over every station, to cover every network. [[c4]]Arrows change who can be reached, not the code. [[next]]Next time: counting paths, from class.",
+  "cues": {
+   "c1": 1.7583330000000001,
+   "c2": 6.888541,
+   "c3": 9.740125,
+   "c4": 13.789583,
+   "next": 16.966666
+  },
+  "dur": 20.746000000000002,
+  "start": 518.0840000000001
+ }
+]

@@ -1,0 +1,8 @@
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-01.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-02.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-03.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-04.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-05.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-06.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-07.mp4'
+file 'C:/Users/Samuel/Desktop/Senior/output/huffman-week-2026-10-13-concrete/clips/04-08.mp4'

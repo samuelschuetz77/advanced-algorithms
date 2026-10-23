@@ -1,5 +1,6 @@
 # Group Project - Optimal Binary Search Tree
 
+- Status: Graded 25/25; submitted 10/10/2026 9:08pm (late) (Canvas, as of 2026-10-20).
 - **Status:** Submitted 10/10/2026 at 9:08pm Mountain; late; ungraded.
 - **Last synced:** 2026-10-12 via ChatGPT in Chrome; Canvas Grades checked.
 - **Canvas link:** https://snow.instructure.com/courses/1254074/assignments/19231864

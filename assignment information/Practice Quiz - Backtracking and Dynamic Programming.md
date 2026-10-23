@@ -1,5 +1,6 @@
 # Practice Quiz - Backtracking and Dynamic Programming
 
+- Status: Graded 23.33/25; submitted 10/13/2026 8:32am (late) (Canvas, as of 2026-10-20).
 - Canvas assignment: https://snow.instructure.com/courses/1254074/assignments/19254540
 - Quiz: https://snow.instructure.com/courses/1254074/quizzes/4912506
 - Due: Wed 10/7/2026, 11:59pm Mountain

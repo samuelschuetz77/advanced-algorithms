@@ -1,0 +1,60 @@
+1
+00:00:00,000 --> 00:00:11,830
+Imagine typing BANANA on one phone and sending it to another. The second phone must receive the exact same six letters, in the same order.
+
+2
+00:00:11,830 --> 00:00:24,010
+A computer can represent information with zeros and ones. One zero or one is called a bit: a tiny choice between two possibilities.
+
+3
+00:00:24,010 --> 00:00:37,510
+Let's make a tiny codebook for the three letters in BANANA. These are labels we choose for this example, so there are no ASCII codes to memorize. Each label has exactly two bits.
+
+4
+00:00:37,510 --> 00:00:46,690
+Read across BANANA. Each of its six letters contributes two bits, so the whole word takes twelve bits.
+
+5
+00:00:46,690 --> 00:00:57,030
+Look at A. It appears in the second, fourth, and sixth positions. We have to send A's label three times.
+
+6
+00:00:57,030 --> 00:01:04,530
+N appears in the third and fifth positions. Its label is sent twice.
+
+7
+00:01:04,530 --> 00:01:11,700
+B appears only at the beginning. Its label is sent just once.
+
+8
+00:01:11,700 --> 00:01:20,400
+Because A appears most often, make its label just zero. Every A now saves one bit.
+
+9
+00:01:20,400 --> 00:01:29,900
+Give N the label one zero and B the label one one. Those labels are longer, but we use them less often.
+
+10
+00:01:29,900 --> 00:01:41,900
+B uses two bits once. N uses two bits twice. A uses one bit three times. That adds up to nine bits instead of twelve.
+
+11
+00:01:41,900 --> 00:01:54,900
+Yes. Read the bits from left to right: one one means B, zero means A, and one zero means N. Continue to recover BANANA.
+
+12
+00:01:54,900 --> 00:02:05,570
+Here is BANANA in eight-bit ASCII bytes. Every letter takes eight digits, so we know where to cut: after each group of eight. You do not need to memorize these codes.
+
+13
+00:02:05,570 --> 00:02:18,740
+Suppose A is zero, N is zero one, and B is one. Now zero one could mean N, or A followed by B. The zero at the start of N is already A. That is the problem.
+
+14
+00:02:18,740 --> 00:02:33,070
+With our actual labels, zero finishes A. If the first bit is one, read another: one zero is N, and one one is B. No complete label starts another label. That is the prefix-free rule.
+
+15
+00:02:33,070 --> 00:02:42,240
+That is what Huffman encoding is about: give common letters shorter labels, keep every label readable, and send fewer bits overall.
+

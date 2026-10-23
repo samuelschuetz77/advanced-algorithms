@@ -1,0 +1,521 @@
+[
+  {
+    "name": "01 - BANANA - One Word, Fewer Bits",
+    "tag": "START WITH ONE WORD",
+    "accent": "#E76F51",
+    "beats": [
+      {
+        "headline": "Imagine sending the word BANANA.",
+        "visual": {
+          "kind": "message"
+        },
+        "narration": "Imagine typing BANANA on one phone and sending it to another. The second phone must receive the exact same six letters, in the same order."
+      },
+      {
+        "headline": "Computers send tiny yes-or-no choices.",
+        "visual": {
+          "kind": "bit"
+        },
+        "narration": "A computer can represent information with zeros and ones. One zero or one is called a bit: a tiny choice between two possibilities."
+      },
+      {
+        "headline": "Give each letter a two-bit label.",
+        "visual": {
+          "kind": "fixed"
+        },
+        "narration": "Let's make a tiny codebook for the three letters in BANANA. These are labels we choose for this example, so there are no ASCII codes to memorize. Each label has exactly two bits."
+      },
+      {
+        "headline": "BANANA now takes twelve bits.",
+        "visual": {
+          "kind": "fixed_total"
+        },
+        "narration": "Read across BANANA. Each of its six letters contributes two bits, so the whole word takes twelve bits."
+      },
+      {
+        "headline": "A appears three times.",
+        "visual": {
+          "kind": "banana_focus",
+          "letter": "A",
+          "count": 3
+        },
+        "narration": "Look at A. It appears in the second, fourth, and sixth positions. We have to send A's label three times."
+      },
+      {
+        "headline": "N appears twice.",
+        "visual": {
+          "kind": "banana_focus",
+          "letter": "N",
+          "count": 2
+        },
+        "narration": "N appears in the third and fifth positions. Its label is sent twice."
+      },
+      {
+        "headline": "B appears once.",
+        "visual": {
+          "kind": "banana_focus",
+          "letter": "B",
+          "count": 1
+        },
+        "narration": "B appears only at the beginning. Its label is sent just once."
+      },
+      {
+        "headline": "What if A had a shorter label?",
+        "visual": {
+          "kind": "banana_label",
+          "letter": "A",
+          "code": "0"
+        },
+        "narration": "Because A appears most often, make its label just zero. Every A now saves one bit."
+      },
+      {
+        "headline": "Keep N and B distinguishable.",
+        "visual": {
+          "kind": "banana_two_labels"
+        },
+        "narration": "Give N the label one zero and B the label one one. Those labels are longer, but we use them less often."
+      },
+      {
+        "headline": "The same word now takes nine bits.",
+        "visual": {
+          "kind": "bit_compare"
+        },
+        "narration": "B uses two bits once. N uses two bits twice. A uses one bit three times. That adds up to nine bits instead of twelve."
+      },
+      {
+        "headline": "Can the receiver read it back?",
+        "visual": {
+          "kind": "decode_banana"
+        },
+        "narration": "Yes. Read the bits from left to right: one one means B, zero means A, and one zero means N. Continue to recover BANANA."
+      },
+      {
+        "headline": "Equal-length bytes have clear boundaries.",
+        "visual": {
+          "kind": "ascii_bytes"
+        },
+        "narration": "Here is BANANA in eight-bit ASCII bytes. Every letter takes eight digits, so we know where to cut: after each group of eight. You do not need to memorize these codes."
+      },
+      {
+        "headline": "A bad short code can be ambiguous.",
+        "visual": {
+          "kind": "prefix_bad"
+        },
+        "narration": "Suppose A is zero, N is zero one, and B is one. Now zero one could mean N, or A followed by B. The zero at the start of N is already A. That is the problem."
+      },
+      {
+        "headline": "Our short labels avoid that problem.",
+        "visual": {
+          "kind": "prefix_good"
+        },
+        "narration": "With our actual labels, zero finishes A. If the first bit is one, read another: one zero is N, and one one is B. No complete label starts another label. That is the prefix-free rule."
+      },
+      {
+        "headline": "This is what Huffman encoding is about.",
+        "visual": {
+          "kind": "final"
+        },
+        "narration": "That is what Huffman encoding is about: give common letters shorter labels, keep every label readable, and send fewer bits overall."
+      }
+    ]
+  },
+  {
+    "name": "02 - What Greedy Means",
+    "tag": "READING 4.1 → 4.4",
+    "accent": "#3F77B9",
+    "beats": [
+      {
+        "headline": "Imagine three files on a tape.",
+        "visual": {
+          "kind": "tape",
+          "items": [
+            2,
+            5,
+            9
+          ]
+        },
+        "narration": "A tape stores files in a line. These files have lengths two, five, and nine. You must pass earlier files to reach later ones."
+      },
+      {
+        "headline": "To read the last file, scan all three.",
+        "visual": {
+          "kind": "scan"
+        },
+        "narration": "If you want the last file, you first pass the first file and the second. Then you finally read the last one."
+      },
+      {
+        "headline": "Short first: total cost 25.",
+        "visual": {
+          "kind": "costs",
+          "order": "2  →  5  →  9",
+          "costs": "2, 7, 16",
+          "total": "25"
+        },
+        "narration": "In the order two, five, nine, the three read costs are two, seven, and sixteen. Together they total twenty-five."
+      },
+      {
+        "headline": "Long first: total cost 39.",
+        "visual": {
+          "kind": "costs",
+          "order": "9  →  5  →  2",
+          "costs": "9, 14, 16",
+          "total": "39"
+        },
+        "narration": "Reverse the order. The read costs are now nine, fourteen, and sixteen. Together they total thirty-nine."
+      },
+      {
+        "headline": "Why did moving two help?",
+        "visual": {
+          "kind": "repeated"
+        },
+        "narration": "The first file gets scanned on every read. A short first file is cheaper each time that repeated scan happens."
+      },
+      {
+        "headline": "This is a greedy choice.",
+        "visual": {
+          "kind": "swap",
+          "before": "9   |   2",
+          "after": "2   |   9"
+        },
+        "narration": "Put the shorter file earlier, commit to that choice, and continue. That is a greedy method: choose a helpful step now."
+      },
+      {
+        "headline": "Huffman chooses two small trees.",
+        "visual": {
+          "kind": "pool",
+          "items": [
+            4,
+            6,
+            8,
+            11
+          ],
+          "selected": [
+            0,
+            1
+          ]
+        },
+        "narration": "Huffman has a different problem but a similar habit. Among the trees available right now, choose the two lightest."
+      },
+      {
+        "headline": "The new tree must go back in.",
+        "visual": {
+          "kind": "merge",
+          "a": 4,
+          "b": 6,
+          "sum": 10
+        },
+        "narration": "Joining weights four and six creates a tree of weight ten. Put that new tree back with the trees you have not used."
+      },
+      {
+        "headline": "Choose from the updated pool.",
+        "visual": {
+          "kind": "pool",
+          "items": [
+            8,
+            10,
+            11
+          ],
+          "selected": [
+            0,
+            1
+          ]
+        },
+        "narration": "Now the available weights are eight, ten, and eleven. The next two are eight and ten. Recheck after every merge."
+      }
+    ]
+  },
+  {
+    "name": "03 - Build One Huffman Tree",
+    "tag": "READING 4.4 · PRACTICE EXAMPLE",
+    "accent": "#149584",
+    "beats": [
+      {
+        "headline": "Each symbol starts as one leaf.",
+        "visual": {
+          "kind": "symbol_pool",
+          "items": [
+            [
+              "P",
+              4
+            ],
+            [
+              "Q",
+              6
+            ],
+            [
+              "R",
+              8
+            ],
+            [
+              "S",
+              11
+            ],
+            [
+              "T",
+              15
+            ]
+          ],
+          "selected": []
+        },
+        "narration": "Our separate practice message has five symbols. P occurs four times, Q six, R eight, S eleven, and T fifteen."
+      },
+      {
+        "headline": "The two smallest are P and Q.",
+        "visual": {
+          "kind": "symbol_pool",
+          "items": [
+            [
+              "P",
+              4
+            ],
+            [
+              "Q",
+              6
+            ],
+            [
+              "R",
+              8
+            ],
+            [
+              "S",
+              11
+            ],
+            [
+              "T",
+              15
+            ]
+          ],
+          "selected": [
+            0,
+            1
+          ]
+        },
+        "narration": "P's weight is four and Q's is six. They are the two least frequent symbols, so Huffman joins them first."
+      },
+      {
+        "headline": "Their parent weighs ten.",
+        "visual": {
+          "kind": "merge",
+          "a": 4,
+          "b": 6,
+          "sum": 10
+        },
+        "narration": "Place P and Q under one new parent. Its weight is four plus six, which is ten."
+      },
+      {
+        "headline": "Now eight is the smallest.",
+        "visual": {
+          "kind": "pool",
+          "items": [
+            8,
+            10,
+            11,
+            15
+          ],
+          "selected": [
+            0,
+            1
+          ]
+        },
+        "narration": "The new tree of weight ten returns to the pool. R still weighs eight, so eight and ten leave next."
+      },
+      {
+        "headline": "Eight and ten make eighteen.",
+        "visual": {
+          "kind": "merge",
+          "a": 8,
+          "b": 10,
+          "sum": 18
+        },
+        "narration": "Join R to the P-Q tree. Their new parent weighs eighteen. It contains three original symbols."
+      },
+      {
+        "headline": "Next, eleven and fifteen.",
+        "visual": {
+          "kind": "merge",
+          "a": 11,
+          "b": 15,
+          "sum": 26
+        },
+        "narration": "The remaining weights are eleven, fifteen, and eighteen. The smallest pair is eleven and fifteen, making twenty-six."
+      },
+      {
+        "headline": "Finish with eighteen and twenty-six.",
+        "visual": {
+          "kind": "merge",
+          "a": 18,
+          "b": 26,
+          "sum": 44
+        },
+        "narration": "Two trees remain. Join them under a parent of weight forty-four. Now every symbol belongs to one tree."
+      },
+      {
+        "headline": "Put bits on the edges.",
+        "visual": {
+          "kind": "tree",
+          "tree": "practice"
+        },
+        "narration": "Let left mean zero and right mean one. The code for a letter is the bits you pass from the top to that letter."
+      },
+      {
+        "headline": "Read one path: P is 010.",
+        "visual": {
+          "kind": "practice_path"
+        },
+        "narration": "To reach P, go left, then right, then left. Write those edge bits in order: zero, one, zero."
+      },
+      {
+        "headline": "The weights add to forty-four.",
+        "visual": {
+          "kind": "weight_sum"
+        },
+        "narration": "You're right: four plus six plus eight plus eleven plus fifteen is forty-four. These weights count how often the letters appear. They do not yet count bits."
+      },
+      {
+        "headline": "Multiply by each code's length.",
+        "visual": {
+          "kind": "weighted_lengths"
+        },
+        "narration": "P and Q have three-bit codes. R, S, and T have two-bit codes. Multiply each letter's weight by the number of bits in its code."
+      },
+      {
+        "headline": "The message takes ninety-eight bits.",
+        "visual": {
+          "kind": "weighted_total"
+        },
+        "narration": "Four times three plus six times three plus eight times two plus eleven times two plus fifteen times two equals ninety-eight bits. That is the total encoded message length."
+      },
+      {
+        "headline": "The merge sum checks the answer.",
+        "visual": {
+          "kind": "merge_total"
+        },
+        "narration": "The merge weights also add to ninety-eight: ten plus eighteen plus twenty-six plus forty-four. This gives us a second way to check the bit count."
+      }
+    ]
+  },
+  {
+    "name": "04 - Use the Tree as a Codec",
+    "tag": "ASSIGNMENT PARTS 2–3 · CONCEPTS",
+    "accent": "#785FBD",
+    "beats": [
+      {
+        "headline": "A program must build the tree first.",
+        "visual": {
+          "kind": "pool",
+          "items": [
+            4,
+            6,
+            8,
+            11
+          ],
+          "selected": [
+            0,
+            1
+          ]
+        },
+        "narration": "The hand trace kept finding the two smallest available weights. A program needs a way to do that repeatedly."
+      },
+      {
+        "headline": "Two Project Two tools have different jobs.",
+        "visual": {
+          "kind": "graph_queue_roles"
+        },
+        "narration": "The assignment reuses two things you built in Project Two. The Graph holds the Huffman tree, with zero or one on each edge. The priority queue chooses which current trees to join next."
+      },
+      {
+        "headline": "A priority queue chooses what goes next.",
+        "visual": {
+          "kind": "pq_role"
+        },
+        "narration": "Your learning log calls it a line where the most important item goes next. Here, each item is one current tree. Its priority is that tree's total frequency, and the smallest weight goes next."
+      },
+      {
+        "headline": "A min-heap makes the minimum quick.",
+        "visual": {
+          "kind": "heap_role"
+        },
+        "narration": "Project Two implements the queue with a min-heap. Each parent weighs no more than its children, so the root is the minimum. The whole heap is not sorted. After a removal, it rearranges to restore that rule."
+      },
+      {
+        "headline": "The locator tells us where a key is.",
+        "visual": {
+          "kind": "locator_role"
+        },
+        "narration": "Your locator dictionary maps each tree's unique key to its position in the heap array. When two heap entries swap, their locator positions change too. It helps remove or update a known key. The heap, not the locator, chooses the minimum."
+      },
+      {
+        "headline": "Take the minimum twice, one at a time.",
+        "visual": {
+          "kind": "two_removals"
+        },
+        "narration": "Your Project Two queue lets us peek at the minimum and remove that node. Take the weight-four tree first. The heap rearranges, so weight six becomes the new minimum. Remove that tree next. The queue is not fully sorted. Join four and six into a weight-ten tree, then insert it."
+      },
+      {
+        "headline": "The finished tree holds the codes.",
+        "visual": {
+          "kind": "tree",
+          "tree": "practice"
+        },
+        "narration": "In the finished tree, each edge carries a zero or one. A symbol's path from the top is its code."
+      },
+      {
+        "headline": "A map points to each letter's leaf.",
+        "visual": {
+          "kind": "map",
+          "items": [
+            [
+              "P",
+              "leaf P"
+            ],
+            [
+              "Q",
+              "leaf Q"
+            ],
+            [
+              "R",
+              "leaf R"
+            ]
+          ]
+        },
+        "narration": "The symbol-to-leaf map helps the program jump straight to the right leaf instead of hunting through the tree."
+      },
+      {
+        "headline": "To encode P, follow its path.",
+        "visual": {
+          "kind": "practice_path"
+        },
+        "narration": "P's path is left, right, left, so the program emits zero, one, zero. It repeats that for each input symbol."
+      },
+      {
+        "headline": "To decode, reverse the direction.",
+        "visual": {
+          "kind": "flow",
+          "top": "010",
+          "bottom": "P"
+        },
+        "narration": "Start at the tree's top and follow the incoming bits. Zero, one, zero ends at P, so output P."
+      },
+      {
+        "headline": "Keep the first test tiny.",
+        "visual": {
+          "kind": "flow",
+          "top": "P  Q  P",
+          "bottom": "encode → decode → P  Q  P"
+        },
+        "narration": "Encode the short message P-Q-P, then decode those bits. The result should be P-Q-P again."
+      },
+      {
+        "headline": "For alternatives, ask two questions.",
+        "visual": {
+          "kind": "questions",
+          "items": [
+            "Same two smallest each time?",
+            "How much work repeats?"
+          ]
+        },
+        "narration": "When comparing other methods, ask whether they choose the correct pair after every merge. Then ask how much repeated work they do."
+      }
+    ]
+  }
+]

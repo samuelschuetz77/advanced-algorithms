@@ -1,0 +1,859 @@
+1
+00:00:00,378 --> 00:00:03,347
+Meet Wrinkles, a naked mole-rat worker.
+
+2
+00:00:03,347 --> 00:00:07,032
+Her colony is a maze of chambers joined by tunnels.
+
+3
+00:00:07,032 --> 00:00:10,678
+Mathematicians draw a maze like this as a graph.
+
+4
+00:00:10,678 --> 00:00:13,777
+Each chamber is a dot, called a vertex.
+
+5
+00:00:13,777 --> 00:00:16,533
+Each tunnel is a line, called an edge.
+
+6
+00:00:17,428 --> 00:00:20,488
+Wrinkles is in the nest, vertex S.
+
+7
+00:00:20,488 --> 00:00:25,605
+Her job is to find every chamber she can reach by following tunnels.
+
+8
+00:00:25,605 --> 00:00:28,652
+That question has a name: reachability.
+
+9
+00:00:28,652 --> 00:00:31,751
+And one burrow over here was cut off by a cave-in,
+
+10
+00:00:31,751 --> 00:00:33,444
+so she will never reach it.
+
+11
+00:00:33,444 --> 00:00:35,019
+Pause, and think.
+
+12
+00:00:35,019 --> 00:00:37,646
+How would Wrinkles check every chamber?
+
+13
+00:00:43,571 --> 00:00:46,839
+Wrinkles' first idea: follow any tunnel.
+
+14
+00:00:46,839 --> 00:00:49,977
+At the next chamber, follow any tunnel again.
+
+15
+00:00:49,977 --> 00:00:50,967
+Watch.
+
+16
+00:00:50,967 --> 00:00:52,738
+Round and round.
+
+17
+00:00:52,738 --> 00:00:55,416
+She never remembers where she has been.
+
+18
+00:00:56,349 --> 00:01:01,610
+Naked mole-rats know their colony by smell, so Wrinkles has a better idea.
+
+19
+00:01:01,610 --> 00:01:06,063
+The first time she arrives at a chamber, she leaves a scent mark.
+
+20
+00:01:06,063 --> 00:01:09,344
+In graph words, she marks the vertex.
+
+21
+00:01:09,344 --> 00:01:13,432
+If she arrives at a marked vertex, she knows: been here,
+
+22
+00:01:13,432 --> 00:01:15,786
+nothing new, turn around.
+
+23
+00:01:16,700 --> 00:01:19,005
+But a scent mark is not enough.
+
+24
+00:01:19,005 --> 00:01:22,338
+At the nest, three tunnels lead out of vertex S,
+
+25
+00:01:22,338 --> 00:01:24,981
+and Wrinkles can only walk down one.
+
+26
+00:01:24,981 --> 00:01:26,752
+What happens to the other two?
+
+27
+00:01:26,752 --> 00:01:27,768
+Pause.
+
+28
+00:01:27,768 --> 00:01:29,288
+How does she remember them?
+
+29
+00:01:34,209 --> 00:01:37,191
+So Wrinkles carries a pile of tokens.
+
+30
+00:01:37,191 --> 00:01:41,462
+Each token reminds her of one tunnel she has not walked yet.
+
+31
+00:01:41,462 --> 00:01:44,938
+It is stamped with the two chambers that tunnel connects.
+
+32
+00:01:44,938 --> 00:01:48,216
+Mole-rats cannot really read, so just pretend.
+
+33
+00:01:49,136 --> 00:01:51,753
+All the tokens go into one pile.
+
+34
+00:01:51,753 --> 00:01:54,097
+The book calls this pile a bag.
+
+35
+00:01:54,097 --> 00:01:57,401
+It is just somewhere to put things in, and take things out.
+
+36
+00:01:58,312 --> 00:02:04,198
+Each token is a pair: the vertex she came from, and the vertex it leads to.
+
+37
+00:02:04,198 --> 00:02:06,880
+In code, we will call these two things came_from,
+
+38
+00:02:06,880 --> 00:02:07,843
+and current.
+
+39
+00:02:07,843 --> 00:02:10,848
+In a few minutes, you will see why we keep both.
+
+40
+00:02:11,775 --> 00:02:14,118
+The whole method is four rules.
+
+41
+00:02:14,118 --> 00:02:19,092
+Rule one: start with a single token that says: came from nobody,
+
+42
+00:02:19,092 --> 00:02:20,468
+leads to the nest.
+
+43
+00:02:21,344 --> 00:02:26,301
+Rule two: as long as the pile is not empty, take one token out.
+
+44
+00:02:27,164 --> 00:02:31,135
+Rule three: look at the vertex that token leads to.
+
+45
+00:02:31,135 --> 00:02:33,557
+If it has no mark yet, mark it.
+
+46
+00:02:33,557 --> 00:02:35,328
+Remember who sent her.
+
+47
+00:02:35,328 --> 00:02:36,734
+That is its parent.
+
+48
+00:02:36,734 --> 00:02:40,689
+Then add a new token for every edge leaving that vertex.
+
+49
+00:02:41,573 --> 00:02:46,301
+Rule four: if the vertex is already marked, throw the token away.
+
+50
+00:02:46,301 --> 00:02:48,211
+There is nothing new to do.
+
+51
+00:02:49,135 --> 00:02:51,336
+That is the entire algorithm.
+
+52
+00:02:51,336 --> 00:02:55,672
+The book calls it whatever-first search,
+because we have not said which token to take
+
+53
+00:02:55,672 --> 00:02:56,817
+out of the pile.
+
+54
+00:02:56,817 --> 00:02:59,565
+Today, we always take the newest one.
+
+55
+00:02:59,565 --> 00:03:03,601
+Next video, we will see what changes if you choose differently.
+
+56
+00:03:03,601 --> 00:03:07,924
+And if you open the book, here is the translation of its letters.
+
+57
+00:03:07,924 --> 00:03:10,021
+The letter s is the start.
+
+58
+00:03:10,021 --> 00:03:12,234
+The bag is our token pile.
+
+59
+00:03:12,234 --> 00:03:14,448
+The letter p is came_from.
+
+60
+00:03:14,448 --> 00:03:16,427
+The letter v is current.
+
+61
+00:03:16,427 --> 00:03:18,363
+And w is a neighbor.
+
+62
+00:03:19,276 --> 00:03:21,190
+Let us run it on the colony.
+
+63
+00:03:21,190 --> 00:03:24,055
+Seven vertices, twelve edges.
+
+64
+00:03:24,055 --> 00:03:29,120
+Each vertex keeps a list of its neighbors, and adds tokens in list order.
+
+65
+00:03:29,120 --> 00:03:32,749
+So the last neighbor in the list ends up on top of the pile.
+
+66
+00:03:33,675 --> 00:03:37,165
+Start with one token: nobody to S.
+
+67
+00:03:37,165 --> 00:03:38,232
+Take it out.
+
+68
+00:03:38,232 --> 00:03:40,967
+S has no mark, so mark S.
+
+69
+00:03:40,967 --> 00:03:42,673
+Its parent is nobody.
+
+70
+00:03:42,673 --> 00:03:48,285
+S has three edges, so add three tokens: S to A, S to B,
+
+71
+00:03:48,285 --> 00:03:49,622
+and S to C.
+
+72
+00:03:50,557 --> 00:03:53,031
+Now the pile has three tokens.
+
+73
+00:03:53,031 --> 00:03:55,178
+We always take the newest one.
+
+74
+00:03:55,178 --> 00:03:56,503
+Which one is it?
+
+75
+00:04:01,418 --> 00:04:04,478
+It is S to C, the last one we added.
+
+76
+00:04:04,478 --> 00:04:05,572
+Take it out.
+
+77
+00:04:05,572 --> 00:04:08,267
+C is new, so mark C.
+
+78
+00:04:08,267 --> 00:04:09,686
+Its parent is S.
+
+79
+00:04:09,686 --> 00:04:15,568
+C has four edges, to A, B, F, and back to S, so four tokens go on top.
+
+80
+00:04:16,476 --> 00:04:19,028
+Newest token: C to S.
+
+81
+00:04:19,028 --> 00:04:21,398
+But S already has a mark.
+
+82
+00:04:21,398 --> 00:04:22,736
+Throw it away.
+
+83
+00:04:23,625 --> 00:04:25,409
+Next, C to F.
+
+84
+00:04:25,409 --> 00:04:26,528
+F is new.
+
+85
+00:04:26,528 --> 00:04:28,429
+Mark it, parent C.
+
+86
+00:04:28,429 --> 00:04:34,142
+F has three edges, to C, D, and E, so three tokens go on top.
+
+87
+00:04:35,072 --> 00:04:37,012
+The newest is F to E.
+
+88
+00:04:37,012 --> 00:04:38,028
+E is new.
+
+89
+00:04:38,028 --> 00:04:39,877
+Mark it, parent F.
+
+90
+00:04:39,877 --> 00:04:42,702
+E has edges to B, D, and F.
+
+91
+00:04:42,702 --> 00:04:44,235
+Three more tokens.
+
+92
+00:04:45,151 --> 00:04:46,714
+Now E to F.
+
+93
+00:04:46,714 --> 00:04:48,797
+F is already marked.
+
+94
+00:04:48,797 --> 00:04:50,069
+Throw it away.
+
+95
+00:04:50,980 --> 00:04:52,282
+Next, E to D.
+
+96
+00:04:52,282 --> 00:04:53,558
+D is new.
+
+97
+00:04:53,558 --> 00:04:55,433
+Mark it, parent E.
+
+98
+00:04:55,433 --> 00:04:58,467
+D has edges to A, E, and F.
+
+99
+00:04:58,467 --> 00:05:00,078
+Three more tokens.
+
+100
+00:05:00,974 --> 00:05:03,474
+D to F: F is marked.
+
+101
+00:05:03,474 --> 00:05:04,750
+Throw it away.
+
+102
+00:05:04,750 --> 00:05:07,042
+D to E: E is marked.
+
+103
+00:05:07,042 --> 00:05:08,913
+Throw that one away too.
+
+104
+00:05:09,866 --> 00:05:11,155
+D to A.
+
+105
+00:05:11,155 --> 00:05:14,684
+A is new, so mark A, parent D.
+
+106
+00:05:14,684 --> 00:05:19,072
+A has four edges, so four tokens go on top: to B,
+
+107
+00:05:19,072 --> 00:05:20,973
+C, D, and S.
+
+108
+00:05:20,973 --> 00:05:23,851
+Only one of those vertices is still unmarked.
+
+109
+00:05:23,851 --> 00:05:29,107
+Which token will lead Wrinkles to it, and
+how many will she throw away first?
+
+110
+00:05:35,036 --> 00:05:37,705
+The answer: three get thrown away.
+
+111
+00:05:37,705 --> 00:05:41,169
+A to S, A to D, and A to C.
+
+112
+00:05:41,169 --> 00:05:42,536
+Then A to B.
+
+113
+00:05:42,536 --> 00:05:45,036
+B is new, so mark B.
+
+114
+00:05:45,036 --> 00:05:46,625
+Its parent is A.
+
+115
+00:05:46,625 --> 00:05:48,721
+That is the seventh vertex.
+
+116
+00:05:48,721 --> 00:05:52,666
+Every vertex Wrinkles can reach now has a mark.
+
+117
+00:05:52,666 --> 00:05:54,681
+But the pile is not empty.
+
+118
+00:05:55,614 --> 00:06:00,731
+Eleven tokens are left, and every one leads to a marked vertex.
+
+119
+00:06:00,731 --> 00:06:03,492
+So rule four, over and over.
+
+120
+00:06:03,492 --> 00:06:06,004
+Throw it away, throw it away.
+
+121
+00:06:06,004 --> 00:06:07,606
+Watch the pile drain.
+
+122
+00:06:07,606 --> 00:06:13,323
+The last two tokens, S to B and S to A, have
+been waiting at the bottom since step one.
+
+123
+00:06:13,323 --> 00:06:16,695
+Their vertices got marked a different way, so they are stale.
+
+124
+00:06:16,695 --> 00:06:20,054
+We never dig through the pile to remove old tokens.
+
+125
+00:06:20,054 --> 00:06:22,254
+We just ignore them when they come out.
+
+126
+00:06:22,254 --> 00:06:23,843
+Zero tokens.
+
+127
+00:06:23,843 --> 00:06:24,999
+We are done.
+
+128
+00:06:25,923 --> 00:06:31,548
+The marked vertices are S, A, B, C, D, E, and F.
+
+129
+00:06:31,548 --> 00:06:33,749
+X and Y never got a mark.
+
+130
+00:06:33,749 --> 00:06:38,501
+That is the answer: from the nest, Wrinkles can reach seven chambers,
+
+131
+00:06:38,501 --> 00:06:41,053
+and she can never reach the cut-off burrow.
+
+132
+00:06:41,053 --> 00:06:42,564
+And look at the count.
+
+133
+00:06:42,564 --> 00:06:48,033
+Twenty-five tokens in all: one to start,
+and two for each of the twelve edges,
+
+134
+00:06:48,033 --> 00:06:49,751
+one from each end.
+
+135
+00:06:49,751 --> 00:06:51,822
+Only seven were useful.
+
+136
+00:06:51,822 --> 00:06:54,448
+We will use that count in the next video.
+
+137
+00:06:55,341 --> 00:06:57,569
+Remember the pair on each token?
+
+138
+00:06:57,569 --> 00:06:59,014
+Here is why.
+
+139
+00:06:59,014 --> 00:07:02,009
+Ask vertex B: who is your parent?
+
+140
+00:07:02,009 --> 00:07:02,582
+A.
+
+141
+00:07:02,582 --> 00:07:03,740
+Ask A?
+
+142
+00:07:03,740 --> 00:07:03,909
+D.
+
+143
+00:07:03,909 --> 00:07:04,873
+Ask D?
+
+144
+00:07:04,873 --> 00:07:05,720
+E.
+
+145
+00:07:05,720 --> 00:07:08,376
+Then F, then C, then S.
+
+146
+00:07:08,376 --> 00:07:11,575
+Keep asking, and Wrinkles walks right back to the nest.
+
+147
+00:07:12,479 --> 00:07:15,214
+Now draw only the parent edges.
+
+148
+00:07:15,214 --> 00:07:18,977
+Six of them, one fewer than the seven vertices.
+
+149
+00:07:18,977 --> 00:07:23,208
+They form a tree: one long, skinny path from the nest.
+
+150
+00:07:23,208 --> 00:07:27,128
+The book says depth-first trees are usually long and skinny.
+
+151
+00:07:27,128 --> 00:07:32,176
+And every marked vertex hangs from the nest by exactly one route.
+
+152
+00:07:33,118 --> 00:07:34,785
+Three promises.
+
+153
+00:07:34,785 --> 00:07:36,673
+First, it always stops.
+
+154
+00:07:36,673 --> 00:07:42,129
+A vertex is marked only once, and only a marked vertex adds tokens.
+
+155
+00:07:42,129 --> 00:07:44,755
+So the pile cannot keep growing forever.
+
+156
+00:07:45,667 --> 00:07:50,198
+Second, it never marks a vertex she cannot reach.
+
+157
+00:07:50,198 --> 00:07:54,626
+Every token is added by a marked vertex, along a real edge.
+
+158
+00:07:54,626 --> 00:07:59,622
+So every marked vertex has a chain of parents leading back to the nest.
+
+159
+00:08:00,611 --> 00:08:04,335
+Third, it marks every vertex she can reach.
+
+160
+00:08:04,335 --> 00:08:09,856
+Pick any reachable vertex, call it the target, and take a shortest route to it.
+
+161
+00:08:09,856 --> 00:08:13,238
+The nest, then a few vertices, then the target.
+
+162
+00:08:14,164 --> 00:08:18,682
+S gets marked, so it adds a token for the next vertex on the route.
+
+163
+00:08:18,682 --> 00:08:23,826
+That token cannot vanish, and the search only stops when the pile is empty,
+
+164
+00:08:23,826 --> 00:08:25,701
+so the token gets taken out.
+
+165
+00:08:25,701 --> 00:08:30,439
+At that moment the vertex is already marked, or it gets marked now.
+
+166
+00:08:30,439 --> 00:08:32,232
+Either way, it is marked.
+
+167
+00:08:33,145 --> 00:08:35,593
+Then it adds the token for the next one.
+
+168
+00:08:35,593 --> 00:08:37,976
+Each vertex knocks over the next.
+
+169
+00:08:37,976 --> 00:08:41,088
+Mathematicians call this induction on distance.
+
+170
+00:08:41,088 --> 00:08:45,251
+It is the proof of Lemma five point one, and now you can read it.
+
+171
+00:08:46,176 --> 00:08:48,661
+Here are the four rules as Python.
+
+172
+00:08:48,661 --> 00:08:50,875
+Rule one is line two.
+
+173
+00:08:50,875 --> 00:08:52,841
+Rule two is the while loop.
+
+174
+00:08:52,841 --> 00:08:56,033
+Rule three is everything inside the if.
+
+175
+00:08:56,033 --> 00:09:00,265
+And rule four is what is missing: if the vertex is already marked,
+
+176
+00:09:00,265 --> 00:09:02,956
+the if is false, and nothing runs.
+
+177
+00:09:03,885 --> 00:09:05,135
+Line two.
+
+178
+00:09:05,135 --> 00:09:08,677
+Square brackets make a list: that is our pile.
+
+179
+00:09:08,677 --> 00:09:10,682
+Inside is one pair.
+
+180
+00:09:10,682 --> 00:09:13,690
+Round brackets glue two values together.
+
+181
+00:09:13,690 --> 00:09:16,580
+The first is None, which means nobody.
+
+182
+00:09:16,580 --> 00:09:18,087
+The second is start.
+
+183
+00:09:19,004 --> 00:09:20,423
+Line six.
+
+184
+00:09:20,423 --> 00:09:24,382
+Pop takes the last item out of the list: our newest token,
+
+185
+00:09:24,382 --> 00:09:25,280
+a pair.
+
+186
+00:09:25,280 --> 00:09:29,421
+The two names on the left of the equals sign, with a comma between them,
+
+187
+00:09:29,421 --> 00:09:30,749
+split that pair.
+
+188
+00:09:30,749 --> 00:09:33,366
+The first value goes into came_from.
+
+189
+00:09:33,366 --> 00:09:35,202
+The second goes into current.
+
+190
+00:09:35,202 --> 00:09:37,086
+That is called unpacking.
+
+191
+00:09:37,996 --> 00:09:41,824
+A set remembers which vertices have a mark, and answers,
+
+192
+00:09:41,824 --> 00:09:44,012
+is this one in here, very quickly.
+
+193
+00:09:44,012 --> 00:09:47,228
+The curly brackets on line four make a dictionary:
+
+194
+00:09:47,228 --> 00:09:49,598
+look up a vertex, get its parent.
+
+195
+00:09:49,598 --> 00:09:52,046
+The loop adds one token per neighbor.
+
+196
+00:09:52,046 --> 00:09:54,220
+Look at the double round brackets.
+
+197
+00:09:54,220 --> 00:09:56,824
+The inner pair is the token.
+
+198
+00:09:56,824 --> 00:09:59,190
+The outer ones belong to append.
+
+199
+00:10:00,136 --> 00:10:02,701
+The function returns the parents table.
+
+200
+00:10:02,701 --> 00:10:07,636
+Its keys are exactly the marked vertices, the answer to reachability.
+
+201
+00:10:07,636 --> 00:10:09,976
+And its values are the tree.
+
+202
+00:10:10,872 --> 00:10:12,526
+One more connection.
+
+203
+00:10:12,526 --> 00:10:14,987
+In class you wrote build_topo_from.
+
+204
+00:10:14,987 --> 00:10:18,268
+That is this same idea, written with recursion.
+
+205
+00:10:18,268 --> 00:10:22,656
+There is no written pile, because Python's own call stack is the pile.
+
+206
+00:10:22,656 --> 00:10:24,909
+The order of the neighbors can come out flipped,
+
+207
+00:10:24,909 --> 00:10:26,923
+but the idea is the same.
+
+208
+00:10:27,813 --> 00:10:29,128
+Let us retell it.
+
+209
+00:10:29,128 --> 00:10:31,485
+Scent marks stop her circling.
+
+210
+00:10:31,485 --> 00:10:35,782
+A pile of tokens remembers the tunnels she has not walked yet.
+
+211
+00:10:35,782 --> 00:10:38,920
+And the parents form a tree back to the nest.
+
+212
+00:10:38,920 --> 00:10:43,152
+Pause, and run the four rules on the graph from page one of your notes.
+
+213
+00:10:43,152 --> 00:10:46,654
+Next time: what changes when the pile is a queue,
+
+214
+00:10:46,654 --> 00:10:48,356
+or a priority queue.

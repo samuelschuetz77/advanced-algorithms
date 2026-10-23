@@ -1,0 +1,367 @@
+[
+ {
+  "id": "g1",
+  "narration": "In your notes, you drew this graph, and two ways to lay it out. Let us give it a story: a morning routine. [[a]]{A} is shower. [[b]]{B} is get dressed. [[c]]{C} is coffee. [[d]]{D} is leave. [[arrow]]An arrow means: this task must come before that one.",
+  "cues": {
+   "a": 6.888541,
+   "b": 8.203666,
+   "c": 9.648958,
+   "d": 11.094291,
+   "arrow": 12.383333
+  },
+  "dur": 16.954,
+  "start": 0.0
+ },
+ {
+  "id": "layouts",
+  "narration": "Now lay the four tasks on a line. [[bad]]In this order, {C}, {B}, {A}, {D}, three arrows point backward. You would drink coffee before showering. [[good]]In this order, {A}, {B}, {C}, {D}, every arrow points the same way. That is called a topological order. [[dag]]Your note says: a DAG always has one.",
+  "cues": {
+   "bad": 3.1125,
+   "good": 11.289583,
+   "dag": 19.792208000000002
+  },
+  "dur": 24.01,
+  "start": 16.954
+ },
+ {
+  "id": "cycle2",
+  "narration": "Why a DAG? Suppose [[cyc]]get dressed had to come before shower, and shower before get dressed. [[imp]]No order could satisfy both. With no cycles, [[ok]]an order always exists.",
+  "cues": {
+   "cyc": 2.370333,
+   "imp": 6.966666,
+   "ok": 10.794791
+  },
+  "dur": 13.282000000000002,
+  "start": 40.964
+ },
+ {
+  "id": "dinner_intro",
+  "narration": "A bigger one. Priya is cooking dinner: seven tasks, and twelve rules. An arrow from one task to another means the first must be finished before the second starts. [[q]]In what order can Priya do everything?",
+  "cues": {
+   "q": 11.966666
+  },
+  "dur": 21.490000000000002,
+  "start": 54.246
+ },
+ {
+  "id": "dfs_idea",
+  "narration": "Here is a trick, using depth-first search. [[u1]]When you reach a task, start it. [[u2]]Then visit everything it unlocks, before anything else. [[u3]]Only then, call this task finished. So a task always finishes after everything that depends on it. Watch.",
+  "cues": {
+   "u1": 3.372916,
+   "u2": 5.391166,
+   "u3": 9.3495
+  },
+  "dur": 17.362000000000002,
+  "start": 75.736
+ },
+ {
+  "id": "dfs_run1",
+  "narration": "[[go]]Start at Shop. Shop unlocks Chop, so go there. Chop unlocks Boil. Boil unlocks Sauce. Sauce unlocks Plate. Plate unlocks Eat. Eat unlocks nothing, so Eat is the first task to finish.",
+  "cues": {
+   "go": 0.391166,
+   "e0": 0.5911660000000001,
+   "e1": 1.7411659999999998,
+   "e2": 2.891166,
+   "e3": 4.041166,
+   "e4": 5.191166,
+   "e5": 6.341166,
+   "e6": 7.491166,
+   "e7": 8.641165999999998,
+   "e8": 9.791165999999999,
+   "e9": 10.941165999999999,
+   "e10": 12.091166,
+   "e11": 13.241165999999998
+  },
+  "dur": 17.0,
+  "start": 93.09800000000001
+ },
+ {
+  "id": "dfs_run2",
+  "narration": "[[go]]Now back up. Plate has nothing left, so Plate is finished. Sauce is finished. Back at Boil, its other task, Plate, is already finished, so skip it. Boil is finished.",
+  "cues": {
+   "go": 0.391166,
+   "e12": 0.691166,
+   "e13": 2.591166,
+   "e14": 4.491166,
+   "e15": 6.391165999999999
+  },
+  "dur": 13.978000000000002,
+  "start": 110.09800000000001
+ },
+ {
+  "id": "dfs_run3",
+  "narration": "[[go]]Back at Chop. Its next task, Fry, is new, so go there. Fry's tasks, Sauce and Plate, are both finished: skip them. Fry is finished. Chop's last task, Sauce, is done too. Chop is finished. Back at Shop, Boil and Fry are done. Shop finishes last of all.",
+  "cues": {
+   "go": 0.391166,
+   "e16": 0.691166,
+   "e17": 2.141166,
+   "e18": 3.591166,
+   "e19": 5.041166,
+   "e20": 6.491166,
+   "e21": 7.941166,
+   "e22": 9.391166,
+   "e23": 10.841166000000001,
+   "e24": 12.291166,
+   "e25": 13.741166
+  },
+  "dur": 20.938000000000002,
+  "start": 124.07600000000002
+ },
+ {
+  "id": "finish_order",
+  "narration": "The finish order is Eat, Plate, Sauce, Boil, Fry, Chop, Shop. That is called the postorder. [[rev]]Reverse it: Shop, Chop, Fry, Boil, Sauce, Plate, Eat. [[line]]Lay the tasks out in that order, and all twelve arrows point forward.",
+  "cues": {
+   "rev": 7.682291,
+   "line": 14.154166
+  },
+  "dur": 19.330000000000002,
+  "start": 145.014
+ },
+ {
+  "id": "why",
+  "narration": "Why does it work? Look at the arrow from [[w1]]Fry to Sauce. Sauce finished before Fry did. And at the arrow from [[w2]]Chop to Boil: Boil finished before Chop. [[rule]]For every arrow, the task it points to finishes first. So when the finish order is reversed, every task comes before the tasks it points to.",
+  "cues": {
+   "w1": 2.669791,
+   "w2": 7.5395829999999995,
+   "rule": 11.042208
+  },
+  "dur": 20.818,
+  "start": 164.34400000000002
+ },
+ {
+  "id": "preorder_fail",
+  "narration": "What about the order the tasks start? That is called the preorder: [[pre]]Shop, Chop, Boil, Sauce, Plate, Eat, Fry. [[bad]]Look: Fry comes last, but Fry must come before Sauce and Plate. Two arrows point backward. The preorder is not a topological order.",
+  "cues": {
+   "pre": 3.854708,
+   "bad": 8.659375
+  },
+  "dur": 19.69,
+  "start": 185.16200000000003
+ },
+ {
+  "id": "e_intro",
+  "narration": "Back to the dinner, with one more detail. Priya also wants to set the table. [[t]]Setting the table has nothing before it, and its only arrow leads to Eat. [[two]]Now there are two tasks with nothing before them: Shop, and Table. So a loop over all the tasks could start at either one. Let us run both.",
+  "cues": {
+   "t": 5.534375,
+   "two": 10.703666
+  },
+  "dur": 21.058,
+  "start": 204.85200000000003
+ },
+ {
+  "id": "e_case1",
+  "narration": "[[go]]Case one: the dictionary lists Shop first. The search runs exactly as before, and Shop finishes. [[late]]Then the loop reaches Table, a new task. Its only arrow leads to Eat, which is already finished. So Table finishes last of all.",
+  "cues": {
+   "go": 0.378125,
+   "late": 7.95625,
+   "e0": 0.578125,
+   "e1": 0.818125,
+   "e2": 1.058125,
+   "e3": 1.298125,
+   "e4": 1.538125,
+   "e5": 1.778125,
+   "e6": 2.018125,
+   "e7": 2.2581249999999997,
+   "e8": 2.498125,
+   "e9": 2.738125,
+   "e10": 2.978125,
+   "e11": 3.2181249999999997,
+   "e12": 3.458125,
+   "e13": 3.698125,
+   "e14": 3.938125,
+   "e15": 4.178125,
+   "e16": 4.418125,
+   "e17": 4.658125,
+   "e18": 4.898125,
+   "e19": 5.138125,
+   "e20": 5.378125,
+   "e21": 5.618125,
+   "e22": 5.858124999999999,
+   "e23": 6.098125,
+   "e24": 6.338125,
+   "e25": 6.578125,
+   "e26": 8.05625,
+   "e27": 9.95625,
+   "e28": 11.85625
+  },
+  "dur": 17.770000000000003,
+  "start": 225.91000000000003
+ },
+ {
+  "id": "e_case2",
+  "narration": "Case two: the dictionary lists Table first. [[e0]]Table starts. [[e1]]Its arrow leads to Eat, a new task, [[e2]]so Eat starts, [[e3]]and finishes at once, since it unlocks nothing. [[e4]]Then Table finishes. [[late]]Now the loop reaches Shop, and the whole dinner search runs. But Eat is already finished, so every arrow into Eat is skipped.",
+  "cues": {
+   "e0": 4.115125,
+   "e1": 5.560416,
+   "e2": 8.203666,
+   "e3": 9.19325,
+   "e4": 12.552083000000001,
+   "late": 14.557833,
+   "e5": 14.657833,
+   "e6": 14.897833,
+   "e7": 15.137833,
+   "e8": 15.377833,
+   "e9": 15.617833000000001,
+   "e10": 15.857833000000001,
+   "e11": 16.097833,
+   "e12": 16.337833,
+   "e13": 16.577833000000002,
+   "e14": 16.817833,
+   "e15": 17.057833000000002,
+   "e16": 17.297833,
+   "e17": 17.537833,
+   "e18": 17.777833,
+   "e19": 18.017833,
+   "e20": 18.257833,
+   "e21": 18.497833,
+   "e22": 18.737833000000002,
+   "e23": 18.977833,
+   "e24": 19.217833,
+   "e25": 19.457833,
+   "e26": 19.697833,
+   "e27": 19.937832999999998,
+   "e28": 20.177833
+  },
+  "dur": 23.266000000000002,
+  "start": 243.68000000000004
+ },
+ {
+  "id": "e_compare",
+  "narration": "[[c1]]Here are both cases side by side. [[c2]]Case two, below. [[bad]]In both, the start order fails: three arrows point backward each time. [[good]]But the reversed finish order is a valid topological order in both. [[diff]]They are not the same order. In case one, Table comes first. In case two, Table comes late, right before Eat. Both are correct, because Table only has to come before Eat.",
+  "cues": {
+   "c1": 0.417208,
+   "c2": 2.8,
+   "bad": 4.479708,
+   "good": 9.792208,
+   "diff": 14.323458
+  },
+  "dur": 27.01,
+  "start": 266.946
+ },
+ {
+  "id": "code_intro",
+  "narration": "Now your code. [[lists]]It keeps three things: the start order, the finish order, and a set of visited tasks. [[nested]]A function inside a function, build topo from, handles one task. [[outer]]And an outer loop tries every task, so every one is covered.",
+  "cues": {
+   "lists": 1.6151250000000001,
+   "nested": 7.6177079999999995,
+   "outer": 13.203666
+  },
+  "dur": 17.938000000000002,
+  "start": 293.956
+ },
+ {
+  "id": "code_nested",
+  "narration": "[[def]]{build_topo_from|build~topo~from} is defined inside topo order, like nested was in count paths. [[p]]So it can read and change pre order, and visited, [[q]]and post order, from outside. Every call shares the same three.",
+  "cues": {
+   "def": 0.391166,
+   "p": 5.9770829999999995,
+   "q": 9.19325
+  },
+  "dur": 14.242,
+  "start": 311.894
+ },
+ {
+  "id": "code_body",
+  "narration": "One call, step by step. [[p1]]Write the task into the start order. [[p2]]Mark it visited. [[p3]]For each task it unlocks, [[p4]]if that task is not visited yet, [[p5]]go and handle it first. [[p6]]Only after all of them are done, write this task into the finish order.",
+  "cues": {
+   "p1": 2.8,
+   "p2": 5.065625,
+   "p3": 6.4458329999999995,
+   "p4": 8.372916,
+   "p5": 10.664583,
+   "p6": 12.878125
+  },
+  "dur": 17.818,
+  "start": 326.136
+ },
+ {
+  "id": "code_base",
+  "narration": "Where is the base case? There is no if for it. [[f]]When a task has no children, or all of them have been started, the for loop does nothing. [[post]]The function falls through to post order, and returns. That is what your note says: none of the recursive calls happen when all the children have already been started.",
+  "cues": {
+   "f": 3.6724159999999997,
+   "post": 9.180208
+  },
+  "dur": 19.426000000000002,
+  "start": 343.954
+ },
+ {
+  "id": "code_outer",
+  "narration": "The outer loop. [[o1]]For each node in the dictionary, in the order the dictionary lists them, [[o2]]if it was not already covered, [[o3]]start a fresh depth-first search from it. That is the loop from the earlier videos, and it is why the dictionary order mattered in the two cases.",
+  "cues": {
+   "o1": 1.810416,
+   "o2": 6.1333329999999995,
+   "o3": 7.904166
+  },
+  "dur": 17.194000000000003,
+  "start": 363.38
+ },
+ {
+  "id": "code_bug",
+  "narration": "Now the bug. [[bug]]The last line returns pre order. We just saw that the start order is not a topological order. [[fix]]The fix: return the reverse of post order, with list of reversed post order. [[rev1]]Reversed hands the items back to front, [[rev2]]and list turns that into a list. This is shown here only. Your file stays as you wrote it.",
+  "cues": {
+   "bug": 1.6020830000000001,
+   "fix": 7.9302079999999995,
+   "rev1": 13.294791,
+   "rev2": 15.925
+  },
+  "dur": 22.594,
+  "start": 380.574
+ },
+ {
+  "id": "test_bad",
+  "narration": "Now your test. [[args]]Your test_topo_order is a copy of the first test. It calls topo order with three arguments, but topo order takes only one: the graph. [[spec]]The spec's test is different. It checks the order itself.",
+  "cues": {
+   "args": 1.7583330000000001,
+   "spec": 12.31825
+  },
+  "dur": 16.714000000000002,
+  "start": 403.168
+ },
+ {
+  "id": "spec_test",
+  "narration": "The real test, line by line. [[s1]]Sorted order equals sorted graph: the same vertices, none lost. [[s2]]Order dot index of u is less than order dot index of w. Index gives a position in the list. [[s3]]For every vertex u, and every child w of u, [[s4]]all means every one of those checks must be true. In other words: every arrow points forward.",
+  "cues": {
+   "s1": 2.904166,
+   "s2": 8.203666,
+   "s3": 15.573458,
+   "s4": 19.81825
+  },
+  "dur": 26.770000000000003,
+  "start": 419.882
+ },
+ {
+  "id": "run_tests",
+  "narration": "Run your function as written. [[bad]]On the first graph it returns {A}, {B}, {D}, {E}, {C}. {C} points to {D}, but {C} comes after {D}. The test fails. [[fixed]]With the fix, both graphs pass: {A}, {C}, {B}, {D}, {E}, and then {Z}, {Y}, {X}.",
+  "cues": {
+   "bad": 2.357291,
+   "fixed": 11.484916
+  },
+  "dur": 19.474,
+  "start": 446.652
+ },
+ {
+  "id": "speed",
+  "narration": "How fast is it? [[s1]]Each task is visited once. [[s2]]Each arrow is looked at once. [[s3]]So the function runs in V plus E time. [[t]]The test uses index, which scans the list, so the test is slower. The function is not.",
+  "cues": {
+   "s1": 1.9145830000000001,
+   "s2": 4.2453330000000005,
+   "s3": 6.615125,
+   "t": 9.805208
+  },
+  "dur": 16.402,
+  "start": 466.126
+ },
+ {
+  "id": "recap",
+  "narration": "To recap. [[c1]]A topological order puts every arrow pointing the same way. [[c2]]Depth-first search gives one: reverse the finish order. [[c3]]The start order is not enough. [[c4]]Your code needs one change: return the reversed post order. [[next]]Next: the book's chapter six, preorder, postorder, and cycles, in detail.",
+  "cues": {
+   "c1": 1.589083,
+   "c2": 5.729708,
+   "c3": 9.622916,
+   "c4": 11.940625,
+   "next": 16.341666
+  },
+  "dur": 22.786,
+  "start": 482.52799999999996
+ }
+]

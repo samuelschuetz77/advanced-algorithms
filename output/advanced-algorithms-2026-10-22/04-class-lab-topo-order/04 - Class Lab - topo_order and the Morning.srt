@@ -1,0 +1,654 @@
+1
+00:00:00,378 --> 00:00:03,907
+In your notes, you drew this graph, and two ways to lay it out.
+
+2
+00:00:03,907 --> 00:00:06,889
+Let us give it a story: a morning routine.
+
+3
+00:00:06,889 --> 00:00:08,204
+A is shower.
+
+4
+00:00:08,204 --> 00:00:09,649
+B is get dressed.
+
+5
+00:00:09,649 --> 00:00:11,094
+C is coffee.
+
+6
+00:00:11,094 --> 00:00:12,383
+D is leave.
+
+7
+00:00:12,383 --> 00:00:16,442
+An arrow means: this task must come before that one.
+
+8
+00:00:17,345 --> 00:00:20,066
+Now lay the four tasks on a line.
+
+9
+00:00:20,066 --> 00:00:26,056
+In this order, C, B, A, D, three arrows point backward.
+
+10
+00:00:26,056 --> 00:00:28,244
+You would drink coffee before showering.
+
+11
+00:00:28,244 --> 00:00:34,220
+In this order, A, B, C, D, every arrow points the same way.
+
+12
+00:00:34,220 --> 00:00:36,746
+That is called a topological order.
+
+13
+00:00:36,746 --> 00:00:40,427
+Your note says: a DAG always has one.
+
+14
+00:00:41,342 --> 00:00:42,814
+Why a DAG?
+
+15
+00:00:42,814 --> 00:00:47,931
+Suppose get dressed had to come before
+shower, and shower before get dressed.
+
+16
+00:00:47,931 --> 00:00:50,457
+No order could satisfy both.
+
+17
+00:00:50,457 --> 00:00:53,721
+With no cycles, an order always exists.
+
+18
+00:00:54,637 --> 00:00:55,991
+A bigger one.
+
+19
+00:00:55,991 --> 00:01:00,080
+Priya is cooking dinner: seven tasks, and twelve rules.
+
+20
+00:01:00,080 --> 00:01:05,275
+An arrow from one task to another means
+the first must be finished before the second
+
+21
+00:01:05,275 --> 00:01:06,213
+starts.
+
+22
+00:01:06,213 --> 00:01:09,204
+In what order can Priya do everything?
+
+23
+00:01:16,140 --> 00:01:19,109
+Here is a trick, using depth-first search.
+
+24
+00:01:19,109 --> 00:01:21,127
+When you reach a task, start it.
+
+25
+00:01:21,127 --> 00:01:25,086
+Then visit everything it unlocks, before anything else.
+
+26
+00:01:25,086 --> 00:01:27,442
+Only then, call this task finished.
+
+27
+00:01:27,442 --> 00:01:31,557
+So a task always finishes after everything that depends on it.
+
+28
+00:01:31,557 --> 00:01:32,569
+Watch.
+
+29
+00:01:33,489 --> 00:01:34,752
+Start at Shop.
+
+30
+00:01:34,752 --> 00:01:37,148
+Shop unlocks Chop, so go there.
+
+31
+00:01:37,148 --> 00:01:39,075
+Chop unlocks Boil.
+
+32
+00:01:39,075 --> 00:01:40,846
+Boil unlocks Sauce.
+
+33
+00:01:40,846 --> 00:01:42,708
+Sauce unlocks Plate.
+
+34
+00:01:42,708 --> 00:01:44,349
+Plate unlocks Eat.
+
+35
+00:01:44,349 --> 00:01:48,941
+Eat unlocks nothing, so Eat is the first task to finish.
+
+36
+00:01:50,489 --> 00:01:51,869
+Now back up.
+
+37
+00:01:51,869 --> 00:01:55,242
+Plate has nothing left, so Plate is finished.
+
+38
+00:01:55,242 --> 00:01:56,817
+Sauce is finished.
+
+39
+00:01:56,817 --> 00:02:00,606
+Back at Boil, its other task, Plate, is already finished,
+
+40
+00:02:00,606 --> 00:02:01,789
+so skip it.
+
+41
+00:02:01,789 --> 00:02:03,556
+Boil is finished.
+
+42
+00:02:04,467 --> 00:02:05,730
+Back at Chop.
+
+43
+00:02:05,730 --> 00:02:08,816
+Its next task, Fry, is new, so go there.
+
+44
+00:02:08,816 --> 00:02:12,423
+Fry's tasks, Sauce and Plate, are both finished:
+
+45
+00:02:12,423 --> 00:02:13,504
+skip them.
+
+46
+00:02:13,504 --> 00:02:14,845
+Fry is finished.
+
+47
+00:02:14,845 --> 00:02:17,827
+Chop's last task, Sauce, is done too.
+
+48
+00:02:17,827 --> 00:02:19,324
+Chop is finished.
+
+49
+00:02:19,324 --> 00:02:22,306
+Back at Shop, Boil and Fry are done.
+
+50
+00:02:22,306 --> 00:02:24,464
+Shop finishes last of all.
+
+51
+00:02:25,405 --> 00:02:29,533
+The finish order is Eat, Plate, Sauce, Boil, Fry,
+
+52
+00:02:29,533 --> 00:02:30,913
+Chop, Shop.
+
+53
+00:02:30,913 --> 00:02:32,696
+That is called the postorder.
+
+54
+00:02:32,696 --> 00:02:38,412
+Reverse it: Shop, Chop, Fry, Boil, Sauce, Plate,
+
+55
+00:02:38,412 --> 00:02:39,168
+Eat.
+
+56
+00:02:39,168 --> 00:02:43,813
+Lay the tasks out in that order, and all twelve arrows point forward.
+
+57
+00:02:44,696 --> 00:02:46,037
+Why does it work?
+
+58
+00:02:46,037 --> 00:02:48,485
+Look at the arrow from Fry to Sauce.
+
+59
+00:02:48,485 --> 00:02:50,699
+Sauce finished before Fry did.
+
+60
+00:02:50,699 --> 00:02:55,386
+And at the arrow from Chop to Boil: Boil finished before Chop.
+
+61
+00:02:55,386 --> 00:02:59,253
+For every arrow, the task it points to finishes first.
+
+62
+00:02:59,253 --> 00:03:04,627
+So when the finish order is reversed, every
+task comes before the tasks it points to.
+
+63
+00:03:05,514 --> 00:03:07,676
+What about the order the tasks start?
+
+64
+00:03:07,676 --> 00:03:11,660
+That is called the preorder: Shop, Chop, Boil, Sauce,
+
+65
+00:03:11,660 --> 00:03:13,821
+Plate, Eat, Fry.
+
+66
+00:03:13,821 --> 00:03:19,225
+Look: Fry comes last, but Fry must come before Sauce and Plate.
+
+67
+00:03:19,225 --> 00:03:21,400
+Two arrows point backward.
+
+68
+00:03:21,400 --> 00:03:24,313
+The preorder is not a topological order.
+
+69
+00:03:25,256 --> 00:03:27,925
+Back to the dinner, with one more detail.
+
+70
+00:03:27,925 --> 00:03:30,386
+Priya also wants to set the table.
+
+71
+00:03:30,386 --> 00:03:35,556
+Setting the table has nothing before it, and its only arrow leads to Eat.
+
+72
+00:03:35,556 --> 00:03:38,655
+Now there are two tasks with nothing before them:
+
+73
+00:03:38,655 --> 00:03:40,191
+Shop, and Table.
+
+74
+00:03:40,191 --> 00:03:43,889
+So a loop over all the tasks could start at either one.
+
+75
+00:03:43,889 --> 00:03:45,370
+Let us run both.
+
+76
+00:03:46,288 --> 00:03:49,765
+Case one: the dictionary lists Shop first.
+
+77
+00:03:49,765 --> 00:03:53,866
+The search runs exactly as before, and Shop finishes.
+
+78
+00:03:53,866 --> 00:03:56,783
+Then the loop reaches Table, a new task.
+
+79
+00:03:56,783 --> 00:04:00,559
+Its only arrow leads to Eat, which is already finished.
+
+80
+00:04:00,559 --> 00:04:03,146
+So Table finishes last of all.
+
+81
+00:04:04,071 --> 00:04:07,795
+Case two: the dictionary lists Table first.
+
+82
+00:04:07,795 --> 00:04:09,240
+Table starts.
+
+83
+00:04:09,240 --> 00:04:12,873
+Its arrow leads to Eat, a new task, so Eat starts,
+
+84
+00:04:12,873 --> 00:04:16,232
+and finishes at once, since it unlocks nothing.
+
+85
+00:04:16,232 --> 00:04:18,238
+Then Table finishes.
+
+86
+00:04:18,238 --> 00:04:22,001
+Now the loop reaches Shop, and the whole dinner search runs.
+
+87
+00:04:22,001 --> 00:04:26,411
+But Eat is already finished, so every arrow into Eat is skipped.
+
+88
+00:04:27,363 --> 00:04:29,746
+Here are both cases side by side.
+
+89
+00:04:29,746 --> 00:04:31,426
+Case two, below.
+
+90
+00:04:31,426 --> 00:04:36,738
+In both, the start order fails: three arrows point backward each time.
+
+91
+00:04:36,738 --> 00:04:41,269
+But the reversed finish order is a valid topological order in both.
+
+92
+00:04:41,269 --> 00:04:43,001
+They are not the same order.
+
+93
+00:04:43,001 --> 00:04:45,762
+In case one, Table comes first.
+
+94
+00:04:45,762 --> 00:04:49,512
+In case two, Table comes late, right before Eat.
+
+95
+00:04:49,512 --> 00:04:53,414
+Both are correct, because Table only has to come before Eat.
+
+96
+00:04:54,347 --> 00:04:55,571
+Now your code.
+
+97
+00:04:55,571 --> 00:04:59,490
+It keeps three things: the start order, the finish order,
+
+98
+00:04:59,490 --> 00:05:01,574
+and a set of visited tasks.
+
+99
+00:05:01,574 --> 00:05:07,160
+A function inside a function, build topo from, handles one task.
+
+100
+00:05:07,160 --> 00:05:11,375
+And an outer loop tries every task, so every one is covered.
+
+101
+00:05:12,285 --> 00:05:17,871
+build_topo_from is defined inside topo
+order, like nested was in count paths.
+
+102
+00:05:17,871 --> 00:05:21,087
+So it can read and change pre order, and visited,
+
+103
+00:05:21,087 --> 00:05:23,158
+and post order, from outside.
+
+104
+00:05:23,158 --> 00:05:25,589
+Every call shares the same three.
+
+105
+00:05:26,488 --> 00:05:28,936
+One call, step by step.
+
+106
+00:05:28,936 --> 00:05:31,202
+Write the task into the start order.
+
+107
+00:05:31,202 --> 00:05:32,582
+Mark it visited.
+
+108
+00:05:32,582 --> 00:05:36,801
+For each task it unlocks, if that task is not visited yet,
+
+109
+00:05:36,801 --> 00:05:39,014
+go and handle it first.
+
+110
+00:05:39,014 --> 00:05:43,412
+Only after all of them are done, write this task into the finish order.
+
+111
+00:05:44,306 --> 00:05:46,064
+Where is the base case?
+
+112
+00:05:46,064 --> 00:05:47,626
+There is no if for it.
+
+113
+00:05:47,626 --> 00:05:51,389
+When a task has no children, or all of them have been started,
+
+114
+00:05:51,389 --> 00:05:53,134
+the for loop does nothing.
+
+115
+00:05:53,134 --> 00:05:56,780
+The function falls through to post order, and returns.
+
+116
+00:05:56,780 --> 00:06:01,259
+That is what your note says: none of the
+recursive calls happen when all the children
+
+117
+00:06:01,259 --> 00:06:02,857
+have already been started.
+
+118
+00:06:03,758 --> 00:06:05,190
+The outer loop.
+
+119
+00:06:05,190 --> 00:06:09,513
+For each node in the dictionary, in the order the dictionary lists them,
+
+120
+00:06:09,513 --> 00:06:13,940
+if it was not already covered, start a fresh depth-first search from it.
+
+121
+00:06:13,940 --> 00:06:18,511
+That is the loop from the earlier videos,
+and it is why the dictionary order mattered
+
+122
+00:06:18,511 --> 00:06:20,044
+in the two cases.
+
+123
+00:06:20,965 --> 00:06:22,176
+Now the bug.
+
+124
+00:06:22,176 --> 00:06:24,715
+The last line returns pre order.
+
+125
+00:06:24,715 --> 00:06:28,504
+We just saw that the start order is not a topological order.
+
+126
+00:06:28,504 --> 00:06:33,869
+The fix: return the reverse of post order, with list of reversed post order.
+
+127
+00:06:33,869 --> 00:06:38,856
+Reversed hands the items back to front, and list turns that into a list.
+
+128
+00:06:38,856 --> 00:06:40,626
+This is shown here only.
+
+129
+00:06:40,626 --> 00:06:42,628
+Your file stays as you wrote it.
+
+130
+00:06:43,559 --> 00:06:44,926
+Now your test.
+
+131
+00:06:44,926 --> 00:06:49,184
+Your test_topo_order is a copy of the first test.
+
+132
+00:06:49,184 --> 00:06:54,432
+It calls topo order with three arguments, but topo order takes only one:
+
+133
+00:06:54,432 --> 00:06:55,486
+the graph.
+
+134
+00:06:55,486 --> 00:06:57,504
+The spec's test is different.
+
+135
+00:06:57,504 --> 00:06:59,363
+It checks the order itself.
+
+136
+00:07:00,260 --> 00:07:02,786
+The real test, line by line.
+
+137
+00:07:02,786 --> 00:07:06,797
+Sorted order equals sorted graph: the same vertices,
+
+138
+00:07:06,797 --> 00:07:08,086
+none lost.
+
+139
+00:07:08,086 --> 00:07:13,164
+Order dot index of u is less than order dot index of w.
+
+140
+00:07:13,164 --> 00:07:15,455
+Index gives a position in the list.
+
+141
+00:07:15,455 --> 00:07:21,744
+For every vertex u, and every child w of u,
+all means every one of those checks must
+
+142
+00:07:21,744 --> 00:07:22,773
+be true.
+
+143
+00:07:22,773 --> 00:07:26,129
+In other words: every arrow points forward.
+
+144
+00:07:27,003 --> 00:07:29,009
+Run your function as written.
+
+145
+00:07:29,009 --> 00:07:33,567
+On the first graph it returns A, B, D, E, C.
+
+146
+00:07:33,567 --> 00:07:36,666
+C points to D, but C comes after D.
+
+147
+00:07:36,666 --> 00:07:38,137
+The test fails.
+
+148
+00:07:38,137 --> 00:07:44,257
+With the fix, both graphs pass: A, C, B, D, E, and then Z,
+
+149
+00:07:44,257 --> 00:07:45,581
+Y, X.
+
+150
+00:07:46,491 --> 00:07:48,041
+How fast is it?
+
+151
+00:07:48,041 --> 00:07:50,371
+Each task is visited once.
+
+152
+00:07:50,371 --> 00:07:52,741
+Each arrow is looked at once.
+
+153
+00:07:52,741 --> 00:07:55,931
+So the function runs in V plus E time.
+
+154
+00:07:55,931 --> 00:08:00,410
+The test uses index, which scans the list, so the test is slower.
+
+155
+00:08:00,410 --> 00:08:02,008
+The function is not.
+
+156
+00:08:02,919 --> 00:08:04,117
+To recap.
+
+157
+00:08:04,117 --> 00:08:08,258
+A topological order puts every arrow pointing the same way.
+
+158
+00:08:08,258 --> 00:08:12,151
+Depth-first search gives one: reverse the finish order.
+
+159
+00:08:12,151 --> 00:08:14,469
+The start order is not enough.
+
+160
+00:08:14,469 --> 00:08:18,870
+Your code needs one change: return the reversed post order.
+
+161
+00:08:18,870 --> 00:08:22,867
+Next: the book's chapter six, preorder, postorder,
+
+162
+00:08:22,867 --> 00:08:24,777
+and cycles, in detail.

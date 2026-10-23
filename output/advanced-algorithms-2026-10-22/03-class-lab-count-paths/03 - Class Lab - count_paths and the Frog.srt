@@ -1,0 +1,662 @@
+1
+00:00:00,391 --> 00:00:02,292
+Meet Hopper, a frog.
+
+2
+00:00:02,292 --> 00:00:05,899
+Hopper wants to cross a river on eight stepping stones,
+
+3
+00:00:05,899 --> 00:00:07,761
+numbered zero to seven.
+
+4
+00:00:07,761 --> 00:00:10,899
+Each hop goes forward one stone, or two.
+
+5
+00:00:10,899 --> 00:00:16,146
+Drawn as a graph, each stone is a vertex, and each hop is an arrow,
+
+6
+00:00:16,146 --> 00:00:17,488
+a directed edge.
+
+7
+00:00:17,488 --> 00:00:21,742
+How many different ways can Hopper get from stone zero to stone seven?
+
+8
+00:00:28,647 --> 00:00:31,629
+Let us count backward, from the far bank.
+
+9
+00:00:31,629 --> 00:00:34,363
+From stone seven, Hopper is done.
+
+10
+00:00:34,363 --> 00:00:36,434
+That is one way: do nothing.
+
+11
+00:00:36,434 --> 00:00:39,988
+From stone six, one way: hop one.
+
+12
+00:00:39,988 --> 00:00:43,842
+From stone five, two ways: hop one, then one more,
+
+13
+00:00:43,842 --> 00:00:46,612
+or hop two, straight to the bank.
+
+14
+00:00:47,510 --> 00:00:48,682
+See the pattern?
+
+15
+00:00:48,682 --> 00:00:51,963
+The ways from a stone are the ways from the stone one ahead,
+
+16
+00:00:51,963 --> 00:00:56,364
+plus the ways from the stone two ahead,
+because those are the only first hops.
+
+17
+00:00:56,364 --> 00:00:59,333
+Stone four: two plus one is three.
+
+18
+00:00:59,333 --> 00:01:02,533
+Stone three: three plus two is five.
+
+19
+00:01:03,469 --> 00:01:04,602
+Keep going.
+
+20
+00:01:04,602 --> 00:01:05,409
+Eight.
+
+21
+00:01:05,409 --> 00:01:06,412
+Thirteen.
+
+22
+00:01:06,412 --> 00:01:09,628
+And from stone zero, twenty-one ways.
+
+23
+00:01:09,628 --> 00:01:13,270
+Every count used only the counts of the stones it can hop to.
+
+24
+00:01:14,194 --> 00:01:17,697
+In any graph, this is called counting paths.
+
+25
+00:01:17,697 --> 00:01:21,655
+The graph must be a DAG: a directed acyclic graph,
+
+26
+00:01:21,655 --> 00:01:24,025
+meaning arrows, and no cycles.
+
+27
+00:01:24,025 --> 00:01:29,116
+To count the paths from s to t: if s is t, there is one path,
+
+28
+00:01:29,116 --> 00:01:30,301
+the empty one.
+
+29
+00:01:30,301 --> 00:01:33,817
+Otherwise, add up the counts of s's children.
+
+30
+00:01:33,817 --> 00:01:36,769
+The children are the vertices that s points to.
+
+31
+00:01:37,752 --> 00:01:40,018
+Here is the graph from your class lab.
+
+32
+00:01:40,018 --> 00:01:42,596
+Vertex A points to B and C.
+
+33
+00:01:42,596 --> 00:01:45,005
+B and C both point to D.
+
+34
+00:01:45,005 --> 00:01:46,307
+D points to E.
+
+35
+00:01:46,307 --> 00:01:48,859
+How many paths from A to E?
+
+36
+00:01:48,859 --> 00:01:51,281
+From B to E: one.
+
+37
+00:01:51,281 --> 00:01:53,664
+From C to E: one.
+
+38
+00:01:53,664 --> 00:01:55,734
+So from A: two.
+
+39
+00:01:55,734 --> 00:01:59,106
+One path goes A, B, D, E.
+
+40
+00:01:59,106 --> 00:02:02,488
+The other goes A, C, D, E.
+
+41
+00:02:03,440 --> 00:02:06,383
+The code asks these questions in a different order.
+
+42
+00:02:06,383 --> 00:02:08,727
+To count from A, it asks B.
+
+43
+00:02:08,727 --> 00:02:10,068
+B asks D.
+
+44
+00:02:10,068 --> 00:02:12,971
+D asks E, and E answers one.
+
+45
+00:02:12,971 --> 00:02:14,391
+D answers one.
+
+46
+00:02:14,391 --> 00:02:15,966
+B answers one.
+
+47
+00:02:15,966 --> 00:02:20,094
+Then A asks C, and C asks D all over again.
+
+48
+00:02:20,094 --> 00:02:22,398
+D has to ask E all over again.
+
+49
+00:02:22,398 --> 00:02:24,482
+The same question, twice.
+
+50
+00:02:24,482 --> 00:02:27,551
+Seven calls, for five vertices.
+
+51
+00:02:28,456 --> 00:02:30,800
+That repeat is harmless here.
+
+52
+00:02:30,800 --> 00:02:33,144
+On a bigger map, it explodes.
+
+53
+00:02:33,144 --> 00:02:37,987
+This is a hiking map: seven junctions, twelve one-way trails,
+
+54
+00:02:37,987 --> 00:02:39,172
+all uphill.
+
+55
+00:02:39,172 --> 00:02:42,476
+How many different routes lead from Start to Summit?
+
+56
+00:02:48,420 --> 00:02:53,329
+Plain recursion asks each child, and each child asks its own children,
+
+57
+00:02:53,329 --> 00:02:54,657
+with no memory.
+
+58
+00:02:54,657 --> 00:02:56,558
+Watch the calls pile up.
+
+59
+00:02:56,558 --> 00:03:00,370
+Twenty-four calls, for a map with seven junctions.
+
+60
+00:03:02,394 --> 00:03:03,839
+Look at the repeats.
+
+61
+00:03:03,839 --> 00:03:06,352
+Meadow is asked five times.
+
+62
+00:03:06,352 --> 00:03:08,813
+Falls is asked four times.
+
+63
+00:03:08,813 --> 00:03:13,510
+Every time, the answer is one, recomputed from scratch.
+
+64
+00:03:14,454 --> 00:03:18,777
+The fix: write each answer down the first time, and look it up after.
+
+65
+00:03:18,777 --> 00:03:22,670
+That is called memoization, and the table is a cache.
+
+66
+00:03:22,670 --> 00:03:25,587
+Here is the same search with a cache.
+
+67
+00:03:25,587 --> 00:03:29,636
+Whenever a junction was already answered, it is a cache hit:
+
+68
+00:03:29,636 --> 00:03:32,055
+read the table, and stop there.
+
+69
+00:03:33,018 --> 00:03:35,453
+Here is the table filling in.
+
+70
+00:03:35,453 --> 00:03:37,197
+Summit: one.
+
+71
+00:03:37,197 --> 00:03:38,656
+Meadow: one.
+
+72
+00:03:38,656 --> 00:03:40,336
+Falls: one.
+
+73
+00:03:40,336 --> 00:03:42,081
+Creek: two.
+
+74
+00:03:42,081 --> 00:03:43,773
+Ridge: two.
+
+75
+00:03:43,773 --> 00:03:45,362
+Pine: five.
+
+76
+00:03:45,362 --> 00:03:47,042
+Start: nine.
+
+77
+00:03:47,042 --> 00:03:48,305
+Nine routes.
+
+78
+00:03:48,305 --> 00:03:52,272
+Each junction was finished only after all of its children.
+
+79
+00:03:53,208 --> 00:03:54,367
+Count the work.
+
+80
+00:03:54,367 --> 00:03:57,857
+Each junction is computed once: seven.
+
+81
+00:03:57,857 --> 00:04:02,479
+Each trail is looked at once, when its starting junction is computed:
+
+82
+00:04:02,479 --> 00:04:03,442
+twelve.
+
+83
+00:04:03,442 --> 00:04:08,364
+So there are thirteen calls: one for the start, plus one per trail.
+
+84
+00:04:08,364 --> 00:04:11,147
+That is V plus E: linear time.
+
+85
+00:04:12,071 --> 00:04:13,321
+Now your code.
+
+86
+00:04:13,321 --> 00:04:16,967
+The first line: from functools import cache.
+
+87
+00:04:16,967 --> 00:04:21,612
+Functools is a toolbox that comes with Python, and cache is one tool in it.
+
+88
+00:04:22,545 --> 00:04:27,207
+Def count_paths takes the graph, a start s, and a target t.
+
+89
+00:04:27,207 --> 00:04:32,411
+The last line, return nested of s, starts the whole search from the start.
+
+90
+00:04:33,331 --> 00:04:36,209
+The line above the inner def is at cache.
+
+91
+00:04:36,209 --> 00:04:39,907
+The at sign means: wrap the function underneath.
+
+92
+00:04:39,907 --> 00:04:42,901
+The wrapped function keeps a table of answers.
+
+93
+00:04:42,901 --> 00:04:47,498
+The first time it sees an input, it runs, and writes the answer down.
+
+94
+00:04:47,498 --> 00:04:50,792
+The next time it sees the same input, it skips the function,
+
+95
+00:04:50,792 --> 00:04:52,533
+and returns what is written.
+
+96
+00:04:53,440 --> 00:04:59,117
+Nested is a function inside a function,
+so it can read graph and t from outside.
+
+97
+00:04:59,117 --> 00:05:02,867
+A new nested is built every time count_paths is called,
+
+98
+00:05:02,867 --> 00:05:05,602
+so its table starts empty each time.
+
+99
+00:05:05,602 --> 00:05:11,162
+That is why the table can be keyed by s
+alone, even though the answer depends on t:
+
+100
+00:05:11,162 --> 00:05:14,039
+inside one call, t never changes.
+
+101
+00:05:14,039 --> 00:05:18,827
+The s in the parentheses is a fresh variable: this call's vertex.
+
+102
+00:05:19,767 --> 00:05:22,970
+If s equals t, return one.
+
+103
+00:05:22,970 --> 00:05:27,502
+Arriving at the target is exactly one path, the empty path.
+
+104
+00:05:27,502 --> 00:05:30,792
+The parentheses around the comparison are optional.
+
+105
+00:05:31,692 --> 00:05:33,528
+Now the densest line.
+
+106
+00:05:33,528 --> 00:05:37,838
+Return sum of nested of child, for child in graph of s.
+
+107
+00:05:37,838 --> 00:05:39,088
+Take it apart.
+
+108
+00:05:39,088 --> 00:05:41,927
+Graph of s is the list of children of s.
+
+109
+00:05:41,927 --> 00:05:45,660
+At vertex A in the diamond, that is B and C.
+
+110
+00:05:46,595 --> 00:05:50,111
+For child in graph of s means: go through that list,
+
+111
+00:05:50,111 --> 00:05:51,830
+one child at a time.
+
+112
+00:05:51,830 --> 00:05:54,720
+Nested of child is the count for that child.
+
+113
+00:05:54,720 --> 00:05:57,962
+Together they produce one number for each child.
+
+114
+00:05:57,962 --> 00:06:02,620
+Wrapped in parentheses like this, it is called a generator expression.
+
+115
+00:06:03,562 --> 00:06:05,619
+Sum adds those numbers up.
+
+116
+00:06:05,619 --> 00:06:10,893
+If s has no children, there is nothing to add, and the sum of nothing is zero.
+
+117
+00:06:10,893 --> 00:06:15,450
+Here is the same thing written longhand: a total that starts at zero,
+
+118
+00:06:15,450 --> 00:06:17,530
+a loop, and a return.
+
+119
+00:06:18,398 --> 00:06:19,963
+Run it on the diamond.
+
+120
+00:06:19,963 --> 00:06:25,431
+A asks B, B asks D, D asks E, and E returns one.
+
+121
+00:06:25,431 --> 00:06:26,603
+D is stored.
+
+122
+00:06:26,603 --> 00:06:27,801
+B is stored.
+
+123
+00:06:27,801 --> 00:06:31,043
+Then A asks C, and C asks D.
+
+124
+00:06:31,043 --> 00:06:33,791
+A cache hit: one, instantly.
+
+125
+00:06:33,791 --> 00:06:35,080
+C is stored.
+
+126
+00:06:35,080 --> 00:06:38,566
+And A adds one plus one: two.
+
+127
+00:06:39,484 --> 00:06:42,245
+Your third test asks for E to A.
+
+128
+00:06:42,245 --> 00:06:47,594
+Nested of E: E is not A, and E has no children, so the sum of nothing is zero.
+
+129
+00:06:47,594 --> 00:06:48,945
+Zero paths.
+
+130
+00:06:49,862 --> 00:06:52,063
+One rule: no cycles.
+
+131
+00:06:52,063 --> 00:06:57,623
+Suppose vertex A pointed to vertex B, B to C, and C back to A.
+
+132
+00:06:57,623 --> 00:07:02,792
+Then nested of A would call B, which calls C, which calls A again,
+
+133
+00:07:02,792 --> 00:07:03,781
+forever.
+
+134
+00:07:03,781 --> 00:07:06,255
+Python gives up with a recursion error.
+
+135
+00:07:06,255 --> 00:07:08,964
+That is why the graph must be acyclic.
+
+136
+00:07:08,964 --> 00:07:14,416
+In the book's words, the dependency
+graph of a recurrence must have no cycles.
+
+137
+00:07:15,336 --> 00:07:20,024
+Now your last test: sixty stepping stones, hop one or two.
+
+138
+00:07:20,024 --> 00:07:22,771
+The test builds the graph in one line.
+
+139
+00:07:22,771 --> 00:07:27,211
+For i in range sixty, make a key i, with the list i plus one,
+
+140
+00:07:27,211 --> 00:07:28,500
+i plus two.
+
+141
+00:07:28,500 --> 00:07:33,982
+The vertical bar merges two dictionaries,
+here adding stones sixty and sixty-one,
+
+142
+00:07:33,982 --> 00:07:35,684
+which have no hops.
+
+143
+00:07:36,612 --> 00:07:38,097
+How many ways?
+
+144
+00:07:38,097 --> 00:07:42,771
+Two trillion, five hundred four billion, seven hundred thirty million,
+
+145
+00:07:42,771 --> 00:07:46,951
+seven hundred eighty-one thousand, nine hundred sixty-one.
+
+146
+00:07:46,951 --> 00:07:51,951
+Those are Fibonacci numbers, like the ones
+from the dynamic programming reading:
+
+147
+00:07:51,951 --> 00:07:54,447
+each count is the sum of the two ahead.
+
+148
+00:07:55,377 --> 00:07:58,671
+Plain recursion would make over eight trillion calls.
+
+149
+00:07:58,671 --> 00:08:02,760
+At ten million calls a second, that is more than nine days.
+
+150
+00:08:02,760 --> 00:08:06,015
+With the cache: one hundred twenty-one calls.
+
+151
+00:08:06,015 --> 00:08:08,160
+A fraction of a millisecond.
+
+152
+00:08:09,052 --> 00:08:13,531
+This is memoization, and it is depth-first search in disguise.
+
+153
+00:08:13,531 --> 00:08:15,784
+Each junction is a vertex.
+
+154
+00:08:15,784 --> 00:08:18,648
+Each call that needs another is an edge.
+
+155
+00:08:18,648 --> 00:08:20,979
+Storing an answer is marking.
+
+156
+00:08:20,979 --> 00:08:24,846
+Computing the value happens after the children, at the post-visit.
+
+157
+00:08:24,846 --> 00:08:30,133
+The book puts it in one line: memoized recursion
+is depth-first search of the dependency
+
+158
+00:08:30,133 --> 00:08:31,028
+graph.
+
+159
+00:08:31,973 --> 00:08:33,184
+To recap.
+
+160
+00:08:33,184 --> 00:08:39,538
+Paths from s to t: one if s is t, otherwise the sum over the children.
+
+161
+00:08:39,538 --> 00:08:41,648
+Plain recursion repeats work.
+
+162
+00:08:41,648 --> 00:08:46,635
+A cache answers each vertex once, so the time is V plus E.
+
+163
+00:08:46,635 --> 00:08:49,239
+And the answers come out children first.
+
+164
+00:08:49,239 --> 00:08:53,649
+Next video: the other half of your lab, topological order.

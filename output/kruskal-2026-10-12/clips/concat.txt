@@ -1,0 +1,8 @@
+file '01-mst.mp4'
+file '02-approach.mp4'
+file '03-left.mp4'
+file '04-finish.mp4'
+file '05-hypothetical.mp4'
+file '06-greedy.mp4'
+file '07-naive.mp4'
+file '08-elegant.mp4'

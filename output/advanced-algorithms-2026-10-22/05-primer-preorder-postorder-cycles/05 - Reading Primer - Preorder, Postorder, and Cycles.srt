@@ -1,0 +1,595 @@
+1
+00:00:00,404 --> 00:00:05,560
+In an old story, Theseus walked into a labyrinth holding a ball of thread,
+
+2
+00:00:05,560 --> 00:00:08,152
+so he could always find his way back.
+
+3
+00:00:08,152 --> 00:00:10,378
+Depth-first search is that thread.
+
+4
+00:00:10,378 --> 00:00:14,714
+This maze has seven rooms, joined by twelve one-way doors.
+
+5
+00:00:14,714 --> 00:00:19,385
+Ada will explore it from room A, unrolling a thread behind her.
+
+6
+00:00:20,297 --> 00:00:21,964
+Ada carries a clock.
+
+7
+00:00:21,964 --> 00:00:25,532
+The first time she enters a room, she advances the clock,
+
+8
+00:00:25,532 --> 00:00:27,511
+and writes the time on the room.
+
+9
+00:00:27,511 --> 00:00:31,065
+That is the room's starting time, its preorder number.
+
+10
+00:00:31,065 --> 00:00:35,453
+When she leaves a room for good, because
+every door out of it has been tried,
+
+11
+00:00:35,453 --> 00:00:40,154
+she advances the clock again, and writes that: its finishing time,
+
+12
+00:00:40,154 --> 00:00:41,739
+its postorder number.
+
+13
+00:00:42,638 --> 00:00:46,688
+At any moment, every room is in one of three states.
+
+14
+00:00:46,688 --> 00:00:49,995
+New: Ada has never entered it.
+
+15
+00:00:49,995 --> 00:00:54,552
+Active: she has entered it, but not yet left it for good.
+
+16
+00:00:54,552 --> 00:00:57,235
+Finished: she has left it for good.
+
+17
+00:00:57,235 --> 00:01:01,595
+The active rooms always form one single path, from the start to Ada.
+
+18
+00:01:01,595 --> 00:01:03,115
+That is the thread.
+
+19
+00:01:04,019 --> 00:01:06,519
+Ada enters A: clock one.
+
+20
+00:01:06,519 --> 00:01:10,738
+The door to B leads to a new room, so she goes: clock two.
+
+21
+00:01:10,738 --> 00:01:12,925
+B to D, clock three.
+
+22
+00:01:12,925 --> 00:01:14,970
+D to E, clock four.
+
+23
+00:01:14,970 --> 00:01:18,095
+E has a door back to B, but B is still on the thread.
+
+24
+00:01:18,095 --> 00:01:21,871
+E has no more doors, so E is finished: clock five.
+
+25
+00:01:21,871 --> 00:01:24,905
+Back in D: finished, clock six.
+
+26
+00:01:24,905 --> 00:01:29,618
+Back in B: its other door, to E, leads to a finished room.
+
+27
+00:01:29,618 --> 00:01:31,945
+B is finished: clock seven.
+
+28
+00:01:32,879 --> 00:01:36,994
+Back at A, the next door leads to C, a new room:
+
+29
+00:01:36,994 --> 00:01:38,153
+clock eight.
+
+30
+00:01:38,153 --> 00:01:40,184
+C to F, nine.
+
+31
+00:01:40,184 --> 00:01:43,582
+F has a door back to C, which is on the thread.
+
+32
+00:01:43,582 --> 00:01:45,887
+F to G, ten.
+
+33
+00:01:45,887 --> 00:01:51,108
+G has a door to D, a finished room, in a branch Ada already completed.
+
+34
+00:01:51,108 --> 00:01:53,582
+G is finished: eleven.
+
+35
+00:01:53,582 --> 00:01:55,679
+F is finished: twelve.
+
+36
+00:01:55,679 --> 00:02:00,015
+Back at C: its door to G leads to a finished room.
+
+37
+00:02:00,015 --> 00:02:02,384
+C is finished: thirteen.
+
+38
+00:02:02,384 --> 00:02:07,476
+Back at A: the last door, to E, also leads to a finished room.
+
+39
+00:02:07,476 --> 00:02:09,559
+A is finished: fourteen.
+
+40
+00:02:09,559 --> 00:02:10,948
+The walk is over.
+
+41
+00:02:11,876 --> 00:02:17,762
+Read the rooms by starting time, A, B, D, E, C, F,
+
+42
+00:02:17,762 --> 00:02:18,569
+G.
+
+43
+00:02:18,569 --> 00:02:20,131
+That is a preorder.
+
+44
+00:02:20,131 --> 00:02:27,110
+Read them by finishing time, E, D, B, G, F, C, A.
+
+45
+00:02:27,110 --> 00:02:28,699
+That is a postorder.
+
+46
+00:02:28,699 --> 00:02:32,228
+With a different order of doors, or a different starting room,
+
+47
+00:02:32,228 --> 00:02:33,813
+you would get different ones.
+
+48
+00:02:34,723 --> 00:02:39,059
+Draw each room as a bar, from its starting time to its finishing time.
+
+49
+00:02:39,059 --> 00:02:42,809
+Any two bars are either nested, one inside the other,
+
+50
+00:02:42,809 --> 00:02:44,515
+or completely apart.
+
+51
+00:02:44,515 --> 00:02:50,166
+And one room's bar contains another's exactly
+when it is an ancestor in the thread tree.
+
+52
+00:02:50,166 --> 00:02:54,068
+The bar for room B contains the bars for D and E.
+
+53
+00:02:54,989 --> 00:02:58,010
+The book says this in four equivalent ways.
+
+54
+00:02:58,010 --> 00:03:02,476
+One: u is an ancestor of v in the thread tree.
+
+55
+00:03:02,476 --> 00:03:05,901
+Two: u's bar contains v's bar.
+
+56
+00:03:05,901 --> 00:03:08,895
+Three: when v starts, u is active.
+
+57
+00:03:08,895 --> 00:03:14,820
+Four: just before u starts, there is a path
+from u to v through rooms that are all new.
+
+58
+00:03:14,820 --> 00:03:16,769
+All four mean the same thing.
+
+59
+00:03:17,703 --> 00:03:19,786
+Now classify the doors.
+
+60
+00:03:19,786 --> 00:03:23,628
+When Ada tries a door from u to v, there are four cases,
+
+61
+00:03:23,628 --> 00:03:25,919
+depending on v's state at that moment.
+
+62
+00:03:25,919 --> 00:03:29,109
+If v is new, it is a tree edge.
+
+63
+00:03:29,109 --> 00:03:31,674
+If v is active, it is a back edge.
+
+64
+00:03:31,674 --> 00:03:35,620
+If v is finished and below u, it is a forward edge.
+
+65
+00:03:35,620 --> 00:03:39,275
+If v is finished, and somewhere else, it is a cross edge.
+
+66
+00:03:40,188 --> 00:03:46,347
+A tree edge: v is new, so Ada walks
+through, and the door joins the thread tree.
+
+67
+00:03:46,347 --> 00:03:48,899
+A to B is a tree edge.
+
+68
+00:03:48,899 --> 00:03:50,575
+So are five more.
+
+69
+00:03:51,491 --> 00:03:55,489
+A back edge: v is active, already on the thread.
+
+70
+00:03:55,489 --> 00:03:59,785
+E to B: B is on the thread, so this door loops back up it.
+
+71
+00:03:59,785 --> 00:04:01,804
+F to C does the same.
+
+72
+00:04:01,804 --> 00:04:04,001
+Two doors are back edges.
+
+73
+00:04:04,954 --> 00:04:08,340
+A forward edge: v is finished, and it is below u.
+
+74
+00:04:08,340 --> 00:04:11,738
+B to E: Ada already reached E through D.
+
+75
+00:04:11,738 --> 00:04:14,655
+C to G and A to E are the same.
+
+76
+00:04:14,655 --> 00:04:16,904
+Three doors are forward edges.
+
+77
+00:04:17,828 --> 00:04:21,474
+A cross edge: v is finished, and not below u.
+
+78
+00:04:21,474 --> 00:04:27,919
+G to D: D sits in a branch that Ada completed
+before she even entered G's branch.
+
+79
+00:04:27,919 --> 00:04:30,207
+One door is a cross edge.
+
+80
+00:04:31,082 --> 00:04:32,775
+What do the bars look like?
+
+81
+00:04:32,775 --> 00:04:36,473
+For a tree edge, u's bar contains v's.
+
+82
+00:04:36,473 --> 00:04:38,582
+For a forward edge, the same.
+
+83
+00:04:38,582 --> 00:04:42,007
+For a back edge, v's bar contains u's.
+
+84
+00:04:42,007 --> 00:04:46,447
+For a cross edge, v's bar is entirely before u's.
+
+85
+00:04:46,447 --> 00:04:49,754
+A fifth kind, with v starting after u has finished,
+
+86
+00:04:49,754 --> 00:04:54,555
+is impossible, because Ada tries every door out of u before she leaves it.
+
+87
+00:04:55,493 --> 00:04:57,707
+Here is the key fact.
+
+88
+00:04:57,707 --> 00:05:02,264
+If any door leads to an active room, the maze has a cycle.
+
+89
+00:05:02,264 --> 00:05:07,420
+The thread runs from B down to E, and
+the door from E back to B closes the loop.
+
+90
+00:05:07,420 --> 00:05:10,776
+But doors to finished rooms never prove a cycle.
+
+91
+00:05:11,662 --> 00:05:15,021
+There is a second way to see it, with finishing times.
+
+92
+00:05:15,021 --> 00:05:18,876
+Here is every door, with the two finishing times.
+
+93
+00:05:18,876 --> 00:05:23,277
+For a back edge, the room it points to is still active when u finishes,
+
+94
+00:05:23,277 --> 00:05:24,930
+so it finishes later.
+
+95
+00:05:24,930 --> 00:05:29,592
+If an edge u to v has u finishing before v, there is a cycle.
+
+96
+00:05:29,592 --> 00:05:33,677
+In a DAG, every edge has u finishing after v.
+
+97
+00:05:34,607 --> 00:05:36,912
+Now the algorithm, in Python.
+
+98
+00:05:36,912 --> 00:05:39,594
+It keeps a status for every room.
+
+99
+00:05:39,594 --> 00:05:41,977
+First, an empty dictionary.
+
+100
+00:05:41,977 --> 00:05:44,825
+A loop sets every room's status to new.
+
+101
+00:05:45,703 --> 00:05:49,349
+Visit is a function inside a function, one call per room.
+
+102
+00:05:49,349 --> 00:05:53,659
+The moment Ada enters v, its status becomes active.
+
+103
+00:05:53,659 --> 00:05:59,319
+Then, for each door out of v, to a room w, look at w's status.
+
+104
+00:06:00,235 --> 00:06:03,438
+If w is active, that is a back edge.
+
+105
+00:06:03,438 --> 00:06:06,238
+Return False: there is a cycle.
+
+106
+00:06:06,238 --> 00:06:10,157
+If w is new, that is a tree edge, so visit it.
+
+107
+00:06:10,157 --> 00:06:13,907
+And if that visit comes back False, a cycle was found deeper down,
+
+108
+00:06:13,907 --> 00:06:15,691
+so return False too.
+
+109
+00:06:15,691 --> 00:06:20,297
+If w is finished, do nothing: it can never prove a cycle.
+
+110
+00:06:21,221 --> 00:06:25,648
+When every door out of v has been tried, v becomes finished.
+
+111
+00:06:25,648 --> 00:06:30,592
+And visit returns True: no cycle was found at or below this room.
+
+112
+00:06:31,503 --> 00:06:32,792
+The outer loop.
+
+113
+00:06:32,792 --> 00:06:35,631
+Try every room as a starting point.
+
+114
+00:06:35,631 --> 00:06:38,717
+Skip the ones an earlier walk already covered.
+
+115
+00:06:38,717 --> 00:06:42,271
+If any walk finds a cycle, the answer is False.
+
+116
+00:06:42,271 --> 00:06:45,670
+If every room is covered and no back edge was found,
+
+117
+00:06:45,670 --> 00:06:48,934
+return True: the graph is a DAG.
+
+118
+00:06:49,809 --> 00:06:51,307
+Run it on the maze.
+
+119
+00:06:51,307 --> 00:06:53,443
+Visit A: active.
+
+120
+00:06:53,443 --> 00:06:54,602
+Visit B.
+
+121
+00:06:54,602 --> 00:06:55,500
+Visit D.
+
+122
+00:06:55,500 --> 00:06:56,672
+Visit E.
+
+123
+00:06:56,672 --> 00:07:00,943
+Now E's door leads to B, and B's status is active.
+
+124
+00:07:00,943 --> 00:07:04,758
+Return False, right away: the maze has a cycle.
+
+125
+00:07:04,758 --> 00:07:07,046
+It never even looks at the rest.
+
+126
+00:07:07,916 --> 00:07:11,809
+Remove the two back edges, E to B and F to C.
+
+127
+00:07:11,809 --> 00:07:13,398
+Ten doors are left.
+
+128
+00:07:13,398 --> 00:07:18,216
+Now no door ever leads to an active room, and the function returns True.
+
+129
+00:07:18,216 --> 00:07:19,973
+This is a DAG.
+
+130
+00:07:19,973 --> 00:07:23,958
+A room with no doors in is a source: here, room A.
+
+131
+00:07:23,958 --> 00:07:28,229
+A room with no doors out is a sink: here, room E.
+
+132
+00:07:28,229 --> 00:07:32,561
+Every DAG has at least one source and one sink.
+
+133
+00:07:33,462 --> 00:07:34,868
+One more detail.
+
+134
+00:07:34,868 --> 00:07:39,986
+If we start a walk from every room in
+turn, skipping the ones already entered,
+
+135
+00:07:39,986 --> 00:07:42,720
+the number of separate trees depends on the order.
+
+136
+00:07:42,720 --> 00:07:45,298
+Start at A: one tree.
+
+137
+00:07:45,298 --> 00:07:48,970
+Start at G first, and the first walk is stuck after G,
+
+138
+00:07:48,970 --> 00:07:50,596
+D, E, B.
+
+139
+00:07:50,596 --> 00:07:52,954
+Then A starts a second tree.
+
+140
+00:07:52,954 --> 00:07:58,367
+In a directed graph, even a connected one,
+the count can be anything from one to V.
+
+141
+00:07:59,287 --> 00:08:00,459
+To recap.
+
+142
+00:08:00,459 --> 00:08:03,623
+Every room gets two stamps from one clock.
+
+143
+00:08:03,623 --> 00:08:08,597
+Every room is new, active, or finished, and the active rooms are the thread.
+
+144
+00:08:08,597 --> 00:08:13,037
+Every door is a tree, forward, back, or cross edge.
+
+145
+00:08:13,037 --> 00:08:17,230
+A back edge, an edge to an active room, means a cycle.
+
+146
+00:08:17,230 --> 00:08:20,732
+Next: topological sort, and dynamic programming,
+
+147
+00:08:20,732 --> 00:08:24,153
+sections six point three and six point four.

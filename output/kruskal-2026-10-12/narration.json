@@ -1,0 +1,42 @@
+[
+  {
+    "id": "01-mst",
+    "title": "The minimum spanning tree problem",
+    "text": "Imagine these letters are places, and each line is a possible connection with a cost. We need to connect all eight places, with no loops, while paying the smallest total cost. That is the minimum spanning tree problem. A spanning tree on eight vertices has exactly seven edges. The objective is the sum of their weights, not the distance between any particular pair. The October twelfth class image leaves C to E unlabeled; for this video, we assign it cost seventeen. Every displayed edge now has a weight."
+  },
+  {
+    "id": "02-approach",
+    "title": "Kruskal's approach",
+    "text": "Kruskal starts with eight singleton trees. Together, the accepted edges form a forest; each connected piece is a tree, or component. A disjoint-set union structure, also called union-find, tracks those components. Sort every edge by cost. For each candidate, call find on both endpoints. Different representatives mean two separate trees: keep the edge and union them. The same representative means the endpoints are already connected: skip the cycle. The forest panel will show every component after each decision. Kruskal chooses globally among edges, rather than growing from one start vertex."
+  },
+  {
+    "id": "03-left",
+    "title": "Build the left component",
+    "text": "Watch the forest panel. Initially, every vertex is its own tree. B to C costs one: find B and find C return different representatives, so union makes the component B C. A to C costs three: A is separate while C belongs to B C, so union makes A B C. C to H costs four: H joins, giving A B C H. Now A to B costs five. Both find calls return the same representative, B, because A and B already connect through C. Skip the edge; the forest remains unchanged. The accepted cost so far is eight."
+  },
+  {
+    "id": "04-finish",
+    "title": "Finish the class example",
+    "text": "H to F costs six. Find H returns the large component's representative, B, while find F returns F. Union adds F, making A B C F H. E to F costs seven: E is separate, so union adds E. G to F costs eight: G is separate, so union adds G. D to E costs nine: D is the last singleton, while E is in the big tree. Union leaves one component containing all eight vertices. Seven accepted edges give a total of thirty eight. We stop here. D G at ten, E G at eleven, and C E at seventeen are never needed."
+  },
+  {
+    "id": "05-hypothetical",
+    "title": "What if D–E cost six?",
+    "text": "Now change D to E from nine to six for a hypothetical run. After the cost-five rejection, the forest still contains A B C H and four singletons. Find D and find E differ, so union creates a second nontrivial tree, D E. H F also costs six: find H points to the first tree, find F to its singleton, so union adds F there. These two cost-six edges can be processed in either order. At E F for seven, find E and find F point to different trees; union bridges them. G F at eight joins the last singleton. One component remains, with total cost thirty five."
+  },
+  {
+    "id": "06-greedy",
+    "title": "Why this is greedy",
+    "text": "Here are the hallmarks of a greedy algorithm. It makes a local choice: the lightest next edge. It commits immediately instead of exploring every possible tree. And it maintains a feasibility rule: never create a cycle. Why is that safe? Think of a cut between two current components. The lightest available edge crossing that cut can belong to an optimal spanning tree. If an optimum used a heavier crossing edge instead, we could swap in the lighter one without losing connectivity. This exchange argument, rather than probability, justifies the choice. Union find makes the component check fast."
+  },
+  {
+    "id": "07-naive",
+    "title": "Python, version one: rough but readable",
+    "text": "First, an edge is a triple: cost, start, end. For example, one, B, C means the B to C edge costs one. The named edge cost function takes that triple apart and returns the cost. In sorted edges, key equals edge cost tells Python to rank edges by that returned number. There is no lambda and no unexplained index. The rough solution makes a group dictionary. An ordinary for loop gives each vertex its own group label. If an edge's endpoint labels match, skip the cycle. Otherwise, remember the old and new labels, scan all vertices to change the old label to the new one, and add the edge. This is clear but slow on large graphs: those repeated scans can take time proportional to V squared."
+  },
+  {
+    "id": "08-elegant",
+    "title": "Python, version two: union find",
+    "text": "Now compare the versions side by side. Both receive the same sorted edges, and both add an edge only when it joins two different trees. The left version scans all vertices to relabel a group. On the right, Disjoint Set replaces that repeated scan. It is a small object that remembers which tree each vertex belongs to, using parent links and tree sizes. Find follows parent links to the tree's representative. For example, find A returns B in our first tree. Path compression remembers that answer for next time. Union calls find on both endpoints. If the roots match, union returns false and Kruskal skips the cycle. If they differ, it joins the smaller tree under the larger and returns true, so Kruskal accepts the edge. In our hypothetical, union E F bridges the D E tree to the A B C F H tree. The outer loop stays short; sorting costs E log E, while the component operations are nearly constant per edge."
+  }
+]

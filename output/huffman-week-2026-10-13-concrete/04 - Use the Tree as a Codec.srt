@@ -1,0 +1,48 @@
+1
+00:00:00,000 --> 00:00:09,500
+The hand trace kept finding the two smallest available weights. A program needs a way to do that repeatedly.
+
+2
+00:00:09,500 --> 00:00:21,500
+The assignment reuses two things you built in Project Two. The Graph holds the Huffman tree, with zero or one on each edge. The priority queue chooses which current trees to join next.
+
+3
+00:00:21,500 --> 00:00:34,670
+Your learning log calls it a line where the most important item goes next. Here, each item is one current tree. Its priority is that tree's total frequency, and the smallest weight goes next.
+
+4
+00:00:34,670 --> 00:00:48,670
+Project Two implements the queue with a min-heap. Each parent weighs no more than its children, so the root is the minimum. The whole heap is not sorted. After a removal, it rearranges to restore that rule.
+
+5
+00:00:48,670 --> 00:01:04,670
+Your locator dictionary maps each tree's unique key to its position in the heap array. When two heap entries swap, their locator positions change too. It helps remove or update a known key. The heap, not the locator, chooses the minimum.
+
+6
+00:01:04,670 --> 00:01:23,000
+Your Project Two queue lets us peek at the minimum and remove that node. Take the weight-four tree first. The heap rearranges, so weight six becomes the new minimum. Remove that tree next. The queue is not fully sorted. Join four and six into a weight-ten tree, then insert it.
+
+7
+00:01:23,000 --> 00:01:32,830
+In the finished tree, each edge carries a zero or one. A symbol's path from the top is its code.
+
+8
+00:01:32,830 --> 00:01:41,830
+The symbol-to-leaf map helps the program jump straight to the right leaf instead of hunting through the tree.
+
+9
+00:01:41,830 --> 00:01:53,030
+P's path is left, right, left, so the program emits zero, one, zero. It repeats that for each input symbol.
+
+10
+00:01:53,030 --> 00:02:03,530
+Start at the tree's top and follow the incoming bits. Zero, one, zero ends at P, so output P.
+
+11
+00:02:03,530 --> 00:02:12,700
+Encode the short message P-Q-P, then decode those bits. The result should be P-Q-P again.
+
+12
+00:02:12,700 --> 00:02:23,900
+When comparing other methods, ask whether they choose the correct pair after every merge. Then ask how much repeated work they do.
+

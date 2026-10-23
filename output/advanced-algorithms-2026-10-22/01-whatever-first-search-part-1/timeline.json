@@ -1,0 +1,488 @@
+[
+ {
+  "id": "meet",
+  "narration": "[[w]]Meet Wrinkles, a naked mole-rat worker. Her colony is a maze of [[chambers]]chambers joined by [[tunnels]]tunnels. Mathematicians draw a maze like this as a [[graph]]graph. Each chamber is a dot, called a [[vertex]]vertex. Each tunnel is a line, called an [[edge]]edge.",
+  "cues": {
+   "w": 0.378125,
+   "chambers": 4.844291,
+   "tunnels": 6.003125,
+   "graph": 9.714083,
+   "vertex": 12.669791,
+   "edge": 15.625541
+  },
+  "dur": 17.05,
+  "start": 0.0
+ },
+ {
+  "id": "question",
+  "narration": "Wrinkles is in the nest, [[nest]]vertex {S}. Her job is to find every chamber she can reach by [[follow]]following tunnels. That question has a name: [[reach]]reachability. And one burrow over here was cut off by a [[cave]]cave-in, so she will never reach it. [[q]]Pause, and think. How would Wrinkles check every chamber?",
+  "cues": {
+   "nest": 2.188041,
+   "follow": 7.044791,
+   "reach": 10.45625,
+   "cave": 13.841666,
+   "q": 16.39375
+  },
+  "dur": 26.130000000000003,
+  "start": 17.05
+ },
+ {
+  "id": "circles",
+  "narration": "Wrinkles' first idea: follow any tunnel. At the next chamber, follow any tunnel again. [[go]]Watch. Round and round. She never remembers where she has been.",
+  "cues": {
+   "go": 6.797416
+  },
+  "dur": 12.778000000000002,
+  "start": 43.18000000000001
+ },
+ {
+  "id": "marks",
+  "narration": "Naked mole-rats know their colony by smell, so Wrinkles has a better idea. The first time she arrives at a chamber, she leaves a [[scent]]scent mark. In graph words, she [[marks]]marks the vertex. If she arrives at a marked vertex, she knows: been here, nothing new, [[turn]]turn around.",
+  "cues": {
+   "scent": 8.945833,
+   "marks": 11.823458,
+   "turn": 18.672416000000002
+  },
+  "dur": 20.338,
+  "start": 55.95800000000001
+ },
+ {
+  "id": "three",
+  "narration": "But a scent mark is not enough. At the nest, [[three]]three tunnels lead out of vertex {S}, and Wrinkles can only walk down one. What happens to the other two? [[q]]Pause. How does she remember them?",
+  "cues": {
+   "three": 3.763541,
+   "q": 10.45625
+  },
+  "dur": 17.522000000000002,
+  "start": 76.29600000000002
+ },
+ {
+  "id": "tokens",
+  "narration": "So Wrinkles carries a pile of [[t1]]tokens. Each token reminds her of one [[t2]]tunnel she has not walked yet. It is [[t3]]stamped with the two chambers that tunnel connects. [[ro]]Mole-rats cannot really read, so just pretend.",
+  "cues": {
+   "t1": 2.305208,
+   "t2": 5.469291,
+   "t3": 7.8520829999999995,
+   "ro": 11.120333
+  },
+  "dur": 14.914000000000001,
+  "start": 93.81800000000003
+ },
+ {
+  "id": "bag",
+  "narration": "All the tokens go into one pile. The book calls this pile a [[bag]]bag. It is just somewhere to put things in, and take things out.",
+  "cues": {
+   "bag": 4.544791
+  },
+  "dur": 9.202000000000002,
+  "start": 108.73200000000003
+ },
+ {
+  "id": "pair",
+  "narration": "Each token is a [[pair]]pair: the vertex she [[from]]came from, and the vertex it leads [[to]]to. In code, we will call these two things {came_from|came~from}, and current. In a few minutes, you will see why we keep both.",
+  "cues": {
+   "pair": 1.250541,
+   "from": 3.151583,
+   "to": 5.534375
+  },
+  "dur": 13.450000000000001,
+  "start": 117.93400000000003
+ },
+ {
+  "id": "rule1",
+  "narration": "The whole method is four rules. [[r1]]Rule one: start with a single token that says: came from nobody, leads to the nest.",
+  "cues": {
+   "r1": 2.733875
+  },
+  "dur": 9.610000000000001,
+  "start": 131.38400000000001
+ },
+ {
+  "id": "rule2",
+  "narration": "[[r2]]Rule two: as long as the pile is not empty, take one token out.",
+  "cues": {
+   "r2": 0.35
+  },
+  "dur": 5.818,
+  "start": 140.99400000000003
+ },
+ {
+  "id": "rule3",
+  "narration": "[[r3]]Rule three: look at the vertex that token leads to. If it has no [[mk]]mark yet, mark it. Remember who sent her. That is its [[par]]parent. Then add a new token for [[ev]]every edge leaving that vertex.",
+  "cues": {
+   "r3": 0.351583,
+   "mk": 5.052625,
+   "par": 8.971875,
+   "ev": 11.667208
+  },
+  "dur": 14.410000000000002,
+  "start": 146.81200000000004
+ },
+ {
+  "id": "rule4",
+  "narration": "[[r4]]Rule four: if the vertex is already marked, [[throw]]throw the token away. There is nothing new to do.",
+  "cues": {
+   "r4": 0.3510409,
+   "throw": 3.619291
+  },
+  "dur": 7.521999999999999,
+  "start": 161.22200000000004
+ },
+ {
+  "id": "translate",
+  "narration": "That is the entire algorithm. The book calls it whatever-first search, because we have not said which token to take out of the pile. Today, we always take the newest one. Next video, we will see what changes if you choose differently. And if you open the book, here is the translation of its letters. [[t_s]]The letter s is the start. [[t_bag]]The bag is our token pile. [[t_p]]The letter p is {came_from|came~from}. [[t_v]]The letter v is current. [[t_w]]And w is a neighbor.",
+  "cues": {
+   "t_s": 19.180208,
+   "t_bag": 21.276583000000002,
+   "t_p": 23.490125,
+   "t_v": 25.703666000000002,
+   "t_w": 27.682833000000002
+  },
+  "dur": 30.154,
+  "start": 168.74400000000003
+ },
+ {
+  "id": "map",
+  "narration": "Let us run it on the colony. Seven [[v7]]vertices, twelve [[e12]]edges. Each vertex keeps a list of its neighbors, and adds tokens in list order. So the [[last]]last neighbor in the list ends up on top of the pile.",
+  "cues": {
+   "v7": 2.682833,
+   "e12": 4.102083,
+   "last": 10.534375
+  },
+  "dur": 14.386000000000001,
+  "start": 198.89800000000002
+ },
+ {
+  "id": "step1",
+  "narration": "Start with one token: [[take]]nobody to {S}. Take it out. {S} has no mark, so [[do]]mark {S}. Its parent is nobody. {S} has three edges, so [[push]]add three tokens: {S} to {A}, {S} to {B}, and {S} to {C}.",
+  "cues": {
+   "take": 2.4875,
+   "do": 6.628125,
+   "push": 11.315625
+  },
+  "dur": 16.882,
+  "start": 213.28400000000002
+ },
+ {
+  "id": "predict1",
+  "narration": "Now the pile has three tokens. We always take the newest one. [[q]]Which one is it?",
+  "cues": {
+   "q": 5.0125
+  },
+  "dur": 10.874,
+  "start": 230.16600000000003
+ },
+ {
+  "id": "step2",
+  "narration": "It is {S} to {C}, the last one we added. [[take]]Take it out. {C} is new, so [[do]]mark {C}. Its parent is {S}. {C} has four edges, to {A}, {B}, {F}, and back to {S}, so [[push]]four tokens go on top.",
+  "cues": {
+   "take": 3.4380409999999997,
+   "do": 6.185416,
+   "push": 12.682833
+  },
+  "dur": 15.058000000000002,
+  "start": 241.04000000000002
+ },
+ {
+  "id": "step3",
+  "narration": "[[take]]Newest token: {C} to {S}. But {S} already has a mark. [[do]]Throw it away.",
+  "cues": {
+   "take": 0.378125,
+   "do": 5.3
+  },
+  "dur": 7.162,
+  "start": 256.098
+ },
+ {
+  "id": "step4",
+  "narration": "[[take]]Next, {C} to {F}. {F} is new. [[do]]Mark it, parent {C}. {F} has three edges, to {C}, {D}, and {E}, so [[push]]three tokens go on top.",
+  "cues": {
+   "take": 0.365125,
+   "do": 3.2682499999999997,
+   "push": 8.984375
+  },
+  "dur": 11.434000000000001,
+  "start": 263.26
+ },
+ {
+  "id": "step5",
+  "narration": "[[take]]The newest is {F} to {E}. {E} is new. [[do]]Mark it, parent {F}. {E} has edges to {B}, {D}, and {F}. [[push]]Three more tokens.",
+  "cues": {
+   "take": 0.378125,
+   "do": 3.333875,
+   "push": 8.008333
+  },
+  "dur": 10.066,
+  "start": 274.694
+ },
+ {
+  "id": "step6",
+  "narration": "[[take]]Now {E} to {F}. {F} is already marked. [[do]]Throw it away.",
+  "cues": {
+   "take": 0.391166,
+   "do": 4.037
+  },
+  "dur": 5.842,
+  "start": 284.76
+ },
+ {
+  "id": "step7",
+  "narration": "[[take]]Next, {E} to {D}. {D} is new. [[do]]Mark it, parent {E}. {D} has edges to {A}, {E}, and {F}. [[push]]Three more tokens.",
+  "cues": {
+   "take": 0.378125,
+   "do": 2.95625,
+   "push": 7.865125
+  },
+  "dur": 9.994000000000002,
+  "start": 290.602
+ },
+ {
+  "id": "step89",
+  "narration": "[[take8]]{D} to {F}: {F} is marked. [[do8]]Throw it away. [[take9]]{D} to {E}: {E} is marked. [[do9]]Throw that one away too.",
+  "cues": {
+   "take8": 0.378125,
+   "do8": 2.878125,
+   "take9": 4.154166,
+   "do9": 6.4458329999999995
+  },
+  "dur": 8.866000000000001,
+  "start": 300.596
+ },
+ {
+  "id": "step10",
+  "narration": "[[take]]{D} to {A}. {A} is new, so [[do]]mark {A}, parent {D}. {A} has four edges, so [[push]]four tokens go on top: to {B}, {C}, {D}, and {S}. Only one of those vertices is still unmarked. [[q]]Which token will lead Wrinkles to it, and how many will she throw away first?",
+  "cues": {
+   "take": 0.40416599999999997,
+   "do": 3.294791,
+   "push": 7.00575,
+   "q": 14.388541
+  },
+  "dur": 25.17,
+  "start": 309.462
+ },
+ {
+  "id": "step1114",
+  "narration": "The answer: three get thrown away. [[take11]]{A} to {S}, [[take12]]{A} to {D}, and [[take13]]{A} to {C}. [[take14]]Then {A} to {B}. {B} is new, so [[do14]]mark {B}. Its parent is {A}. That is the seventh vertex. Every vertex Wrinkles can reach now has a mark. [[push14]]But the pile is not empty.",
+  "cues": {
+   "take11": 3.073458,
+   "take12": 4.3495,
+   "take13": 5.417208,
+   "take14": 6.537,
+   "do14": 9.3495,
+   "push14": 18.034375,
+   "do11": 3.573458,
+   "do12": 4.8495,
+   "do13": 5.917208
+  },
+  "dur": 20.578000000000003,
+  "start": 334.632
+ },
+ {
+  "id": "drain",
+  "narration": "Eleven tokens are left, and every one leads to a marked vertex. [[drain]]So rule four, over and over. Throw it away, throw it away. Watch the pile drain. [[s1]]The last two tokens, {S} to {B} and {S} to {A}, have been waiting at the bottom since step one. Their vertices got marked a different way, so they are stale. We never dig through the pile to remove old tokens. We just ignore them when they come out. [[s2]]Zero tokens. We are done.",
+  "cues": {
+   "drain": 5.521375,
+   "s1": 12.396375,
+   "s2": 27.044291,
+   "take15": 5.521375,
+   "do15": 5.771375,
+   "take16": 6.071375,
+   "do16": 6.321375,
+   "take17": 6.6213750000000005,
+   "do17": 6.8713750000000005,
+   "take18": 7.171375,
+   "do18": 7.421375,
+   "take19": 7.721375,
+   "do19": 7.971375,
+   "take20": 8.271374999999999,
+   "do20": 8.521374999999999,
+   "take21": 8.821375,
+   "do21": 9.071375,
+   "take22": 9.371375,
+   "do22": 9.621375,
+   "take23": 9.921375000000001,
+   "do23": 10.171375000000001,
+   "take24": 27.044291,
+   "do24": 27.344291000000002,
+   "take25": 27.994291,
+   "do25": 28.294291
+  },
+  "dur": 30.322000000000003,
+  "start": 355.21000000000004
+ },
+ {
+  "id": "answer",
+  "narration": "The marked vertices are {S}, {A}, {B}, {C}, {D}, {E}, and {F}. [[xy]]{X} and {Y} never got a mark. That is the answer: from the nest, Wrinkles can reach [[seven]]seven chambers, and she can never reach the cut-off burrow. And look at the [[count]]count. Twenty-five tokens in all: [[one]]one to start, and [[two]]two for each of the twelve edges, one from each end. Only seven were useful. We will use that count in the next video.",
+  "cues": {
+   "xy": 6.016166,
+   "seven": 11.823458,
+   "count": 16.08125,
+   "one": 19.023958,
+   "two": 20.260958000000002
+  },
+  "dur": 29.458000000000002,
+  "start": 385.53200000000004
+ },
+ {
+  "id": "parents",
+  "narration": "Remember the pair on each token? Here is why. [[b]]Ask vertex {B}: who is your parent? {A}. [[a]]Ask {A}? {D}. [[d]]Ask {D}? {E}. [[e]]Then {F}, [[f]]then {C}, [[c]]then {S}. Keep asking, and Wrinkles [[back]]walks right back to the nest.",
+  "cues": {
+   "b": 4.023958,
+   "a": 7.591666,
+   "d": 8.919291000000001,
+   "e": 10.729708,
+   "f": 11.406791,
+   "c": 12.513541,
+   "back": 14.688041
+  },
+  "dur": 17.098000000000003,
+  "start": 414.99000000000007
+ },
+ {
+  "id": "tree",
+  "narration": "Now draw only the [[par]]parent edges. Six of them, one fewer than the seven vertices. They form a [[tree]]tree: one long, skinny path from the nest. The book says depth-first trees are usually long and skinny. And every marked vertex hangs from the nest by exactly one route.",
+  "cues": {
+   "par": 1.732291,
+   "tree": 7.4614579999999995
+  },
+  "dur": 20.626,
+  "start": 432.0880000000001
+ },
+ {
+  "id": "stops",
+  "narration": "Three promises. First, it always stops. A vertex is marked [[once]]only once, and only a marked vertex adds tokens. So the pile cannot keep growing forever.",
+  "cues": {
+   "once": 5.339083
+  },
+  "dur": 12.562000000000001,
+  "start": 452.71400000000006
+ },
+ {
+  "id": "never",
+  "narration": "Second, it never marks a vertex she cannot reach. Every token is added by a marked vertex, along a real edge. So [[c1]]every marked vertex has a chain [[c2]]of parents [[c3]]leading back [[c4]]to the nest.",
+  "cues": {
+   "c1": 9.935416,
+   "c2": 11.8625,
+   "c3": 12.513541,
+   "c4": 13.177625
+  },
+  "dur": 14.866000000000001,
+  "start": 465.27600000000007
+ },
+ {
+  "id": "route",
+  "narration": "Third, it marks every vertex she can reach. Pick any reachable vertex, call it the target, and take a [[route]]shortest route to it. The nest, then a few vertices, then the target.",
+  "cues": {
+   "route": 8.1125
+  },
+  "dur": 13.618000000000002,
+  "start": 480.14200000000005
+ },
+ {
+  "id": "dominoes1",
+  "narration": "[[s]]{S} gets marked, so it adds a [[tok]]token for the next vertex on the route. That token cannot vanish, and the search only stops when the pile is empty, so the token [[out]]gets taken out. At that moment the vertex is already marked, or it gets marked now. [[either]]Either way, it is marked.",
+  "cues": {
+   "s": 0.40416599999999997,
+   "tok": 2.383333,
+   "out": 10.742708,
+   "either": 16.679166000000002
+  },
+  "dur": 18.994,
+  "start": 493.76000000000005
+ },
+ {
+  "id": "dominoes2",
+  "narration": "Then it [[next]]adds the token for the next one. Each vertex [[knock]]knocks over the next. Mathematicians call this [[ind]]induction on distance. It is the proof of Lemma five point one, and now you can read it.",
+  "cues": {
+   "next": 0.8208329999999999,
+   "knock": 3.633333,
+   "ind": 6.55
+  },
+  "dur": 13.018,
+  "start": 512.754
+ },
+ {
+  "id": "code_all",
+  "narration": "Here are the four rules as Python. [[l2]]Rule one is line two. [[l5]]Rule two is the while loop. [[l7]]Rule three is everything inside the if. [[l_else]]And rule four is what is missing: if the vertex is already marked, the if is false, and nothing runs.",
+  "cues": {
+   "l2": 2.889083,
+   "l5": 5.102625,
+   "l7": 7.06875,
+   "l_else": 10.260958
+  },
+  "dur": 17.722,
+  "start": 525.772
+ },
+ {
+  "id": "code_l2",
+  "narration": "[[l2]]Line two. [[sq]]Square brackets make a list: that is our pile. Inside is one pair. [[rd]]Round brackets glue two values together. The first is [[none]]None, which means nobody. The second is [[start]]start.",
+  "cues": {
+   "l2": 0.391166,
+   "sq": 1.6411660000000001,
+   "rd": 7.188041,
+   "none": 10.912,
+   "start": 13.7375
+  },
+  "dur": 15.106000000000002,
+  "start": 543.494
+ },
+ {
+  "id": "code_l6",
+  "narration": "[[l6]]Line six. [[pop]]Pop takes the last item out of the list: our newest token, a pair. [[names]]The two names on the left of the equals sign, with a comma between them, split that pair. The first value goes into {came_from|came~from}. The second goes into current. That is called [[unp]]unpacking.",
+  "cues": {
+   "l6": 0.40416599999999997,
+   "pop": 1.823458,
+   "names": 6.6802079999999995,
+   "unp": 17.31825
+  },
+  "dur": 19.018,
+  "start": 558.6
+ },
+ {
+  "id": "code_sets",
+  "narration": "A [[set]]set remembers which vertices have a mark, and answers, is this one in here, very quickly. The [[curly]]curly brackets on line four make a dictionary: look up a vertex, get its parent. The [[loop]]loop adds one token per neighbor. Look at the [[dbl]]double round brackets. The inner pair is the token. The outer ones belong to append.",
+  "cues": {
+   "set": 0.45625,
+   "curly": 6.497916,
+   "loop": 12.070833,
+   "dbl": 14.9875
+  },
+  "dur": 22.114,
+  "start": 577.618
+ },
+ {
+  "id": "code_ret",
+  "narration": "The function [[ret]]returns the parents table. Its [[keys]]keys are exactly the marked vertices, the answer to reachability. And its [[values]]values are the tree.",
+  "cues": {
+   "ret": 1.06825,
+   "keys": 3.190625,
+   "values": 8.516166
+  },
+  "dur": 10.762000000000002,
+  "start": 599.7320000000001
+ },
+ {
+  "id": "recursion",
+  "narration": "One more connection. In class you wrote {build_topo_from|build~topo~from}. That is this [[g1]]same idea, [[g2]]written with [[g3]]recursion. There is no written pile, because Python's own [[nopile]]call stack is the pile. The order of the neighbors can come out flipped, but the idea is the same.",
+  "cues": {
+   "g1": 5.026583,
+   "g2": 6.315625,
+   "g3": 6.70625,
+   "nopile": 10.352083
+  },
+  "dur": 16.954,
+  "start": 610.4940000000001
+ },
+ {
+  "id": "recap",
+  "narration": "Let us retell it. [[c1]]Scent marks stop her circling. [[c2]]A pile of tokens remembers the tunnels she has not walked yet. [[c3]]And the parents form a tree back to the nest. [[try]]Pause, and run the four rules on the graph from page one of your notes. Next time: what changes when the pile is a queue, or a priority queue.",
+  "cues": {
+   "c1": 1.6802080000000001,
+   "c2": 4.037,
+   "c3": 8.333875,
+   "try": 11.471875
+  },
+  "dur": 21.442,
+  "start": 627.4480000000001
+ }
+]

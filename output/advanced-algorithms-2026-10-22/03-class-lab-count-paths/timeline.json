@@ -1,0 +1,314 @@
+[
+ {
+  "id": "hook",
+  "narration": "Meet Hopper, a frog. Hopper wants to cross a river on eight stepping stones, numbered zero to seven. Each hop goes forward one stone, or two. Drawn as a graph, each [[stone]]stone is a vertex, and each [[hop]]hop is an arrow, a directed edge. [[q]]How many different ways can Hopper get from stone zero to stone seven?",
+  "cues": {
+   "stone": 12.787,
+   "hop": 14.570833,
+   "q": 17.4875
+  },
+  "dur": 28.282,
+  "start": 0.0
+ },
+ {
+  "id": "back7",
+  "narration": "Let us count backward, from the far bank. [[s7]]From stone seven, Hopper is done. That is one way: do nothing. [[s6]]From stone six, one way: hop one. [[s5]]From stone five, two ways: hop one, then one more, or hop two, straight to the bank.",
+  "cues": {
+   "s7": 3.346875,
+   "s6": 8.151583,
+   "s5": 11.70625
+  },
+  "dur": 18.85,
+  "start": 28.282
+ },
+ {
+  "id": "rule",
+  "narration": "[[rule]]See the pattern? The ways from a stone are the ways from the stone one ahead, plus the ways from the stone two ahead, because those are the only first hops. [[s4]]Stone four: two plus one is three. [[s3]]Stone three: three plus two is five.",
+  "cues": {
+   "rule": 0.378125,
+   "s4": 9.232291,
+   "s3": 12.201041
+  },
+  "dur": 15.946000000000002,
+  "start": 47.132000000000005
+ },
+ {
+  "id": "finish21",
+  "narration": "Keep going. [[s2]]Eight. [[s1]]Thirteen. [[s0]]And from stone zero, twenty-one ways. [[rule0]]Every count used only the counts of the stones it can hop to.",
+  "cues": {
+   "s2": 1.5239580000000001,
+   "s1": 2.33125,
+   "s0": 3.333875,
+   "rule0": 6.55
+  },
+  "dur": 10.738000000000001,
+  "start": 63.078
+ },
+ {
+  "id": "general",
+  "narration": "In any graph, this is called counting paths. The graph must be a [[dag]]DAG: a directed acyclic graph, meaning arrows, and no cycles. To count the paths from {s|S} to {t|T}: [[base]]if {s|S} is {t|T}, there is one path, the empty one. [[rec]]Otherwise, add up the counts of {s|S}'s children. The children are the vertices that {s|S} points to.",
+  "cues": {
+   "dag": 4.896375,
+   "base": 12.721875,
+   "rec": 16.484916000000002
+  },
+  "dur": 23.506,
+  "start": 73.816
+ },
+ {
+  "id": "diamond",
+  "narration": "Here is the graph from your class lab. Vertex {A} points to {B} and {C}. {B} and {C} both point to {D}. {D} points to {E}. How many paths from {A} to {E}? [[b]]From {B} to {E}: one. [[c]]From {C} to {E}: one. [[a]]So from {A}: two. [[p1]]One path goes {A}, {B}, {D}, {E}. [[p2]]The other goes {A}, {C}, {D}, {E}.",
+  "cues": {
+   "b": 11.537,
+   "c": 13.958875,
+   "a": 16.341666,
+   "p1": 18.412,
+   "p2": 21.784375
+  },
+  "dur": 25.714000000000002,
+  "start": 97.322
+ },
+ {
+  "id": "diamond_rec",
+  "narration": "The code asks these questions in a different order. [[go]]To count from {A}, it asks {B}. {B} asks {D}. {D} asks {E}, and {E} answers one. {D} answers one. {B} answers one. Then {A} asks {C}, and {C} asks {D} all over again. {D} has to ask {E} all over again. [[again]]The same question, twice. Seven calls, for five vertices.",
+  "cues": {
+   "go": 3.346875,
+   "again": 19.3625
+  },
+  "dur": 25.042,
+  "start": 123.036
+ },
+ {
+  "id": "trail_intro",
+  "narration": "That repeat is harmless here. On a bigger map, it explodes. This is a hiking map: seven junctions, twelve one-way trails, all uphill. [[q]]How many different routes lead from Start to Summit?",
+  "cues": {
+   "q": 11.094291
+  },
+  "dur": 19.938,
+  "start": 148.078
+ },
+ {
+  "id": "trail_naive",
+  "narration": "Plain recursion asks each child, and each child asks its own children, with no memory. [[go]]Watch the calls pile up. Twenty-four calls, for a map with seven junctions.",
+  "cues": {
+   "go": 6.641166
+  },
+  "dur": 14.0,
+  "start": 168.016
+ },
+ {
+  "id": "dups",
+  "narration": "Look at the repeats. [[meadow]]Meadow is asked five times. [[falls]]Falls is asked four times. Every time, the answer is one, recomputed from scratch.",
+  "cues": {
+   "meadow": 1.823458,
+   "falls": 4.3364579999999995
+  },
+  "dur": 12.034,
+  "start": 182.016
+ },
+ {
+  "id": "memo",
+  "narration": "The fix: write each answer down the first time, and look it up after. That is called memoization, and the table is a cache. [[tree]]Here is the same search with a cache. [[hit]]Whenever a junction was already answered, it is a cache hit: read the table, and stop there.",
+  "cues": {
+   "tree": 8.620333,
+   "hit": 11.537
+  },
+  "dur": 18.538,
+  "start": 194.04999999999998
+ },
+ {
+  "id": "table",
+  "narration": "Here is the table filling in. [[c1]]Summit: one. [[c2]]Meadow: one. [[c3]]Falls: one. [[c4]]Creek: two. [[c5]]Ridge: two. [[c6]]Pine: five. [[c7]]Start: nine. Nine routes. Each junction was finished only after all of its children.",
+  "cues": {
+   "c1": 2.865125,
+   "c2": 4.608874999999999,
+   "c3": 6.06825,
+   "c4": 7.747916,
+   "c5": 9.492708,
+   "c6": 11.185416,
+   "c7": 12.773958
+  },
+  "dur": 20.242,
+  "start": 212.588
+ },
+ {
+  "id": "cost",
+  "narration": "Count the work. [[v]]Each junction is computed once: seven. [[e]]Each trail is looked at once, when its starting junction is computed: twelve. [[calls]]So there are thirteen calls: one for the start, plus one per trail. [[big]]That is V plus E: linear time.",
+  "cues": {
+   "v": 1.5370000000000001,
+   "e": 5.026583,
+   "calls": 10.6125,
+   "big": 15.534375
+  },
+  "dur": 18.85,
+  "start": 232.82999999999998
+ },
+ {
+  "id": "code_import",
+  "narration": "Now your code. [[import]]The first line: from functools import cache. [[tool]]Functools is a toolbox that comes with Python, and cache is one tool in it.",
+  "cues": {
+   "import": 1.6411660000000001,
+   "tool": 5.287
+  },
+  "dur": 10.474000000000002,
+  "start": 251.67999999999998
+ },
+ {
+  "id": "code_def",
+  "narration": "[[def]]Def {count_paths|count~paths} takes the graph, a start {s|S}, and a target {t|T}. [[ret]]The last line, return nested of {s|S}, starts the whole search from the start.",
+  "cues": {
+   "def": 0.391166,
+   "ret": 5.052625
+  },
+  "dur": 10.786000000000001,
+  "start": 262.154
+ },
+ {
+  "id": "decorator",
+  "narration": "[[at]]The line above the inner def is at cache. The at sign means: wrap the function underneath. [[wrap]]The wrapped function keeps a table of answers. The first time it sees an input, it runs, and writes the answer down. [[again]]The next time it sees the same input, it skips the function, and returns what is written.",
+  "cues": {
+   "at": 0.391166,
+   "wrap": 6.966666,
+   "again": 14.557833
+  },
+  "dur": 20.122,
+  "start": 272.94
+ },
+ {
+  "id": "closure",
+  "narration": "[[nested]]Nested is a function inside a function, so it can read [[gg]]graph and [[tt]]{t|T} from outside. A new nested is built every time {count_paths|count~paths} is called, so its table starts empty each time. That is why the table can be keyed by {s|S} alone, even though the answer depends on {t|T}: inside one call, {t|T} never changes. [[shadow]]The {s|S} in the parentheses is a fresh variable: this call's vertex.",
+  "cues": {
+   "nested": 0.378125,
+   "gg": 3.698458,
+   "tt": 4.622916,
+   "shadow": 20.977083
+  },
+  "dur": 26.314,
+  "start": 293.062
+ },
+ {
+  "id": "code_base",
+  "narration": "[[base]]If {s|S} equals {t|T}, [[one]]return one. Arriving at the target is exactly one path, the empty path. The parentheses around the comparison are optional.",
+  "cues": {
+   "base": 0.391166,
+   "one": 2.435416
+  },
+  "dur": 11.938,
+  "start": 319.37600000000003
+ },
+ {
+  "id": "sum1",
+  "narration": "Now the densest line. Return sum of nested of child, for child in graph of {s|S}. Take it apart. [[g]]Graph of {s|S} is the list of children of {s|S}. At vertex {A} in the diamond, that is {B} and {C}.",
+  "cues": {
+   "g": 7.7739579999999995
+  },
+  "dur": 14.89,
+  "start": 331.314
+ },
+ {
+  "id": "sum2",
+  "narration": "[[for]]For child in graph of {s|S} means: go through that list, one child at a time. [[nc]]Nested of child is the count for that child. Together they produce one number for each child. Wrapped in parentheses like this, it is called a generator expression.",
+  "cues": {
+   "for": 0.391166,
+   "nc": 5.625541
+  },
+  "dur": 16.954,
+  "start": 346.204
+ },
+ {
+  "id": "sum3",
+  "narration": "[[sum]]Sum adds those numbers up. [[nothing]]If {s|S} has no children, there is nothing to add, and the sum of nothing is zero. [[long]]Here is the same thing written longhand: a total that starts at zero, a loop, and a return.",
+  "cues": {
+   "sum": 0.40416599999999997,
+   "nothing": 2.461458,
+   "long": 7.734916
+  },
+  "dur": 14.89,
+  "start": 363.158
+ },
+ {
+  "id": "trace",
+  "narration": "Run it on the diamond. [[t1]]{A} asks {B}, {B} asks {D}, {D} asks {E}, and {E} returns one. [[t2]]{D} is stored. {B} is stored. [[t3]]Then {A} asks {C}, and {C} asks {D}. [[t4]]A cache hit: one, instantly. {C} is stored. [[t5]]And {A} adds one plus one: two.",
+  "cues": {
+   "t1": 1.9145830000000001,
+   "t2": 7.3833329999999995,
+   "t3": 9.753125,
+   "t4": 12.995333,
+   "t5": 17.031791000000002
+  },
+  "dur": 21.058,
+  "start": 378.048
+ },
+ {
+  "id": "e_to_a",
+  "narration": "Your third test asks for {E} to {A}. [[e]]Nested of {E}: {E} is not {A}, and {E} has no children, so the sum of nothing is zero. Zero paths.",
+  "cues": {
+   "e": 3.138541
+  },
+  "dur": 10.378000000000002,
+  "start": 399.106
+ },
+ {
+  "id": "cycle",
+  "narration": "One rule: no cycles. Suppose vertex {A} pointed to vertex {B}, {B} to {C}, and {C} back to {A}. [[go]]Then nested of {A} would call {B}, which calls {C}, which calls {A} again, forever. [[err]]Python gives up with a recursion error. That is why the graph must be acyclic. In the book's words, the dependency graph of a recurrence must have no cycles.",
+  "cues": {
+   "go": 8.138541,
+   "err": 14.297416
+  },
+  "dur": 25.474,
+  "start": 409.484
+ },
+ {
+  "id": "ladder_code",
+  "narration": "Now your last test: sixty stepping stones, hop one or two. The test builds the graph in one line. [[comp]]For i in range sixty, make a key i, with the list i plus one, i plus two. [[bar]]The vertical bar merges two dictionaries, here adding stones sixty and sixty-one, which have no hops.",
+  "cues": {
+   "comp": 7.813041,
+   "bar": 13.542208
+  },
+  "dur": 21.25,
+  "start": 434.95799999999997
+ },
+ {
+  "id": "ladder_num",
+  "narration": "How many ways? [[big]]Two trillion, five hundred four billion, seven hundred thirty million, seven hundred eighty-one thousand, nine hundred sixty-one. [[fib]]Those are Fibonacci numbers, like the ones from the dynamic programming reading: each count is the sum of the two ahead.",
+  "cues": {
+   "big": 1.888541,
+   "fib": 10.742708
+  },
+  "dur": 18.778000000000002,
+  "start": 456.20799999999997
+ },
+ {
+  "id": "ladder_cost",
+  "narration": "Plain recursion would make over eight trillion calls. At ten million calls a second, that is more than nine days. [[cache]]With the cache: one hundred twenty-one calls. A fraction of a millisecond.",
+  "cues": {
+   "cache": 7.7739579999999995
+  },
+  "dur": 13.714000000000002,
+  "start": 474.986
+ },
+ {
+  "id": "dp_link",
+  "narration": "This is memoization, and it is depth-first search in disguise. [[m1]]Each junction is a vertex. [[m2]]Each call that needs another is an edge. [[m3]]Storing an answer is marking. [[m4]]Computing the value happens after the children, at the post-visit. The book puts it in one line: memoized recursion is depth-first search of the dependency graph.",
+  "cues": {
+   "m1": 4.83125,
+   "m2": 7.083875,
+   "m3": 9.948458,
+   "m4": 12.279166
+  },
+  "dur": 22.882,
+  "start": 488.7
+ },
+ {
+  "id": "recap",
+  "narration": "To recap. [[c1]]Paths from {s|S} to {t|T}: one if {s|S} is {t|T}, otherwise the sum over the children. [[c2]]Plain recursion repeats work. [[c3]]A cache answers each vertex once, so the time is V plus E. [[c4]]And the answers come out children first. Next video: the other half of your lab, topological order.",
+  "cues": {
+   "c1": 1.6020830000000001,
+   "c2": 7.95625,
+   "c3": 10.065625,
+   "c4": 15.052625
+  },
+  "dur": 22.618000000000002,
+  "start": 511.582
+ }
+]

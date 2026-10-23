@@ -1,9 +1,9 @@
 # Greedy Huffman
 
 - Canvas link: https://snow.instructure.com/courses/1254074/assignments/19257409
-- Due: Thu 10/15/2026, 11:59pm Mountain
+- Due: Fri 10/16/2026, 11:59pm Mountain (was Thu 10/15 at the 10/12 sync)
 - Points: 28
-- Status: Published and available; not submitted as of 2026-10-12.
+- Status: Submitted 10/16/2026 7:46am; ungraded. Canvas due date is now Fri 10/16/2026, 11:59pm (Canvas, as of 2026-10-20).
 - Available until: Fri 10/16/2026, 11:59pm Mountain.
 - Submission: Canvas file upload; PDF, JPG, JPEG, PNG, PY permitted; unlimited attempts.
 - Turn-in path: `../projects or assignments i turn in live here/` (specific files not identified).

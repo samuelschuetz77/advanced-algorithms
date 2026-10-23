@@ -1,10 +1,10 @@
 __pycache__/
 *.pyc
 
-# generated study videos and their build files (only video 6 is tracked)
-output/*
-!output/advanced-algorithms-2026-10-22/
-output/advanced-algorithms-2026-10-22/*
-!output/advanced-algorithms-2026-10-22/06-primer-toposort-and-dp/
-output/advanced-algorithms-2026-10-22/06-primer-toposort-and-dp/cache/
-output/advanced-algorithms-2026-10-22/06-primer-toposort-and-dp/build.log
+# regenerable build files inside the study-video folders (the videos themselves are tracked)
+output/**/cache/
+output/**/frames/
+output/**/work/
+output/**/snaps/
+output/**/build.log
+output/**/superseded_rumor_version/

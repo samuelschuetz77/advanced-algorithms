@@ -1,0 +1,52 @@
+1
+00:00:00,000 --> 00:00:11,670
+Our separate practice message has five symbols. P occurs four times, Q six, R eight, S eleven, and T fifteen.
+
+2
+00:00:11,670 --> 00:00:21,670
+P's weight is four and Q's is six. They are the two least frequent symbols, so Huffman joins them first.
+
+3
+00:00:21,670 --> 00:00:30,350
+Place P and Q under one new parent. Its weight is four plus six, which is ten.
+
+4
+00:00:30,350 --> 00:00:39,180
+The new tree of weight ten returns to the pool. R still weighs eight, so eight and ten leave next.
+
+5
+00:00:39,180 --> 00:00:48,030
+Join R to the P-Q tree. Their new parent weighs eighteen. It contains three original symbols.
+
+6
+00:00:48,030 --> 00:00:58,870
+The remaining weights are eleven, fifteen, and eighteen. The smallest pair is eleven and fifteen, making twenty-six.
+
+7
+00:00:58,870 --> 00:01:08,890
+Two trees remain. Join them under a parent of weight forty-four. Now every symbol belongs to one tree.
+
+8
+00:01:08,890 --> 00:01:18,060
+Let left mean zero and right mean one. The code for a letter is the bits you pass from the top to that letter.
+
+9
+00:01:18,060 --> 00:01:28,280
+To reach P, go left, then right, then left. Write those edge bits in order: zero, one, zero.
+
+10
+00:01:28,280 --> 00:01:38,950
+You're right: four plus six plus eight plus eleven plus fifteen is forty-four. These weights count how often the letters appear. They do not yet count bits.
+
+11
+00:01:38,950 --> 00:01:48,450
+P and Q have three-bit codes. R, S, and T have two-bit codes. Multiply each letter's weight by the number of bits in its code.
+
+12
+00:01:48,450 --> 00:02:00,280
+Four times three plus six times three plus eight times two plus eleven times two plus fifteen times two equals ninety-eight bits. That is the total encoded message length.
+
+13
+00:02:00,280 --> 00:02:09,450
+The merge weights also add to ninety-eight: ten plus eighteen plus twenty-six plus forty-four. This gives us a second way to check the bit count.
+
