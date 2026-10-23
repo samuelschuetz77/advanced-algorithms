@@ -1,0 +1,306 @@
+[
+ {
+  "id": "def",
+  "narration": "Section six point three starts with a simple idea. Here is the hiking map from the count paths video. In a drawing, the trails can point in any direction. A topological ordering rearranges the junctions onto a line, so that every trail points forward, from left to right. [[ok]]Watch the junctions slide into place. Every arrow now points right. [[bad]]Here is a line-up that fails: some arrows point backward. [[formal]]In symbols: for every edge from vertex u to vertex v, u comes before v. [[tot]]The book calls this a total order: any two vertices have a definite before and after.",
+  "cues": {
+   "ok": 19.167208000000002,
+   "bad": 24.063041000000002,
+   "formal": 28.203666000000002,
+   "tot": 34.102083
+  },
+  "dur": 40.16199999999999,
+  "start": 0.0
+ },
+ {
+  "id": "cycle",
+  "narration": "Why can a graph with a cycle never have one? Take three tasks: x before y, y before z, and z before x, closing the circle. Who goes first? [[x1]]Not task x, because task z must come before it. [[y1]]Not task y, because task x must come before it. [[z1]]And not task z, because task y must come before it. [[all]]Nobody can go first: every vertex on a cycle has an arrow pointing into it. [[book]]The book says it from the other end: the rightmost vertex has an arrow that can only point left. So a cycle rules out any topological ordering.",
+  "cues": {
+   "x1": 11.08125,
+   "y1": 14.844291,
+   "z1": 18.919791,
+   "all": 22.982291,
+   "book": 28.555208
+  },
+  "dur": 39.297999999999995,
+  "start": 40.16199999999999
+ },
+ {
+  "id": "goals",
+  "narration": "To make this concrete, we will keep using the hiking map: seven junctions, twelve one-way trails. [[s]]This time, [[score]]every trail has a number: the scenery points you collect walking it. We have two goals. [[g1]]First: an order of the junctions that respects every trail. [[g2]]Second: the most scenic route from Start to Summit.",
+  "cues": {
+   "s": 7.357291,
+   "score": 8.281791,
+   "g1": 14.245333,
+   "g2": 18.464083000000002
+  },
+  "dur": 22.882,
+  "start": 79.45999999999998
+ },
+ {
+  "id": "fill",
+  "narration": "First goal. The book's algorithm uses an array S, with one slot per vertex. A clock starts at V, which is seven. Run depth-first search, and whenever a vertex finishes, put it in the slot the clock points to, then move the clock down. [[f1]]Summit finishes first: it goes in the last slot, S seven. [[f2]]Meadow finishes next, into S six. [[f3]]Falls, into S five. [[f4]]Creek, into S four. [[f5]]Ridge, into S three. [[f6]]Pine, into S two. [[f7]]And Start finishes last, into S one. [[done]]Read the array from left to right, and every trail points to the right.",
+  "cues": {
+   "f1": 16.836458,
+   "f2": 21.471875,
+   "f3": 24.557833000000002,
+   "f4": 26.70625,
+   "f5": 28.775541,
+   "f6": 30.807833000000002,
+   "f7": 32.64375,
+   "done": 35.742708
+  },
+  "dur": 40.90599999999999,
+  "start": 102.34199999999998
+ },
+ {
+  "id": "order_check",
+  "narration": "Lay the vertices out in the order of S. [[line]]Start, Pine, Ridge, Creek, Falls, Meadow, Summit. [[zero]]All twelve trails point to the right: zero point left. [[lin]]One depth-first search did all of it, so the time is V plus E.",
+  "cues": {
+   "line": 2.695833,
+   "zero": 8.529166,
+   "lin": 12.656791
+  },
+  "dur": 17.482000000000003,
+  "start": 143.248
+ },
+ {
+  "id": "code",
+  "narration": "In Python, the simplest version needs no clock. [[kids]]Visit a vertex by visiting every neighbor not yet visited. [[app]]Then append the vertex to a list, after all its neighbors. That puts the vertices in finish order. [[rev]]The last line reverses the list in place, which is the same as filling the array from the back. [[outer]]And an outer loop starts a search from every vertex not yet visited.",
+  "cues": {
+   "kids": 4.048958,
+   "app": 8.034375,
+   "rev": 14.909375,
+   "outer": 20.938041000000002
+  },
+  "dur": 26.146,
+  "start": 160.73
+ },
+ {
+  "id": "cycle_check",
+  "narration": "This version assumes the graph has no cycle. [[a]]If we already know it is acyclic, plain marking is enough. [[b]]If it might have a cycle, use the three-state version from the last video, and fail gracefully the moment an edge leads to an active vertex. The book writes that failure as: fail gracefully.",
+  "cues": {
+   "a": 3.372916,
+   "b": 7.3833329999999995
+  },
+  "dur": 20.722,
+  "start": 186.87599999999998
+ },
+ {
+  "id": "implicit",
+  "narration": "Often, the sorted list is not the real goal. We want to do something at each vertex, in order. [[proc]]Then we can do that something at the end of each vertex's search, which handles the vertices in reverse topological order. [[noarr]]No array is needed: the book just renames the post-visit step to process. [[p1]]Summit is processed first, [[p2]]then Meadow, [[p3]]Falls, [[p4]]Creek, [[p5]]Ridge, [[p6]]Pine, [[p7]]and Start last. Every vertex is processed after everything it points to.",
+  "cues": {
+   "proc": 6.615125,
+   "noarr": 14.076041,
+   "p1": 19.688041000000002,
+   "p2": 21.406791000000002,
+   "p3": 22.070833,
+   "p4": 22.565625,
+   "p5": 23.047416000000002,
+   "p6": 23.776583000000002,
+   "p7": 24.258333
+  },
+  "dur": 29.794,
+  "start": 207.59799999999998
+ },
+ {
+  "id": "rev",
+  "narration": "What if we want the vertices in forward order instead? One way: [[rev]]search the reversal of the graph, written rev of G, where every edge is flipped. [[src]]Every source of G becomes a sink of rev of G, and the other way round. A reversed cycle is still a cycle, so reversing a DAG gives another DAG. [[lin]]And building the reversal takes V plus E time.",
+  "cues": {
+   "rev": 4.8833329999999995,
+   "src": 10.313041,
+   "lin": 21.263541
+  },
+  "dur": 25.594,
+  "start": 237.392
+ },
+ {
+  "id": "footnote",
+  "narration": "There is a subtle point, in the book's footnote. [[one]]Here is the reverse of G's postorder. [[two]]And here is a postorder of the reversed graph. Both are topological orderings of G, with zero backward edges. [[diff]]But they are different: Ridge and Creek swap places. So a postordering of rev of G is not necessarily the reversal of a postordering of G.",
+  "cues": {
+   "one": 3.763541,
+   "two": 6.771375,
+   "diff": 15.104708
+  },
+  "dur": 25.762,
+  "start": 262.986
+ },
+ {
+  "id": "dep",
+  "narration": "Section six point four. Remember the frog. [[rec]]The ways from stone i is the ways from stone i plus one, plus the ways from stone i plus two. [[dep]]The book draws a dependency graph for any recurrence: a vertex for every subproblem, and an edge from one subproblem to another, if evaluating the first needs the second. [[same]]For the frog, that graph is the stepping-stone graph itself. [[acyc]]And it has to be acyclic. Otherwise, the plain recursion would never halt.",
+  "cues": {
+   "rec": 3.8286659999999997,
+   "dep": 10.76875,
+   "same": 21.901583000000002,
+   "acyc": 26.133333
+  },
+  "dur": 31.786,
+  "start": 288.748
+ },
+ {
+  "id": "memo_dfs",
+  "narration": "Here is the big claim. Evaluating a recurrence with memoization is exactly the same as a depth-first search of the dependency graph. [[m1]]Is the value still undefined? That is the same as: is the vertex unmarked. [[m2]]Starting to evaluate is the pre-visit. [[m3]]Evaluating every subproblem it needs is the recursive calls along the edges. [[m4]]And finishing the value is the post-visit. [[mk]]A vertex is marked when its value has been computed. [[pp]]The pre-visit and post-visit steps stand in for the actual arithmetic.",
+  "cues": {
+   "m1": 9.063041,
+   "m2": 15.039583,
+   "m3": 17.578666000000002,
+   "m4": 22.500541000000002,
+   "mk": 25.339083000000002,
+   "pp": 29.05
+  },
+  "dur": 34.209999999999994,
+  "start": 320.534
+ },
+ {
+  "id": "dp_post",
+  "narration": "Now dynamic programming. It evaluates every subproblem in reverse topological order: each one is considered after the subproblems it depends on. [[go]]For the frog, that means stone seven, six, five, down to zero. That order is a postorder of the dependency graph. [[every]]So every dynamic programming algorithm is equivalent to a postorder traversal of the dependency graph of its recurrence.",
+  "cues": {
+   "go": 10.182833,
+   "every": 18.086458
+  },
+  "dur": 26.41,
+  "start": 354.74399999999997
+ },
+ {
+  "id": "grid",
+  "narration": "Most dynamic programming algorithms look different from a topological sort. [[fill]]Take edit distance. [[one]]Each subproblem depends on its left, upper, and diagonal neighbors. The dependency graph is a regular grid. [[loops]]Because it is so regular, we hard-wire a good order into the algorithm, as nested loops, so no topological sort is needed at run time. [[eval]]The book calls that order the evaluation order.",
+  "cues": {
+   "fill": 5.000541,
+   "one": 6.667208,
+   "loops": 14.089083,
+   "eval": 22.95625
+  },
+  "dur": 26.458000000000002,
+  "start": 381.154
+ },
+ {
+  "id": "diffs",
+  "narration": "So there are two small differences between most dynamic programming and topological sort. [[d1]]First, the dependency graph is implicit. The recurrence encodes the edges, so there is no adjacency list in memory. That is minor, as long as we can list each subproblem's children in constant time. [[d2]]Second, the graph is usually regular, so nested loops replace the topological sort. [[d3]]When the graph is not regular, we can use depth-first search directly.",
+  "cues": {
+   "d1": 5.703666,
+   "d2": 18.802625,
+   "d3": 25.339083000000002
+  },
+  "dur": 30.514000000000003,
+  "start": 407.612
+ },
+ {
+  "id": "problem",
+  "narration": "Here is an irregular graph: the hiking map. [[prob]]The longest path problem asks: given a weighted directed graph, a start s and a target t, find the path with the largest total weight. Here, the most scenic route. [[np]]In general directed graphs, that problem is NP-hard. [[easy]]But if the graph is acyclic, it takes only linear time.",
+  "cues": {
+   "prob": 4.023958,
+   "np": 15.6125,
+   "easy": 19.675
+  },
+  "dur": 24.226000000000003,
+  "start": 438.12600000000003
+ },
+ {
+  "id": "recurrence",
+  "narration": "[[def]]For any vertex v, let LLP of v be the length of the longest path from v to t. [[base]]If v is t, it is zero: you are already there. [[rec]]Otherwise, look at every edge from v to some w. Take the edge's length, plus LLP of w, and keep the maximum. [[neg]]If v has no edges out, and is not t, the maximum of nothing is minus infinity: there is no route. [[dep]]The dependency graph of this recurrence is the input graph itself. [[dfs]]So a depth-first search, memoizing as we go, solves it in V plus E time.",
+  "cues": {
+   "def": 0.44325,
+   "base": 7.122916,
+   "rec": 10.781791,
+   "neg": 19.961458,
+   "dep": 28.073458000000002,
+   "dfs": 32.357291
+  },
+  "dur": 38.961999999999996,
+  "start": 462.35200000000003
+ },
+ {
+  "id": "run",
+  "narration": "Run it. Summit is the target, so its score is zero. [[v1]]Meadow has one trail, to Summit, worth five. Five plus zero is five. [[v2]]Falls has one trail, worth four. Four. [[v3]]Creek has two trails. Via Meadow: two plus five is seven. Via Falls: seven plus four is eleven. The best is eleven. [[v4]]Ridge: via Meadow, four plus five is nine. Via Falls, three plus four is seven. The best is nine. [[v5]]Pine has three trails. Via Creek: five plus eleven is sixteen. Via Ridge: one plus nine is ten. Via Meadow: six plus five is eleven. The best is sixteen. [[v6]]Start: via Pine, three plus sixteen is nineteen. Via Creek, four plus eleven is fifteen. Via Ridge, two plus nine is eleven. The best is nineteen.",
+  "cues": {
+   "v1": 4.583875,
+   "v2": 10.859916,
+   "v3": 14.635958,
+   "v4": 24.3495,
+   "v5": 32.357291,
+   "v6": 45.833875
+  },
+  "dur": 58.88199999999999,
+  "start": 501.314
+ },
+ {
+  "id": "lp_setup",
+  "narration": "Now the Python. The function takes the graph, a dictionary called [[len]]length, whose keys are pairs: the pair v, w gives the points of the trail from v to w. And the start and the target. [[best]]Best is an empty dictionary: the cache.",
+  "cues": {
+   "len": 4.844291,
+   "best": 13.945833
+  },
+  "dur": 17.482000000000003,
+  "start": 560.196
+ },
+ {
+  "id": "lp_base",
+  "narration": "Inside, the helper function go. [[base]]If v is t, return zero. [[memo]]If v is not in best yet, we have not computed it. Only then do the work. Otherwise, skip down to the last line, and return what is stored.",
+  "cues": {
+   "base": 2.865125,
+   "memo": 5.76875
+  },
+  "dur": 15.826000000000002,
+  "start": 577.678
+ },
+ {
+  "id": "lp_max",
+  "narration": "Now the heart. [[inf]]Start best of v at minus infinity: float of the text minus inf makes a special number, smaller than any other, which is the book's maximum of nothing. [[loop]]Then for each trail out of v, to a vertex w: [[key]]look up the trail's points, using the pair v, w, [[go]]add go of w, the best score from there, [[max]]and keep the larger of that and the best so far.",
+  "cues": {
+   "inf": 1.8495000000000001,
+   "loop": 12.565625,
+   "key": 16.315625,
+   "go": 19.909375,
+   "max": 22.4745
+  },
+  "dur": 26.17,
+  "start": 593.504
+ },
+ {
+  "id": "lp_ret",
+  "narration": "[[ret]]Return best of v. [[start]]And the last line starts everything: return go of s. That is the book's LongestPath algorithm. Each vertex is computed once, and each trail is looked at once: V plus E.",
+  "cues": {
+   "ret": 0.378125,
+   "start": 1.9536660000000001
+  },
+  "dur": 15.658000000000001,
+  "start": 619.674
+ },
+ {
+  "id": "route",
+  "narration": "The answer is nineteen scenery points. [[r1]]Start to Pine, [[r2]]to Creek, [[r3]]to Falls, [[r4]]to Summit: three plus five plus seven plus four. [[extra]]One extra, which is not in the book. The algorithm computes the length. To recover the route itself, remember which trail gave the maximum at each junction.",
+  "cues": {
+   "r1": 3.464083,
+   "r2": 4.51875,
+   "r3": 5.313041,
+   "r4": 6.120333,
+   "extra": 10.091666
+  },
+  "dur": 21.466,
+  "start": 635.332
+ },
+ {
+  "id": "dp_table",
+  "narration": "The book then says: we can turn this into dynamic programming, with a topological sort. Take the finish order from the depth-first search, and [[loop]]loop through it. Children always come before parents, so when we reach a vertex, [[lookup]]every best of w it needs is already in the table, and no recursion is needed. [[fill]]Watch the table fill in: Summit, zero. Meadow, five. Falls, four. Creek, eleven. Ridge, nine. Pine, sixteen. Start, nineteen. [[same]]The same table, in the same order, as the memoized version. Memoization and dynamic programming are two views of one postorder.",
+  "cues": {
+   "loop": 8.854708,
+   "lookup": 13.828666,
+   "fill": 18.88075,
+   "same": 31.523958
+  },
+  "dur": 41.553999999999995,
+  "start": 656.798
+ },
+ {
+  "id": "recap",
+  "narration": "To recap sections six point three and six point four. [[c1]]A topological order is the reverse of a depth-first search's finishing order. [[c2]]To process in reverse order, process each vertex as it finishes. For forward order, search the reversed graph. [[c3]]Memoization is a depth-first search of the dependency graph, which must be acyclic. [[c4]]And dynamic programming is a postorder of that same graph, so longest path in a DAG takes V plus E time. [[try]]Pause, and say each of those four in your own words. That is a good start for your learning log.",
+  "cues": {
+   "c1": 4.453666,
+   "c2": 9.245333,
+   "c3": 17.839083000000002,
+   "c4": 23.672416000000002,
+   "try": 31.563041000000002
+  },
+  "dur": 38.31399999999999,
+  "start": 698.352
+ }
+]
