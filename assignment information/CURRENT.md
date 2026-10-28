@@ -5,10 +5,14 @@ the work; do not rely on this file for full requirements.
 
 | Status | Due | Canvas title | Submission type | Turn-in path | Spec |
 |---|---|---|---|---|---|
+| Not started | Mon 11/2/2026, 11:20am (in class) | Exam 1 | In-class Canvas quiz (100 pts, 21 Qs); everything through Class 25; closed everything | N/A | [Exam 1.md](Exam%201.md) |
+| Not started | Wed 10/28/2026, 11:59pm | Final Checkpoint 1 | Text/upload (5 pts): dated progress-journal entry | Final Project repo journal | [Final Checkpoint 1.md](Final%20Checkpoint%201.md) |
+| Graded 13/13; submitted 10/23 11:25am | Fri 10/23/2026, 11:20am (in class) | Quiz - DFS and Topological Sort | Canvas quiz (13 pts) | N/A | [Quiz - DFS and Topological Sort.md](Quiz%20-%20DFS%20and%20Topological%20Sort.md) |
+| Class activity (not graded) | Class 22 | Class 22 - Connections to Memoization | Mini lab: `longest_from`, bonus `lis_length` | N/A | [Class 22 - Connections to Memoization.md](Class%2022%20-%20Connections%20to%20Memoization.md) |
 | Not started | Fri 10/30/2026, 10:59pm MDT (API 10/31 04:59Z; verify displayed time) | Group Project - Strongly Connected Components | Canvas text: Python code + pytest tests (21 pts; partner; no AI code) | ../projects or assignments i turn in live here/ (not created) | [Group Project - Strongly Connected Components.md](Group%20Project%20-%20Strongly%20Connected%20Components.md) |
 | Not started | Fri 10/23/2026, 11:59pm | Learning Log 11 | Canvas text (5 pts) | ../learning log.md | [Learning Log 11.md](Learning%20Log%2011.md) |
 | Class activity (not graded) | Class 21 | Class 21 - DFS Traversal and Topo Sort | Mini lab: `count_paths`, bonus `topo_order` | N/A | [Class 21 - DFS Traversal and Topo Sort.md](Class%2021%20-%20DFS%20Traversal%20and%20Topo%20Sort.md) |
-| Not started | API 12/14 04:59Z (Sun 12/13, 9:59pm MST; verify displayed time) | Final Project | 100 pts | not created | spec not pulled; Module 10 |
+| Not started | API 12/14 04:59Z (Sun 12/13, 9:59pm MST; verify displayed time) | Final Project | 100 pts | not created | [Final Project.md](Final%20Project.md) |
 | Graded 23.33/25; submitted 10/13 8:32am, late | Wed 10/7/2026, 11:59pm | Practice Quiz - Backtracking and Dynamic Programming | Canvas quiz (25 pts) | N/A; derived answer guide in spec | [Practice Quiz - Backtracking and Dynamic Programming.md](Practice%20Quiz%20-%20Backtracking%20and%20Dynamic%20Programming.md) |
 | Graded 5/5; submitted 10/13 11:11pm | Wed 10/14/2026, 11:59pm | Learning Log 10 | Canvas text (5 pts) | ../learning log.md | [Learning Log 10.md](Learning%20Log%2010.md) |
 | Graded 14.33/20; submitted 10/14 10:50am | Wed 10/14/2026, 11:59pm | Quiz - Greedy | Canvas quiz (20 pts) | N/A | [Quiz - Greedy.md](Quiz%20-%20Greedy.md) |
@@ -28,7 +32,12 @@ the work; do not rely on this file for full requirements.
 | Submitted; score not displayed on current Grades page | Fri 9/11/2026, 11:59pm | Project 2 - ADTs and Data Structures | Code/writeup per spec | `../projects or assignments i turn in live here/` | [Project 2 - ADTs and Data Structures.md](Project%202%20-%20ADTs%20and%20Data%20Structures.md) |
 | Graded 5/5 | Wed 9/9/2026, 11:59pm | Learning Log 4 | Canvas text | `../learning log.md` | [Learning Log 4.md](Learning%20Log%204.md) |
 
-**Last synced:** 2026-10-21 via Claude in Chrome (Canvas API: assignments; Class 21 page read); full pages last read 2026-10-12 via ChatGPT in Chrome. Complete Canvas Grades list checked; new and newly available assignment pages read. Dates and times are Canvas-displayed Mountain time.
+**Last synced:** 2026-10-23 via Claude in Chrome (Canvas API; Class 22, Exam 1, Final Project, Final Checkpoint 1, DFS quiz read). Dates and times are Canvas-displayed Mountain time.
+
+## October 23 sync
+
+- New: Exam 1 (Mon 11/2, in class, everything through Class 25), Class 22 page, Final Checkpoint 1 (due Wed 10/28; checkpoints weekly), Final Project spec now pulled (due Sun 12/13), Quiz - DFS and Topological Sort graded 13/13.
+- Classes 23-25 are not posted yet (shortest paths; needed for Exam 1).
 
 ## October 21 sync
 

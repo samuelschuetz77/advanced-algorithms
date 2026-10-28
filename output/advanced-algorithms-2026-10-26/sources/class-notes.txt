@@ -1,0 +1,1838 @@
+1. Advanced Algorithms Class Notes
+
+
+Published using Google Docs
+Report abuseLearn more
+
+1. Advanced Algorithms Class Notes
+Updated automatically every 5 minutes
+
+
+Advanced Algorithms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wednesday 8/26/2026:
+  
+We talked about how AI can do algorithms - so why are we taking this class?
+
+Code - I keep asking ai to do things, but 
+
+Final project focused on NP hard problems. 
+
+NP-hard problem is a computational problem that is at least as hard as the hardest problems in the class NP (Nondeterministic Polynomial time), meaning every problem in NP can be reduced to it in polynomial time. [1] 
+
+Ex: traveling salesman
+
+
+
+Getting good at algorithms is kind like learning to play the game instead of just reading the instructions
+
+
+Make a vscode profile and edit settings.json in it. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Monday 8/31/2026:
+
+There are a few techniques Adam wants us to be able to use in this class:
+
+Everyday he wants to give us a portion of the study guide instead of giving a study guide at the end of class
+
+Today we used uno cards to quickly run through the sorting algorithm: 
+
+Adams goals for the class: 
+
+Help you ensure you are preparing for each class period
+Hoping to make the time you do spend stick better, retention
+ABET wants engineers that know how to apply effective learning strategies
+
+
+If you want to sample 5 random cards from an array of cards length n:
+
+Pick a random number between 0 and n-1 (for index)
+
+fisher -Yates shuffle related to selection sort: 
+
+Let me pick     
+
+Is selection sort stable? 
+Is selection sort in place? 
+
+Auxiliary memory -  extra memory used by an algorithm to solve a problem, excluding the memory taken up by the input data itself. 
+
+Worst case selection vs insertion
+Best case selection vs insertion
+
+
+Went over bubble sort 
+
+Merge sort
+
+If i got less than 2 cards im sorted, otherwise i split the deck in half
+
+Merge sort is heavy on auxiliary memory
+
+
+We talked about counting sort
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wednesday 9/02/2026:
+
+We can do analysis of getting a solution to a problem
+
+And we can also do analysis of the problem itself: 
+
+An example of this is analysis of the sorting problem and conducting a proof by induction to prove that the smallest big O to solve the sorting problem is O(n log n) 
+
+
+And we can also do analysis of the problem itself: 
+
+This is very interesting to think about
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Friday 9/11/2026:
+
+HALVING ALGORITHM — RECURSION TREES AND RUNTIME
+
+Given:
+
+def halving(n):
+    if n <= 1:
+        return 1
+    return 2 * halving(n // 2) + 1
+
+
+============================================================
+1. WHAT DOES log₂(n) MEAN?
+============================================================
+
+The easiest way to think about a logarithm:
+
+log₂(n) = "How many times can I divide n by 2 before reaching 1?"
+
+Example:
+
+n = 8
+
+8 → 4 → 2 → 1
+    1    2    3 divisions
+
+Therefore:
+
+log₂(8) = 3
+
+This makes sense because:
+
+2³ = 8
+
+
+Another example:
+
+n = 32
+
+32 → 16 → 8 → 4 → 2 → 1
+
+That takes 5 halvings.
+
+Therefore:
+
+log₂(32) = 5
+
+because:
+
+2⁵ = 32
+
+
+BIG IDEA:
+
+Whenever an algorithm repeatedly does:
+
+n // 2
+
+I should immediately start thinking:
+
+"Probably log₂(n) levels."
+
+
+============================================================
+2. WHAT DOES THE HALVING FUNCTION ACTUALLY DO?
+============================================================
+
+Look carefully at:
+
+return 2 * halving(n // 2) + 1
+
+There is only ONE recursive function call:
+
+halving(n // 2)
+
+The "2 *" does NOT create two recursive calls.
+
+It just multiplies the returned answer by 2.
+
+So:
+
+2 * halving(n // 2)
+
+DOES NOT mean:
+
+halving(n // 2) + halving(n // 2)
+
+
+This distinction is extremely important.
+
+The first version makes ONE recursive call.
+
+The second version makes TWO recursive calls.
+
+That completely changes the runtime.
+
+
+============================================================
+3. RECURSION TREE FOR THE ACTUAL FUNCTION
+============================================================
+
+Because there is only ONE recursive call, this isn't really a
+branching tree. It is a skinny chain.
+
+
+k = 0                  halving(n)
+                           |
+                           |
+k = 1                halving(n/2)
+                           |
+                           |
+k = 2                halving(n/4)
+                           |
+                           |
+k = 3                halving(n/8)
+                           |
+                          ...
+                           |
+k = k                halving(n/2^k)
+                           |
+                          ...
+                           |
+k = log₂(n)           halving(1)
+                       BASE CASE
+
+
+At each level, n has been divided by another 2.
+
+So:
+
+k = 0:     n
+
+k = 1:     n/2
+
+k = 2:     n/4       = n/2²
+
+k = 3:     n/8       = n/2³
+
+...
+
+k = k:     n/2^k
+
+
+GENERAL RULE:
+
+At depth k:
+
+input size = n / 2^k
+
+
+============================================================
+4. HOW DO WE KNOW THE TREE HAS log₂(n) LEVELS?
+============================================================
+
+The recursion stops when the input reaches 1.
+
+At level k:
+
+n / 2^k = 1
+
+Multiply both sides by 2^k:
+
+n = 2^k
+
+Now ask:
+
+"What exponent k do I put on 2 to get n?"
+
+That is EXACTLY what a logarithm tells us.
+
+Therefore:
+
+k = log₂(n)
+
+
+So the recursion has approximately:
+
+log₂(n) levels.
+
+
+Example with n = 8:
+
+k = 0              8
+                   |
+k = 1              4
+                   |
+k = 2              2
+                   |
+k = 3              1
+
+log₂(8) = 3
+
+
+============================================================
+5. WHY IS THE RUNTIME Θ(log n)?
+============================================================
+
+Each level performs a small constant amount of work besides
+the recursive call.
+
+For example:
+
+n <= 1       → constant work
+n // 2       → constant work
+2 * result   → constant work
++ 1          → constant work
+
+We can represent this constant amount of work as:
+
+c
+
+
+Therefore the work looks like:
+
+k = 0          c
+k = 1          c
+k = 2          c
+k = 3          c
+...
+k = log₂(n)    c
+
+
+There are approximately log₂(n) levels.
+
+Each level does constant work.
+
+Therefore:
+
+total work ≈ c × log₂(n)
+
+Constants disappear in asymptotic notation.
+
+Therefore:
+
+Θ(log n)
+
+
+CORRECT ANSWER FOR THE QUIZ QUESTION:
+
+Θ(log n)
+
+
+============================================================
+6. WHY ISN'T IT Θ(n log n)?
+============================================================
+
+I originally chose Θ(n log n).
+
+The mistake is thinking that each of the log(n) levels is
+doing n work.
+
+It isn't.
+
+There is only ONE function call at each level, and each call
+does constant extra work.
+
+So it is:
+
+log(n) levels × constant work
+
+NOT:
+
+log(n) levels × n work
+
+
+Therefore:
+
+Θ(log n)
+
+
+============================================================
+7. WHAT WAS THE BRANCHING TREE ON THE WHITEBOARD?
+============================================================
+
+The professor's whiteboard also showed a tree like this:
+
+
+k = 0                     n
+                        /   \
+                       /     \
+
+k = 1                 n/2     n/2
+                     /  \     /  \
+                    /    \   /    \
+
+k = 2              n/4  n/4 n/4  n/4
+
+                   / \   / \ / \   / \
+
+k = 3            n/8 n/8 ... ... n/8
+
+                       ...
+
+k = k        n/2^k  n/2^k ... n/2^k
+
+                       ...
+
+k = log₂(n)       1  1  1  1 ... 1
+
+
+THIS represents a DIFFERENT kind of recursion.
+
+It represents TWO recursive calls per function call.
+
+For example:
+
+return halving(n // 2) + halving(n // 2) + 1
+
+
+That is fundamentally different from:
+
+return 2 * halving(n // 2) + 1
+
+
+============================================================
+8. WHAT HAPPENS AT EACH LEVEL OF A TWO-BRANCH TREE?
+============================================================
+
+At:
+
+k = 0
+
+there is:
+
+2⁰ = 1 node
+
+
+At:
+
+k = 1
+
+there are:
+
+2¹ = 2 nodes
+
+
+At:
+
+k = 2
+
+there are:
+
+2² = 4 nodes
+
+
+At:
+
+k = 3
+
+there are:
+
+2³ = 8 nodes
+
+
+So in general:
+
+At depth k:
+
+NUMBER OF NODES = 2^k
+
+INPUT SIZE OF EACH NODE = n / 2^k
+
+
+This gives us:
+
+
+DEPTH       INPUT PER NODE        NUMBER OF NODES
+
+k = 0           n                     1 = 2⁰
+
+k = 1          n/2                    2 = 2¹
+
+k = 2          n/4                    4 = 2²
+
+k = 3          n/8                    8 = 2³
+
+...
+
+k = k         n/2^k                  2^k
+
+...
+
+k = log₂(n)     1                 2^(log₂(n))
+
+
+============================================================
+9. TWO THINGS ARE HAPPENING AT THE SAME TIME
+============================================================
+
+As we move DOWN the tree:
+
+The input size gets SMALLER:
+
+n → n/2 → n/4 → n/8 → ...
+
+
+But the number of nodes gets BIGGER:
+
+1 → 2 → 4 → 8 → ...
+
+
+So:
+
+INPUT SIZE PER NODE:
+
+n / 2^k
+
+
+NUMBER OF NODES:
+
+2^k
+
+
+This is why we need to pay attention to BOTH:
+
+1. How deep is the recursion?
+
+2. How wide does the recursion tree become?
+
+
+============================================================
+10. WHAT DOES 2^k * c ON THE WHITEBOARD MEAN?
+============================================================
+
+Suppose every function call performs constant work:
+
+c
+
+At level k there are:
+
+2^k nodes
+
+Therefore the work at that level is:
+
+2^k × c
+
+
+Examples:
+
+k = 0:
+
+2⁰c = c
+
+
+k = 1:
+
+2¹c = 2c
+
+
+k = 2:
+
+2²c = 4c
+
+
+k = 3:
+
+2³c = 8c
+
+
+So the amount of work per level grows like:
+
+c, 2c, 4c, 8c, 16c, ...
+
+
+============================================================
+11. WHAT DOES THE SUM ON THE WHITEBOARD MEAN?
+============================================================
+
+The professor wrote something approximately like:
+
+           log₂(n)
+              Σ      2^k c
+             k=0
+
+
+Σ just means:
+
+"Add all of these things together."
+
+
+So this means:
+
+Add the work from:
+
+k = 0
+through
+k = log₂(n)
+
+
+Which gives:
+
+c(1 + 2 + 4 + 8 + ...)
+
+
+The last level contains:
+
+2^(log₂(n))
+
+nodes.
+
+
+============================================================
+12. IMPORTANT LOG IDENTITY
+============================================================
+
+Remember:
+
+2^(log₂(n)) = n
+
+
+Why?
+
+Because:
+
+log₂(n)
+
+literally means:
+
+"What exponent do I put on 2 to get n?"
+
+
+Example:
+
+log₂(8) = 3
+
+Therefore:
+
+2^(log₂(8))
+
+= 2³
+
+= 8
+
+
+Another:
+
+log₂(32) = 5
+
+Therefore:
+
+2^(log₂(32))
+
+= 2⁵
+
+= 32
+
+
+So:
+
+2^(log₂(n)) = n
+
+
+============================================================
+13. WHY DOES THE TWO-BRANCH VERSION BECOME Θ(n)?
+============================================================
+
+The work across the levels looks like:
+
+1 + 2 + 4 + 8 + ... + n
+
+This is a geometric series.
+
+The important beginner-friendly fact is:
+
+When numbers repeatedly double like this, the final/largest
+term is roughly the same size as all the previous terms
+combined.
+
+For example:
+
+1 + 2 + 4 + 8 = 15
+
+The largest term is 8.
+
+15 is less than 2 × 8.
+
+So asymptotically:
+
+1 + 2 + 4 + ... + n = Θ(n)
+
+
+Therefore the TWO-recursive-call version has:
+
+Θ(n)
+
+runtime.
+
+
+============================================================
+14. COMPARE THE TWO TREES
+============================================================
+
+ONE RECURSIVE CALL:
+
+             n
+             |
+            n/2
+             |
+            n/4
+             |
+            n/8
+             |
+             .
+             .
+             .
+             |
+             1
+
+
+Depth = log₂(n)
+
+Width = always 1
+
+Runtime = Θ(log n)
+
+
+------------------------------------------------------------
+
+
+TWO RECURSIVE CALLS:
+
+                    n
+                  /   \
+                n/2   n/2
+               / \     / \
+             n/4 n/4 n/4 n/4
+            / \  / \ / \  / \
+           ...  ... ... ... ...
+                 ...
+          1 1 1 1 1 1 1 1 ...
+
+
+Depth = log₂(n)
+
+Width grows exponentially.
+
+Number of calls at depth k = 2^k
+
+Bottom level has approximately n calls.
+
+Runtime = Θ(n)
+
+
+============================================================
+15. THE BIG IDEA
+============================================================
+
+When analyzing recursive algorithms, ask TWO separate
+questions.
+
+
+QUESTION 1:
+
+HOW MUCH SMALLER DOES THE INPUT GET?
+
+If:
+
+n → n/2 → n/4 → n/8 → ...
+
+then the depth is:
+
+log₂(n)
+
+
+QUESTION 2:
+
+HOW MANY RECURSIVE CALLS DOES EACH FUNCTION MAKE?
+
+One recursive call:
+
+Skinny recursion tree.
+
+
+Two recursive calls:
+
+Branching recursion tree.
+
+
+This can completely change the runtime even if both algorithms
+divide n by 2.
+
+
+============================================================
+16. MEMORY SHORTCUT
+============================================================
+
+HALVING tells me how TALL the tree is.
+
+BRANCHING tells me how WIDE the tree is.
+
+
+If I repeatedly halve:
+
+n → n/2 → n/4 → n/8 → 1
+
+then:
+
+HEIGHT = log₂(n)
+
+
+But I still have to ask:
+
+"How many recursive calls happen at every node?"
+
+
+============================================================
+17. MOST IMPORTANT DISTINCTION FROM THIS EXAMPLE
+============================================================
+
+This:
+
+2 * halving(n // 2)
+
+has ONE recursive call.
+
+
+This:
+
+halving(n // 2) + halving(n // 2)
+
+has TWO recursive calls.
+
+
+The first "2" is just multiplication.
+
+The second example actually executes the function twice.
+
+
+Therefore:
+
+
+return 2 * halving(n // 2) + 1
+
+           ONE CALL
+              ↓
+             n
+             |
+            n/2
+             |
+            n/4
+             |
+            ...
+             |
+             1
+
+         Θ(log n)
+
+
+VERSUS:
+
+
+return halving(n // 2) + halving(n // 2) + 1
+
+           TWO CALLS
+              ↓
+             n
+           /   \
+         n/2   n/2
+        / \     / \
+      n/4 n/4 n/4 n/4
+           ...
+      1 1 1 1 1 1 1 1
+
+           Θ(n)
+
+
+============================================================
+FINAL TAKEAWAY
+============================================================
+
+log₂(n) basically means:
+
+"How many times can I halve n before I reach 1?"
+
+
+For recursion:
+
+Halving determines DEPTH.
+
+Branching determines WIDTH.
+
+
+For the quiz function:
+
+def halving(n):
+    if n <= 1:
+        return 1
+    return 2 * halving(n // 2) + 1
+
+There is ONE recursive call.
+
+The input is HALVED each time.
+
+Therefore there are log₂(n) recursive levels.
+
+Each level performs constant work.
+
+Therefore:
+
+                 Θ(log n)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Monday 9/14/2026:
+
+Induction amounts to a proof by smallest or first contradiction: 
+
+
+Def halving(n):
+        If n<=1:
+                RETURN 1
+        RETURN 2 * HALVING(N//2) + 1 
+
+T(n) = T(n/2) + O(1) 
+
+ 
+Here were my quiz results: 
+
+Question 4: Halving Function Runtime (Score: 0 / 1)
+Your answer: Θ(nlogn)
+Correct answer: Θ(logn)
+Why: The return statement is 2 * halving(n // 2) + 1. Notice there is only one recursive call here (the result is simply multiplied by 2), unlike Question 3 which executed halving(n // 2) + halving(n // 2). Because the problem size halves on each step with O(1) work outside the call, the recurrence relation is T(n)=T(n/2)+O(1), which solves to Θ(logn).
+
+Question 5: Definitions Equivalent to f=O(g) (Score: 0.33 / 1)
+What went wrong:
+Incorrectly selected: "There is some n>0 such that f(n)≤g(n)." Big-O is an asymptotic bound describing behavior as n→∞. A relationship holding for a single value of n tells you nothing about asymptotic growth.
+Missed option: "There is a positive constant c such that f(n)≤c⋅g(n) for all n>0." Because f and g map positive integers to positive reals, any finite number of initial values prior to threshold N can simply be absorbed into a larger constant c=max(c,max1≤k≤N​g(k)f(k)​), making this equivalent to the standard definition.
+
+Question 6: Asymptotic Notation Statements (Score: 0.6 / 1)
+What went wrong: You selected three correct statements, but missed two other true statements:
+Missed: n^2 + 100n \in \Theta(n^2) — True because the lower-order term 100n is dominated by n2 as n→∞.
+Missed: 100n \in O(n) — True because constant multipliers do not affect Big-O membership (100n≤100⋅n).
+
+Question 8: Runtime Matching (Score: 0.43 / 1 — 3 of 7 correct)
+Binary search in a sorted array of size n:
+Your answer: Θ(nlogn)
+Correct answer: Θ(logn)
+Why: Binary search cuts the search space in half each step, taking logarithmic time, not linearithmic.
+Push to a binary heap of size n:
+Your answer: Θ(1) expected
+Correct answer: Θ(logn) (or O(logn))
+Why: Inserting an element requires sifting up along the height of the heap, which has depth ⌊log2​n⌋.
+Build a heap from an unsorted array of size n:
+Your answer: Θ(nlogn)
+Correct answer: Θ(n)
+Why: Using bottom-up heap construction (Floyd’s build_heap algorithm), the sum of node heights converges to linear time ∑2hn​O(h)=Θ(n), rather than repeatedly inserting n times.
+Look up a key in a hash table with a good hash function:
+Your answer: Θ(1)
+Correct answer: Θ(1) expected (hash tables run in constant time on average/expected, but have O(n) worst-case collision potential).
+
+
+We talked about when a recusion tree has all the action at the top O(n)^d 
+
+Summation  log base b n starting at k = 0 is (a^k)/(n/b^n)^d -> which can be condensed down to
+
+((a^k) / (b ^dk)) n^d 
+
+According to gemini this is Case 3 of the Master Theorem 
+To do: understand the master theorem and all its cases. Watch a video, talk to claude, know it well
+
+
+
+
+
+
+
+
+
+Wednesday 9/16/2026:
+Divide and Conquer
+Decide if it's easy enough to solve without delegating?
+Two people going to the grocery store split up to get things in their cart
+Divide and conquer
+divide 
+delegate 
+Combine sub-results
+
+What could go wrong? 
+Infinite recursion
+Wrong base case
+Wrong subproblems to solve
+Did Not combine them right
+The recursive calls are wrong
+
+Learning Log Questions:
+
+For recursion to work and induction to work we have to fin problems that are smaller than the overarching problem
+
+If I ever delegate a subproblem it needs to be strictly smaller
+
+Eclidean 
+
+Def gcd (a,b)
+   If b == 0:
+     Return a
+   Return gcd(b, (a % b) ) 
+
+
+Induction
+If we assume all the subproblems are calculated correctly it's our job to prove we correctly use those results to solve the problem
+
+The inductive steps says if i prove all these are true 
+
+How to think induction: 
+Suppose to the contrary it gets it wrong
+We got our subproblem wrong
+Remember we have an ordering on these things
+If we are going to get something wrong lets pick the smallest that we are wrong on
+
+Then either its a base case
+Or all the smaller ones i delegated to are going to be right 
+If we know the base case can be wrong
+
+Proof by induction is proof by smalles contradiction - lets take the smallest one that goes wrong and check it out - but we can’t find a smallest one that goes wrong
+
+Understanding induction can help with recursion, understanding recursion can help with induction
+
+
+
+
+
+Friday 9/18/2026:
+Monday 9/21/2026:
+
+Divide
+Analyze running time (rec trees) 
+Correctness (induction)
+Base cases correct
+Ordering of “problems” (parameters)
+Recursive calls
+Only are smaller
+Prove correct return gives correct recursive calls
+Almost anything can look like “backtracking” search 
+
+
+T(n -1) + O(n) 
+N -> n-1 -> n-2 -> … n-n
+
+Each level iS DOING ROUGHLY N/2 WORK 
+
+N times n/2 = n^2 
+
+backtracking 
+Decide on first part
+Decide on rest
+
+
+
+
+
+
+
+Wednesday 9/23/2026:
+
+
+P vs NP: 
+
+Big o is comparing functions
+
+Those things are associated with an algorithm that solves a particular problem
+
+P and NPs are properties of computational problems
+
+The set P are all problems that can be solved in O(n^k) for some constant k
+
+P for polynomial time - what kind of hardware -> on a turing machine
+
+Problems in p: 
+
+Sorting a list, looking up a value in a hash table
+Multiply, GCD, 
+
+
+NP decision problems: 
+
+NP:  is there an x such that Y where a candidate X can be verified in poly time 
+
+How to prove prob A is in NP?
+>give alg that verifies in polytime  
+How to prove prob A is in P? 
+>Give an alfo that solves show it is O(poly)
+
+
+NP hard - if i had a solver for any np hard problem then any problem in NP could be solved in polynomial time (by reducing it to that problem). 
+
+Every problem in np can be reduced to b
+
+NP complete - in NP and in NP hard
+
+Circuit satisfiability - is there any way i can set these boolean switches so that it returns true
+
+Reductions: To solve problem A using an existing solver for problem B, reduce A to B (convert an instance of A into an instance of B, run solver B, and convert the answer back to A). This shows that problem B is at least as hard as problem A. 
+
+How do I prove that Q is in NP complete
+How to prove its in NP?
+How to prove its in NP hard?
+If i know problem h is in nphard i can just reduce h to Q
+
+ 
+
+
+Monday 9/28/2026:
+
+Today is about Dynamic Programming, Adam’s favorite topic 
+
+What is an NP-complete problem? 
+
+To prove a problem is NP-complete, it just has to check two boxes:
+
+Easy to check (It's in NP): If someone hands you a completed answer, you can quickly double-check that it’s correct.
+
+At least as hard as everything else in NP (It's NP-hard): It is among the toughest problems in that group. You prove this by showing: "If we could solve my problem fast, we could use that solution to solve another notoriously hard problem fast, too."
+
+
+
+Layer 1: The "Budget" Trick (Turning Finding into Checking)
+In real life, you usually want to find the best thing (e.g., "Find the cheapest flight"). That’s an optimization problem.
+In theory, math people hate optimizing because it's messy. They prefer Yes/No questions:
+Optimization: "Find the cheapest route."
+Decision: "Is there a route that costs ≤ $500?" (This $500 is your budget).
+Why make it a Yes/No question? Because if someone claims there is a route under $500, you just say, "Show me the ticket." You look at the ticket, add up the numbers, and verify it in seconds.
+
+Layer 2: The Binary Search (How Yes/No Finds the Best Price)
+How do you get back the cheapest route using only a Yes/No question? You play the High/Low game (Binary Search) with the budget:
+"Is there a route under $1,000?" Yes. (Too high, cut in half).
+"Is there a route under $500?" No. (Too low, try between $500 and $1,000).
+"Is there a route under $750?" Yes.
+Why won't this chop forever?
+Computers can't store infinite decimals. They have finite bits (usually 64 bits). Even if you chopped continuous numbers in half over and over, you physically run out of precision after around 50 to 60 cuts. The computer literally cannot cut any smaller, so it stops.
+
+Layer 3: What "NP-Hard" and the "Caller" Actually Mean
+Your professor mentioned having a "solver" and "calling it a polynomial amount of times."
+Think of an NP-Hard solver like a magical black box that answers an impossibly hard puzzle instantly.
+Saying a problem is NP-Hard means: If you gave me that magical black box, I could solve every single problem in NP just by writing a simple loop around it.
+You don't need to reinvent the wheel for every hard problem. If you crack one NP-Hard problem, you can route all the other hard problems through it with a few lines of code ("polynomial calls").
+We call them hard because nobody on Earth has found a fast way to build that box without brute-forcing it.
+
+Layer 4: The 3 Categories (In Plain English)
+NP: Problems where checking the answer is easy. (If someone hands you a solved Sudoku, checking that each row has 1–9 is fast, even if solving it from scratch is painful).
+NP-Hard: The master key problems. If you find a fast cheat to solve one, you can unlock all NP problems.
+NP-Complete: The sweet spot. A problem that is both:
+Easy to double-check once you have an answer (it's in NP).
+A master key that could unlock everything else if solved fast (it's NP-Hard).
+
+Layer 5: Picking Your Wikipedia Problem
+For your assignment, do not pick an obscure math problem. Pick one that feels like a board game:
+Subset Sum: You have a list of numbers. Can you pick a few that add up to exactly 100?
+Vertex Cover: You have a web of hallways (graph). Can you place security guards at k corners so every single hallway is watched by at least one guard?
+3-Coloring: Can you color a map using only 3 colors so no two touching countries have the same color?
+
+Layer 1: What is Circuit-SAT?
+Imagine a physical computer chip made of logic gates (AND, OR, NOT) with multiple input wires and a single output wire.
+The question is simple: Is there any combination of inputs (True/False) that will make the final output wire light up (True)?
+Checking is fast (O(n)): If someone gives you a specific set of inputs, you simply run the signals through each gate. It takes seconds to see if the final output equals 1. That puts it squarely in NP.
+Solving is brutal: If there are k inputs, there are 2k combinations. Brute-forcing it takes exponential time.
+
+Layer 2: Why Was It the Very First? (The Chicken-and-Egg Problem)
+To prove a new problem is NP-hard, you usually show: "Problem A (already known to be NP-hard) reduces to Problem B."
+The glaring problem in 1971: No problem was known to be NP-hard yet. There was no first domino to knock down.
+Stephen Cook (and independently Leonid Levin) solved this by going straight to the metal. Every computer program running on a computer is fundamentally just an electrical circuit:
+A deterministic computer running in polynomial time can only execute a polynomial number of steps.
+Each step modifies memory bits using basic logic gates.
+Therefore, the entire execution of any program that verifies an NP problem can be unrolled into a single, giant boolean circuit.
+
+Layer 3: The Grand Takeaway (The Master Domino)
+Because any problem in NP can be mechanically translated into an equivalent logic circuit, Circuit-SAT can simulate every single problem in NP.
+If you built a magical black box that solved Circuit-SAT, you could pipe every verification algorithm on Earth into it and solve them all instantly. This made Circuit-SAT the foundational NP-complete problem that unlocked the rest of complexity theory.
+
+
+
+Fridays goal is you are going to teach the class
+
+
+
+
+Wednesday 9/30/2026:
+Today we are working on this sequence
+
+Longest increasing subsequence (dynamic programming algorithm)
+
+
+5 1 3 2 6 7 2 9 8
+
+Caching drops the time complexity from O(2ⁿ) to O(n²). Without it, the recursion recomputes subproblems exponentially. With caching, there are only n unique states (index). Each state iterates through at most n subsequent elements, doing O(1) cached lookups. Space complexity increases to O(n) to store subproblem answers in memory.
+
+
+
+Here is the bottom-up formulation for the Longest Increasing Subsequence, followed by a direct breakdown of how bottom-up compares to top-down.
+
+Bottom-Up Implementation of LIS
+In the bottom-up approach, we eliminate recursion and the call stack by filling an array (or table) iteratively from the smallest subproblems to the largest.
+(Note: You can also define dp[i] as the LIS ending at index i moving forwards 0 -> n-1. Both formulations solve the problem iteratively in O(n²) time and O(n) space).
+
+Top-Down vs. Bottom-Up in General
+
+Dimension
+Top-Down (Memoization)
+Bottom-Up (Tabulation)
+
+Execution Flow
+Starts at the original problem and branches downward recursively into subproblems as needed.
+Starts at the trivial base cases and builds upward iteratively using loops.
+
+Subproblem Evaluation
+Lazy / On-demand: Computes only the subproblems reachable from the original call.
+Eager: Computes every entry in the table/order, regardless of whether every state is needed.
+
+Overhead
+Incurs function call stack overhead and recursion limits (can hit RecursionError on large inputs).
+Zero recursion overhead; uses simple loops and contiguous arrays.
+
+Mental Model
+Natural translation of the mathematical recurrence relation.
+Requires figuring out a valid topological order / dependency direction beforehand.
+
+Space Optimization
+Generally requires storing all visited states in a hash map or cache table.
+Often allows rolling arrays/variables to discard old states (e.g., keeping only the last row or two variables).
+
+How to Choose Between Them
+Use Top-Down when the state space is sparse (many possible subproblem states exist, but only a fraction are actually reachable), or when translating a tricky recursive decision tree quickly.
+Use Bottom-Up when you need maximum performance, want to avoid call stack limits on large inputs, or intend to optimize auxiliary space by throwing away previously computed rows/values.
+
+def longest_increasing(seq):
+    """Returns the length of the longest strictly increasing subsequence."""
+    if not seq:
+        return 0
+    answers = {}
+    def longest_starting_at(index):
+        if index not in answers:
+            # We can always start a subsequence of length 1 using just seq[index].
+            # Then look forward for any element greater than seq[index].
+            answers[index] = 1 + max(
+                (longest_starting_at(j) for j in range(index + 1, len(seq)) if seq[j] > seq[index]),
+                default=0,
+            )
+        return answers[index]
+    return max(longest_starting_at(i) for i in range(len(seq)))
+def cache(f):
+    answers = {}
+    def with_cache(arg):
+        if arg not in answers:
+            answers[arg] = f(arg)
+        return answers[arg]
+    return with_cache
+Advanced Algorithms: Dynamic Programming Notes
+1. Edit Distance (Levenshtein Distance)
+Problem Overview
+Edit distance quantifies how dissimilar two strings are by calculating the minimum number of basic edit operations needed to transform one string into another.
+Allowed Operations:
+Insertion: Add a character.
+Deletion: Remove a character.
+Substitution / Transformation: Replace one character with another.
+(Match / Copy carries zero cost).
+Weighted Edit Distance: In generalized formulations, distinct operations carry variable cost weights (e.g., Costinsert, Costdelete, Costsub). The objective becomes finding the sequence of operations that yields the minimum total cost.
+
+Example: Transforming "sunny" ↔ "snowy"
+To transform "sunny" into "snowy":
+s → s: Match / Copy (Cost: 0)
+u → n: Substitute u with n
+n → o: Substitute
+n → w: Substitute
+y → y: Match / Copy (Cost: 0)
+
+Dynamic programming finds the global minimum alignment cost among all possible operation sequences.
+
+2. Upcoming Project: DeNile’s Robot (Optimal BST Variation)
+Reference: Jeff Erickson, Algorithms (Chapter 3: Dynamic Programming)
+
+Context & Warehouse Setup
+Warehouse Layout: A 1D array of bins indexed 1 through n, arranged in strictly increasing order of book ISBN.
+Base Station: Located at bin 0 (the negative direction relative to the bins).
+Robot Behavior: To retrieve a book, DeNile searches its internal Binary Search Tree (BST) to locate the target bin, walks from the base station to the target bin, extracts the book, and returns to bin 0.
+
+Parameters & Costs
+f[1 … n]: Array of access frequencies, where f[i] is the request count for bin i.
+α: Time cost per step between adjacent bins.
+β: Time cost per internal tree comparison / node visit.
+γ: Extraction time to retrieve a book from a bin.
+
+Dynamic Programming Subproblem Formulation
+Because the bins are sorted by ISBN, any valid search tree over a contiguous range of keys [i … j] forms a subtree. To minimize total retrieval time across all queries, we frame the optimal choice of the subtree root r (i ≤ r ≤ j) recursively.
+Subproblem Definition: OptCost(i, j, …) represents the minimum search/traversal cost for the subset of keys from index i to j.
+State Space:
+i, j: The boundary indices of the current key subrange.
+Additional state variables: Incoming direction or parent bin references.
+
+3. Implementation: Memoization & Recursion
+To prevent exponential time complexity from re-evaluating overlapping subproblems, the recursive formulation uses memoization.
+
+
+Monday 10/05/2026:
+
+Today we are talking about Huffman trees. 
+
+They are optimal and greedy at the same time. 
+
+Attempt to finish before wednesday
+
+Lets come up with a python solution for edit distance
+
+For quiz wednesday - you need to practice in english if the big problem is X what is the piece we will be able to recurse on. Find a description of the subproblem that is general enough to solve the big problem but small enough.. Look through the dynamic programming problems in the book for the dynamic programming chapter.. 
+
+
+Wednesday 10/07/2026:
+
+Greedy and and certificates of optimality
+
+Divide and Conquer - i have got a big problem and i can split it so this part is isolated from another part and at the end we combine the results… he talked about an algorithms that chooses the closet dots on a plot of lots of dots recursively.
+
+Data structures and algorithms in python - O’Reilly
+
+
+
+
+Backtracking we are using recursion to do it, but we are trying to try all possible options.. Lets split it up but we will try the first little sliver and make a decision - for robot i am going to choose a root. Im thinking of doing one piece of work and leaving the rest for someone to do. Make 1 choice and leave rest for later (recursion) 
+
+
+
+Dynamic Programming  memoization - caching 
+Some people think it's a bottom up approach. For example in natural language parsing, we are trying to find all ways to parenthesize a sentence. We have to try to split the sentence into two things. For each possible type of structure for each span - what is the best span size 2 - then size 3. Its bottom up - have solved this yet -> i look it up. 
+
+Top down is usually a little naive, in bottom up requires an extra step in thinking: the order of solving subproblems 
+
+Greedy with local information I am going to pick the best without all the answers first. It picks the best immediate step without looking ahead. It never reconsiders or undoes a decision once made. It follows a single linear path from start to finish. Only guarantees a globally optimal solution if the problem exhibits greedy choice property and optimal structure. Typically very fast polynomial time. Typical use cases are minimum spanning trees (krustal’s, prim’s), Dijkstra's shortest path, Huffman coding, Activity Selection. 
+
+
+Quiz for friday 
+
+A row of n houses must be painted of k colors and painting house, plan out the nested function, selecting a name min_cost_from 
+
+
+The test gives a problem description
+What parameters do we need, i, previous colors
+
+ What is it the Base case 
+
+Options it considers
+
+What choosing color c is with
+
+How it combines options
+
+
+Decoding digits
+
+We get a number string [“1236471238632874”] -> each number or pair of numbers is a 
+
+We can play with this practice problems
+
+
+
+ 
+
+
+Friday 10/09/2026:
+
+
+
+
+
+
+
+Monday 10/12/2026:
+
+Hill climbing - look it up
+
+Question: in a greedy proof do we ever consider probabilities? 
+
+Minimum Spanning Tree
+
+We talked about prims
+
+Today we will talk about Krustkals
+Vocab:
+union-find 
+
+**Certificate of optimally
+
+Professor hopes we can think of applications for MST 
+
+
+A Minimum Spanning Tree (MST) is a way to connect every point in a network using the absolute shortest total path length without creating any loops. Kruskal's algorithm achieves this by sorting all available connections from cheapest to most expensive and repeatedly adding the lowest-cost link that doesn't form a circle until every point is connected. 
+
+Loops are not allowed
+
+In the diagram A, B, and C form a loop. Similarly D, E and G form a loop. 
+The output of Kruskal’s algorithm is simply a list of selected edges, for our graph: 
+
+(B, C) – weight 1
+(A, C) – weight 3
+(C, H) – weight 4
+(H, F) – weight 6
+(E, F) – weight 7
+(G, F) – weight 8
+(D, E) – weight 9     <- this is the MST, we find its best with krustal’s
+
+
+A, B C etc are vertexes or nodes; or more generally elements  1… 11 are edges or the arrows between nodes/vertexes
+Root set: {A}, {B}, {C}, {D}, {E}, {F}, {G}, {H}
+The recursive function for krustal’s is something like:
+find(vertex)
+
+
+Edge (B, C) with weight 1
+We always begin krustals by selecting the connection with the lowest weight/cost, that is b - C with 1 cost
+Find: Find(B) has root B (or C), Find(C) has root C. They are in different trees.
+Action: Union them. Let’s make C the root of the tree containing both.
+Current Forest Roots: {A}, {B, C} (root: C), {D}, {E}, {F}, {G}, {H}
+Edge (A, C) with weight 3 - this is the next cheapest edge
+Find: Find(A) has root A, Find(C) has root C. Different roots.
+Action: Union them. Let’s attach tree root A under root C.
+Current Forest Roots: {A, B, C} (root: C), {D}, {E}, {F}, {G}, {H}
+
+
+Edge (C, H) with weight 4
+Find: Find(C) has root C, Find(H) has root H. Different roots.
+Action: Union them. Let’s attach tree root H under root C.
+Current Forest Roots: {A, B, C, H} (root: C), {D}, {E}, {F}, {G}
+Edge (A, B) with weight 5
+Find: Find(A) returns root C, Find(B) returns root C.
+Action: Since both share the exact same root (C), adding this edge would create a cycle. Skip.
+Current Forest Roots: Unchanged (root: C for the main component)
+Edge (H, F) with weight 6
+Find: Find(H) has root C, Find(F) has root F. Different roots.
+Action: Union them. Attach root F under root C.
+Current Forest Roots: {A, B, C, H, F} (root: C), {D}, {E}, {G}
+Hypothetical Scenario: Evaluating Edge (D, E) with Weight 6 After Edge (A, B)
+Concept: If edge weights were modified such that (D, E) had a weight of 6 instead of 9, Kruskal's algorithm would evaluate it immediately after edge (A, B) (weight 5) based on strict sorted order.
+Find: Find(D) returns root D, Find(E) returns root E. They belong to disjoint trees.
+Action: Since their roots differ, Union(D, E) merges the two components into a single tree without creating a cycle.
+Takeaway: Kruskal's algorithm always processes edges in strict non-decreasing order of weight, using Find operations to inspect component roots and Union operations to join trees whenever roots differ.
+Edge (E, F) with weight 7
+Find: Find(E) has root E, Find(F) has root C. Different roots.
+Action: Union them. Attach root E under root C.
+Current Forest Roots: {A, B, C, H, F, E} (root: C), {D}, {G}
+Edge (G, F) with weight 8
+Find: Find(G) has root G, Find(F) has root C. Different roots.
+Action: Union them. Attach root G under root C.
+Current Forest Roots: {A, B, C, H, F, E, G} (root: C), {D}
+Edge (D, E) with weight 9
+Find: Find(D) has root D, Find(E) has root C. Different roots.
+Action: Union them. Attach root D under root C.
+Current Forest Roots: {A, B, C, D, E, F, G, H} — all vertices now share the single unified root C, completing the Minimum Spanning Tree.
+
+
+
+
+
+
+
+Wednesday 10/14/2026:
+
+We talked about whateverfirstsearh from JEA and we also talked about quickselect algorithm that borrows concepts from quick select
+
+
+
+Wednesday 10/21/2026:
+
+Today we talked about 
+
+
+
+
+
+
+
+Friday 10/23/2026:
+Monday 10/26/2026:
+
+Backtracking vs DFS (dfs to find topological order of nodes) 
+Reverse post-order
+
+General recipe for backtracking somehow applies to reverse post order
+
+This reverse postorder trick is related to backtracking because depth first search is backtracking
+
+What is depth first search trying to solve? 
+
+Backtracking who can i get to from one step from here and who can i get to from there
+
+Recursive problems in general have a dag
+
+Memoization 
+Topo order gave us a way to understand the order things go into the cache
+
+
+Strongly Connected Components
+
+Depth first search will run on cyclic graphs
+
+If we took the nodes involved in a cycle and collapsed their cyclic edges into one node representing all three.. Every graph even cyclical ones can thus be made into DAG of strongly connecting components
+
+If it is a DAG it has connected components
+
+
+See attach
+
+Iterate with depth first search by starting at all possible nodes
+
+Whats post order if i start at d 
+
+Comp = []
+Comps = []
+For n in storngly_node:
+  If node not in visited:
+     explain (n) 
+Dne with comp 
+Comps append comp 
+Comp = []
+
+What is the order of doing each strongly connected component
+
+Think about the reverse of the graph (reverse all edgees, the nodes that wer in the sink component one of them, dps the last thing that pops of in the reverse graph is going to be one of the nodes in the sink component. 
+
+When you reverse this - when you have a sink now everything is downstream from it. 
+
+Look at strongly connected components images where f has nothing coming into it on canvas 
+
+We are going to use the topological order of the reversed graph and now we don't need to reverse topological order
+
+Reverse the graph - switch edges direction 
+Run dps on that graph -keep track of what would have been topological order
+No need to reverse that keep track
+
+What happens to  
+Hash set visited, the actual comp is visited?? 
+
+It's a small tweak on DPS that results in linear time - 
+
+Strongly connected components need to be kept in your tool-box
+
+
+Notice in that same image where f is reversed - in the original graph before it was reversed g seems furthest? G has one edge coming in and sends its outgoing edge to that same node of the edge coming in
+
+Find balance with speed and quality for final project
+
+Here is another drawing that is closest to what we did since the prof updated edited the page drawing in class: 
+
+
+
+https://snow.instructure.com/courses/1254074/pages/class-23-strongly-connected-components?module_item_id=35216435
+
+
+
+Wednesday 10/28/2026:
+Friday 10/30/2026:
+Monday 11/02/2026:
+Wednesday 11/04/2026:
+Friday 11/06/2026:
+Monday 11/09/2026:
+Wednesday 11/11/2026:
+Friday 11/13/2026:
+Monday 11/16/2026:
+Wednesday 11/18/2026:
+Friday 11/20/2026:
+Monday 11/23/2026:
+Wednesday 11/25/2026:
+Friday 11/27/2026:
+Monday 11/30/2026:
+Wednesday 12/02/2026:
+Friday 12/04/2026:
+Monday 12/07/2026:
+Wednesday 12/09/2026:
+Friday 12/11/2026:
+Monday 12/14/2026:
+Wednesday 12/16/2026:
+Friday 12/18/2026:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LRU_CACHE #1
+Of lru_cache: 
+Essentially it creates a dictionary that maps the argument(s) used to the return value of the decorated function as called with those argument(s), then returns the return value. In future calls with the same argument(s) the cached return value is returned immediately and the decorated function is not called again.
+
+If you call the decorator with a maxsize of None the cache will grow for each new discrete argument(s) in an unbounded fashion, eventually crashing with a MemoryError if enough unique calls are made. You shouldn’t usually use such an unbounded cache
+
+If you call it without setting maxsize to None it also keeps track of how recently the wrapped function has been called with those particular argument(s), so there’s more memory overhead than just the return value. Using this information it acts as a Least Recently Used cache with an upper bounds of maxsize (that is by default 128 items). When the cache is full the oldest item on the cache (aka the least recently used) is discarded and the current argument(s) are added in its place.
+
+In both cases the argument(s) must all be hashable, which is a limiting factor, and obviously it will only work if the decorated function is pure in the sense that it will always return the same value for the same argument(s) and has no other side effects. The maxsize value should usually be a power of 2 for the sake of efficiency as well.
+
+You’re basically trading memory for speed, which means you probably should not use too many such caches, and only very rarely unbounded ones, but if your function is going to be called repeatedly with the same arguments, and especially if it’s most likely to be called often with the one of the most recent arguments, then it can be a huge speed boost with little overhead.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ye Shall Do
+
+
+
+Priority
+Title
+Link
+Due Time
+Due Day 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

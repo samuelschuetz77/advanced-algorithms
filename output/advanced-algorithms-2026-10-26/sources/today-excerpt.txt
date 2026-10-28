@@ -1,0 +1,78 @@
+10/26/2026:
+
+Backtracking vs DFS (dfs to find topological order of nodes) 
+Reverse post-order
+
+General recipe for backtracking somehow applies to reverse post order
+
+This reverse postorder trick is related to backtracking because depth first search is backtracking
+
+What is depth first search trying to solve? 
+
+Backtracking who can i get to from one step from here and who can i get to from there
+
+Recursive problems in general have a dag
+
+Memoization 
+Topo order gave us a way to understand the order things go into the cache
+
+
+Strongly Connected Components
+
+Depth first search will run on cyclic graphs
+
+If we took the nodes involved in a cycle and collapsed their cyclic edges into one node representing all three.. Every graph even cyclical ones can thus be made into DAG of strongly connecting components
+
+If it is a DAG it has connected components
+
+
+See attach
+
+Iterate with depth first search by starting at all possible nodes
+
+Whats post order if i start at d 
+
+Comp = []
+Comps = []
+For n in storngly_node:
+  If node not in visited:
+     explain (n) 
+Dne with comp 
+Comps append comp 
+Comp = []
+
+What is the order of doing each strongly connected component
+
+Think about the reverse of the graph (reverse all edgees, the nodes that wer in the sink component one of them, dps the last thing that pops of in the reverse graph is going to be one of the nodes in the sink component. 
+
+When you reverse this - when you have a sink now everything is downstream from it. 
+
+Look at strongly connected components images where f has nothing coming into it on canvas 
+
+We are going to use the topological order of the reversed graph and now we don't need to reverse topological order
+
+Reverse the graph - switch edges direction 
+Run dps on that graph -keep track of what would have been topological order
+No need to reverse that keep track
+
+What happens to  
+Hash set visited, the actual comp is visited?? 
+
+It's a small tweak on DPS that results in linear time - 
+
+Strongly connected components need to be kept in your tool-box
+
+
+Notice in that same image where f is reversed - in the original graph before it was reversed g seems furthest? G has one edge coming in and sends its outgoing edge to that same node of the edge coming in
+
+Find balance with speed and quality for final project
+
+Here is another drawing that is closest to what we did since the prof updated edited the page drawing in class: 
+
+
+
+https://snow.instructure.com/courses/1254074/pages/class-23-strongly-connected-components?module_item_id=35216435
+
+
+
+Wednesday 

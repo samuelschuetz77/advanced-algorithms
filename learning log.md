@@ -1374,16 +1374,242 @@ if not(lst):
 - Minutes Spent Documenting: [fill in]
 - Confidence: [fill in]
 
-## 10/13/2026 : Learning Log 11 : Huffman code length and tree depth
 
-- Question/Problem: Does the number of bits in a letter's Huffman code correspond to its level in the tree?
-- When Identified: 10/13/2026 [time: fill in]
-- Importance: [fill in]
-- How to Learn: Pause the Huffman tree video and count the edges from the root to each letter; compare that count with the letter's bit code.
+
+
+## 10/22/26 : Learning Log 11.666
+
+- Question/Problem: What does PreVisit(v) do, and is u.post the clock value when I am done visiting u and all its children?
+- When Identified: [fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Ask Gemini to explain the clock assignments, then restate postvisit as finishing the node and all its children.
 - Insight/Answer:
-    - Each edge on the path from the root to a letter's leaf contributes one bit, either 0 or 1. So the number of bits in that letter's code equals the leaf's depth (the number of edges from the root).
-    - In the practice tree, P and Q are three edges down and have three-bit codes. R, S, and T are two edges down and have two-bit codes.
-    - I first thought of this as the leaf's height or level. "Depth" is the more precise word: height is usually measured downward from a node, while depth is measured from the root. If the root is called level 0, level and depth match.
+  - PreVisit increments the shared clock and saves the new value as the vertex's discovery timestamp.
+  - PostVisit increments the clock and records completion after the vertex's neighbors and all recursive child calls are handled.
+  - When v is u's ancestor, event order is v.pre < u.pre < u.post < v.post.
+  - For a directed edge u → v, pointing back to an active ancestor closes a cycle.
+  - I understood u.post as finishing u and its children; the interval records the whole call, including recursive work.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 10/21/23 : Learning Log 11.666
+
+- Question/Problem: Does 'mark v' mean recording its previsit timestamp, or is it like checking a visited list in recursive DFS?
+- When Identified: [fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Compare the textbook's 'mark v' and 'if w is unmarked' with adding to and checking a visited collection.
+- Insight/Answer:
+  - Marking a vertex records that DFS has discovered it.
+  - A visited set implements this: add v on entry, and recurse only when a neighbor is absent.
+  - The mark prevents repeated discovery; the previsit timestamp records when discovery happened.
+  - Next test: explain the difference between a discovered vertex and one whose DFS call is still active.
+  - My question connected unfamiliar 'mark' pseudocode to the visited collection I already recognized.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 10/21/23 : Learning Log 11.666
+
+- Question/Problem: What is a DFS forest, and are its parent pointers and nested intervals describing the recursive call stack?
+- When Identified: [fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Ask what 'forest' means, then translate parents, ancestors, and intervals into recursive calls and returns.
+- Insight/Answer:
+  - A DFS forest is the collection of discovery trees produced by the traversal.
+  - When DFS(u) discovers v and calls DFS(v), u becomes v's parent.
+  - DFSAll starts another tree whenever its outer loop reaches an unvisited vertex.
+  - The active stack shows one ancestor path; parent pointers preserve the discovery trees after calls return.
+  - My breakthrough was recognizing the forest and nested intervals as records of recursive calls I already understood.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 10/22/26 : Learning Log 11.666
+
+- Question/Problem: Context: same video, slide "The cost of tokens". It says every token is put in the pile once and taken out once, one put or take costs T, and the total is (2E + 1) x T, about 2E x T. What does "take" mean, and what is T?
+- When Identified: [fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Map "put" and "take" onto push and pop (or making a call and running it). Then match the slide's panel of 2E puts and 2E + 1 takes to the token count.
+- Insight/Answer:
+  - "Put" means pushing a token onto the pile; "take" means popping it off to check and use it.
+  - T is a constant: the cost of one push or one pop, including the visited check.
+  - Puts total at most 2E, one per neighbor of each expanded vertex; takes total at most 2E + 1.
+  - The extra take is the starting token on the first station, which no expansion wrote.
+  - Total (2E + 1) x T is about 2E x T, dropping the +1 as negligible next to 2E.
+  - Underlying confusion: "take" was unfamiliar wording for pop. Next test: explain why dead tokens still cost T each.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 10/22/26 : Learning Log 11.666
+
+- Question/Problem: From JEA 6.1, Figure 6.2: What is the difference between the two DFSAll formulations (loop over vertices vs. adding vertex s)?
+- When Identified: [fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Trace both versions on a graph where one vertex is unreachable from the first start.
+- Insight/Answer:
+  - Both visit every vertex; they differ in how they guarantee full coverage.
+  - Loop version restarts DFS at each unmarked vertex, producing a forest of separate trees.
+  - Super-source version adds s with an edge to every vertex, then runs DFS(s) once.
+  - The result is one tree whose children of s are the forest's roots.
+  - Real code uses the loop version; s mainly simplifies proofs by giving a single root.
+  - Open question: do both versions give identical timestamps, or only equally valid orders?
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 10/22/26 : Learning Log 11 : .5
+
+- Question/Problem: From JEA 6.1, Figure 6.3: Why does DFS bring in a clock, is it like c# stopwatch or something else? 
+- When Identified: 10/21/26 
+- Importance : 5
+- How to Learn: Consider the code and ask ai, try to understand what uses clock e.g. pre and post visits
+- Insight/Answer:
+  - The clock is a reference that increments throughout DFS and gives pre and post a time to mark, the clock never goes backwards just like time, its just a counter. 
+  - The intervals just span the range when the previsit is recorded (what was clock at when we started pre for a vertex), and when post visit (what waws clock's value when we were done with that vertex)
+  - The intervals dont overlap between vertexes; either a vertex is nested meaning the vertex that it is nested in is its ancestor or its part of a different tree entirely.
+  - Crossing is impossible because a vertex cannot finish while a child call is still open.
+  - In the pseudocode, that arrow is equivalent to =; I hadn't realized that. 
+  - The intervals weren't immediately intuitive because my mind was hung up on the fact that we were bringing a alleged c#-like-stopwatch into this algorithm.
+  - Instead clock is just a place to record pseudo-timestamps for enters and exits of a vertex.
+- Hours Spent Learning: 0.25
+- Minutes Spent Documenting: 10
+- Confidence: 5 
+
+## 10/22/26 : Learning Log 11 : 1
+
+- Question/Problem: Why does A’s interval end at 22 when I only counted 11 vertices? What do these intervals actually represent?
+- Context: JEA figure 6.4 including the interval diagram
+- When Identified: 10/22/26
+- Importance: 5
+- How to Learn: Trace DFS in 6.4 by hand and try to think through the intervals marking pre and post 
+- Insight/Answer:
+  - Preorder records when calls start; postorder records when calls finish.
+  - Because each vertex has two main actions (entered and return), each action becomes a clock incremenet. 
+  - A’s tree contains 11 vertices; 11 vertices * 2 clock increments/vertex means we arrive at clock 22 when A and the tree are completely finished
+  - Already understand that all children must be done before a parent can finish, which explains why we have nested intervals.
+  - Before a sibling can start the other sibling and all its children must be done.
+  - This is why O finishes before sibling P starts; both calls happen inside L’s active interval.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 10
+- Confidence: 5
+
+## 10/22/26 : Learning Log 11 : 2
+
+- Question/Problem: I wanted to understand why a new tree would be created so I considered the following: Why does E start a new DFS tree, while B is another recursive call within A’s tree?
+- Context: Following DFSAll into A’s search and then E’s search.
+- When Identified: 10/22/26
+- Importance: 5
+- How to Learn: Follow the calls from DFSAll into A’s search, back to the outer loop, and then into E’s search.
+- Insight/Answer:
+  - DFS records discovery relationships; it does not choose or care about a shortest or “best” tree. It wants to travel to each node once in a way that prioritizes beelines to the leaves/sinks.
+  - An unvisited neighbor is a vertex connected by an outgoing edge that DFS has not reached yet. 
+  - Calling DFS on an unvisited neighbor makes it a child of the vertex we came from (graph -> tree repressentations), in the same tree of discoveries from this starting call.
+  - You can see this inside DFS(u), where v is a neighbor of u:
+
+    if v not in visited:
+        parent[v] = u
+        DFS(v)
+
+  - Finishing one leaf does not finish the tree; earlier calls may still have unexplored neighbors.
+  - After A’s entire search returns, DFSAll continues checking vertices and skips those already visited.
+  - E starts a new tree because it remains unvisited when the outer loop reaches it.
+  - The distinction is who calls DFS: another active vertex creates a child; the outer loop starts a root.
+  - The other short answer to my original question is that there is no incoming arrows to e or any of the nodes connected to e by green arrows from any nodes on a's green tree
+  - these graphs are distinct not because they dont have any connections to nodes from a's tree's but because the nodes they do connect to on a's tree have already been explored.
+- Hours Spent Learning: 0.33
+- Minutes Spent Documenting: 15
+- Confidence: 5
+
+## 10/22/26 : Learning Log 11 : 3
+
+- Question/Problem: Are blue forward edges skipped within one tree and gray cross edges skipped between different trees?
+- Context: From JEA 6.1, Figures 6.4 and 6.5.
+- When Identified: 10/22/26
+- Importance: 5
+- How to Learn: Compare T -> V and W -> V in Figure 6.5 with E -> F in Figure 6.4.
+- Insight/Answer: 
+  - A forward edge (blue) points to a descendant discovered through another path within the starting vertex’s recursive search.
+  - We don't travel a blue edge because while recursively gunning it straight to a first leaf node we already discovered the node the blue arrow points to
+  - In Figure 6.5, T reaches V through U, so its direct edge T -> V becomes a forward edge.
+  - A cross edge points to a finished vertex in a separate branch, potentially within the same tree - but could be a different tree. 
+  - In 6.5, W -> V crosses two sibling vertices; in Figure 6.4, E -> F crosses between trees. 
+  - When I saw the first gray cross edge in figure 6.4, I assumed that they were only for seperate trees, but in figure 6.5, when I saw a cross edge between sibling vertices of the same tree it disrupted my understanding of what a cross edge really is. 
+  - The ground zero parent of a tree is the node that starts the tree.
+  - Having differing ground zero parents can be a hallmark of a cross edge, but not an absolute requirement
+  - The most important insight to distinguish forward and cross edges is that you should use ancestry, not whether their endpoints belong to different trees.
+  - The particular question is: are the nodes that make up these edges ancestors of each other 
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 25
+- Confidence: 5
+
+## 10/22/26 : Learning Log 11 :  4
+
+- Question/Problem: How can V start before U for an edge U -> V?
+- Context: U and V are common variables used in code and the book and elsewhere to describe an edge from U to V. I was assuming U had to be the ancestor. Used Figure 6.4 in JEA to reason through this.
+- When Identified: 10/22/26
+- Importance: 5
+- How to Learn: Use the edge G -> A in Figure 6.4 in JEA, substituting G for U and A for V, then compare their pre and post times.
+- Insight/Answer:
+  - U and V identify an edge’s starting and ending vertices; they do not automatically identify parent and child.
+  - For G -> A, U is G and V is A.
+  - A is already active when G starts, so G -> A points back to an ancestor.
+  - A.pre < G.pre < G.post < A.post? Yes, satisfied
+  - The tree path A -> B -> F -> G plus G -> A forms a cycle. We don't like cycles, but to answer my question U happens to be a descendent of V here.
+  - I was thinking too tree and not enough graph
+- Hours Spent Learning: 0.25
+- Minutes Spent Documenting: 10
+- Confidence: 5
+
+## 10/22/26 : Learning Log 11 : Entry 5
+
+- Question/Problem: Why is it 2E + 1, and why does every undirected track count twice?
+- Context: I was watching a self-made explainer video on whatever-first graph search (Video 2 of 6, based on Erickson's Algorithms, section 5.5, p.219). It uses a 7-station, 12-track "metro map" and keeps a pile of "tokens", each a pending note saying "go visit this station". At 0:48 it asked how many tokens get written in total. The answer is 25.
+- When Identified: [fill in]
+- Importance: 5
+- How to Learn: Relate tokens to recursive DFS calls, which I already understand. Then count tokens on the metro map from each station's neighbor list. Suggested next test: count them on a directed graph.
+- Insight/Answer:
+  - A token is one pending "visit this vertex" request; in recursive DFS it equals one call.
+  - Each expanded vertex writes one token per neighbor, so total tokens equal 1 plus the sum of degrees.
+  - An undirected edge sits in both endpoints' neighbor lists, so it is written once from each end.
+  - Metro map: 2 x 12 + 1 = 25 tokens; with directed edges it would be E + 1.
+  - Underlying confusion: the doubling comes from how undirected edges are stored, not from DFS itself.
 - Hours Spent Learning: [fill in]
 - Minutes Spent Documenting: [fill in]
 - Confidence: [fill in]
+
+## 10/22/26 : Learning Log 11 : Entry 6
+
+- Question/Problem: Does a token still get written when its station was already visited, and does that "dead" call (a dead call is a when we make a call but we can see it was already visited) count toward the 25 tokens placed in the pile over the whole search? Total number of requests added overall (how many tokens did we add to the bag)
+- Context: Chapter 5 JEA video I had claude generate (whatever-first search, token pile, metro map with 7 stations and 12 tracks).
+- When Identified: 10/22/26
+- Importance: 5
+- How to Learn: Trace one full run on the metro map and label each token live (visits a new station) or dead (station already visited). 
+- Insight/Answer:
+  - A token for an already-visited vertex is still written, taken out, and checked, then discarded.
+  - Dead tokens count because this version checks "already visited" only when a token is taken out.
+  - Dead calls are why DFS runs in O(V + E), not O(V).
+  - On the metro map, 7 tokens do real work and the other 18 of 25 are dead.
+  - Underlying confusion: I saw that a call that does nothing still costs work, so it must be counted.
+- Hours Spent Learning: 0.33
+- Minutes Spent Documenting: 15
+- Confidence: 4
+
+## 10/22/26 : Learning Log 11 : Entry 7
+
+- Question/Problem: What does "Preprocess" mean in the DFSAll wrapper, and why does the wrapper unmark every vertex first?
+- Context: From JEA 6.1.
+- When Identified: [fill in]
+- Importance: 5
+- How to Learn: Fill in Preprocess, PreVisit and PostVisit for pre/post timestamps, then for counting components, and compare.
+- Insight/Answer:
+  - Preprocess, PreVisit and PostVisit are empty hooks; each DFS-based algorithm fills them in differently.
+  - Preprocess runs once before traversal, typically setting up variables like clock = 0 or count = 0.
+  - Unmarking gives a clean slate; leftover marks would make DFS skip vertices it never visited.
+  - The DFS skeleton stays fixed; only the hooks change between algorithms.
+  - I read Preprocess as a mysterious step; it is just setup, left open on purpose.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence: [fill in]
+
