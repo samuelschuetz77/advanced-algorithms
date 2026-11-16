@@ -4,3 +4,7 @@
 [submodule "projects or assignments i turn in live here/SamAndJoelAttemptRoboBST"]
 	path = projects or assignments i turn in live here/SamAndJoelAttemptRoboBST
 	url = https://github.com/samuelschuetz77/SamAndJoelAttemptRoboBST.git
+[submodule "projects or assignments i turn in live here/Maxflow-LP"]
+	path = projects or assignments i turn in live here/Maxflow-LP
+	url = https://github.com/snow-teichert-2026/algorithms-fall-2026-maxflow-lp-samuelschuetz77.git
+	branch = main
