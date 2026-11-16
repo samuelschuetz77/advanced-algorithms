@@ -1,0 +1,240 @@
+[
+  {
+    "panel": 1,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.4"
+  },
+  {
+    "panel": 2,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.5"
+  },
+  {
+    "panel": 3,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.6"
+  },
+  {
+    "panel": 4,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.7"
+  },
+  {
+    "panel": 5,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.8"
+  },
+  {
+    "panel": 6,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.12"
+  },
+  {
+    "panel": 7,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 5.13"
+  },
+  {
+    "panel": 8,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.1"
+  },
+  {
+    "panel": 9,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.4"
+  },
+  {
+    "panel": 10,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.5"
+  },
+  {
+    "panel": 11,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.6"
+  },
+  {
+    "panel": 12,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.8"
+  },
+  {
+    "panel": 13,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.13"
+  },
+  {
+    "panel": 14,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.14"
+  },
+  {
+    "panel": 15,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.17"
+  },
+  {
+    "panel": 16,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.20"
+  },
+  {
+    "panel": 17,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.21"
+  },
+  {
+    "panel": 18,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Erickson | Figure 6.23"
+  },
+  {
+    "panel": 19,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Colony | disconnected burrow"
+  },
+  {
+    "panel": 20,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Metro | one connected network"
+  },
+  {
+    "panel": 21,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Metro | separate ferry network"
+  },
+  {
+    "panel": 22,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Metro | one-way tracks"
+  },
+  {
+    "panel": 23,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Frog | stepping-stone dependencies"
+  },
+  {
+    "panel": 24,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Class lab | diamond and tail"
+  },
+  {
+    "panel": 25,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Hiking map | DAG"
+  },
+  {
+    "panel": 26,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Morning routine | class A-B-C-D graph"
+  },
+  {
+    "panel": 27,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Dinner | dependency network"
+  },
+  {
+    "panel": 28,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Maze | directed cycles"
+  },
+  {
+    "panel": 29,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Maze | back edges removed"
+  },
+  {
+    "panel": 30,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Class notes | original directed graph"
+  },
+  {
+    "panel": 31,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Chapter 6 video | added teaching edge"
+  },
+  {
+    "panel": 32,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Class graph | reversed arrows"
+  },
+  {
+    "panel": 33,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Class graph | condensation DAG"
+  },
+  {
+    "panel": 34,
+    "words": 30,
+    "lines": 2,
+    "font_pt": 7.5,
+    "title": "Class graph | undirected interpretation"
+  }
+]

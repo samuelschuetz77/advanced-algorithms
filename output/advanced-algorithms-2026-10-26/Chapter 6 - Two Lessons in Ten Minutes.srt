@@ -1,0 +1,587 @@
+1
+00:00:00,404 --> 00:00:03,698
+Start at vertex D in Monday's drawing.
+
+2
+00:00:03,698 --> 00:00:07,553
+Following arrows reaches E, F, and G.
+
+3
+00:00:07,553 --> 00:00:10,417
+But reaching somewhere, returning from somewhere,
+
+4
+00:00:10,417 --> 00:00:13,226
+and going through somewhere are different questions.
+
+5
+00:00:14,158 --> 00:00:18,620
+Both class periods used depth-first search to make those differences visible.
+
+6
+00:00:19,571 --> 00:00:21,719
+Open Figure six point four.
+
+7
+00:00:21,719 --> 00:00:26,667
+Above is a directed graph: vertices joined by one-way arrows.
+
+8
+00:00:26,667 --> 00:00:29,271
+Below are bars recording the search.
+
+9
+00:00:29,271 --> 00:00:32,722
+Depth-first search follows an unexplored neighbor,
+
+10
+00:00:32,722 --> 00:00:35,921
+finishes that exploration, then returns.
+
+11
+00:00:36,824 --> 00:00:39,204
+Let's connect the arrows to the bars.
+
+12
+00:00:40,137 --> 00:00:44,890
+A bar opens when the recursive call begins and closes when it returns.
+
+13
+00:00:44,890 --> 00:00:48,210
+The left endpoint is the starting time, called pre.
+
+14
+00:00:48,210 --> 00:00:51,618
+The right endpoint is the finishing time, called post.
+
+15
+00:00:52,511 --> 00:00:55,828
+A call stays active while it waits for calls below it.
+
+16
+00:00:56,718 --> 00:01:00,846
+Vertex H starts at six and finishes at seventeen.
+
+17
+00:01:00,846 --> 00:01:03,997
+Vertex D's whole interval fits inside it.
+
+18
+00:01:03,997 --> 00:01:06,628
+So does vertex L's.
+
+19
+00:01:06,628 --> 00:01:08,694
+Which one finishes first?
+
+20
+00:01:14,637 --> 00:01:17,668
+And can D still be active when L starts?
+
+21
+00:01:23,545 --> 00:01:26,119
+Read the endpoints before answering.
+
+22
+00:01:27,011 --> 00:01:30,553
+D finishes at eight, before L starts at nine.
+
+23
+00:01:30,553 --> 00:01:33,456
+Both are descendants of H in the search tree.
+
+24
+00:01:33,456 --> 00:01:37,489
+Recursive calls nest or finish before another begins.
+
+25
+00:01:38,437 --> 00:01:43,551
+Their active intervals cannot partly overlap like two sliding windows.
+
+26
+00:01:44,504 --> 00:01:49,009
+The solid arrows record which call first discovered each vertex.
+
+27
+00:01:49,009 --> 00:01:52,499
+They form a forest: one or more search trees.
+
+28
+00:01:52,499 --> 00:01:55,165
+The other arrows still exist in the graph.
+
+29
+00:01:56,104 --> 00:02:01,035
+A visited mark prevents another recursive call, not another incoming edge.
+
+30
+00:02:01,958 --> 00:02:05,617
+A vertex is new, active, or finished.
+
+31
+00:02:05,617 --> 00:02:10,135
+An arrow back to an active ancestor closes a directed cycle:
+
+32
+00:02:10,135 --> 00:02:13,178
+the search already followed a path down to us.
+
+33
+00:02:14,098 --> 00:02:17,940
+An arrow to a finished vertex need not close a cycle.
+
+34
+00:02:17,940 --> 00:02:20,866
+‘Visited’ alone hides that distinction.
+
+35
+00:02:21,791 --> 00:02:24,200
+The book names four edge types.
+
+36
+00:02:24,200 --> 00:02:26,687
+Tree edges discover children.
+
+37
+00:02:26,687 --> 00:02:29,669
+Forward edges lead to other descendants.
+
+38
+00:02:29,669 --> 00:02:32,323
+Back edges lead to ancestors.
+
+39
+00:02:32,323 --> 00:02:36,278
+Cross edges connect different branches or trees.
+
+40
+00:02:37,237 --> 00:02:42,042
+The timestamps let you recognize these
+relationships without trusting how the graph is
+
+41
+00:02:42,042 --> 00:02:42,911
+drawn.
+
+42
+00:02:43,824 --> 00:02:49,801
+In a graph without directed cycles, reading
+finish order backward puts every vertex before
+
+43
+00:02:49,801 --> 00:02:51,520
+its outgoing neighbors.
+
+44
+00:02:51,520 --> 00:02:53,495
+That's a topological order.
+
+45
+00:02:54,451 --> 00:02:58,070
+For a recurrence whose arrows point to needed subproblems,
+
+46
+00:02:58,070 --> 00:03:03,132
+evaluate in the opposite order: finish the needed values before using them.
+
+47
+00:03:04,058 --> 00:03:06,258
+Monday's graph has cycles.
+
+48
+00:03:06,258 --> 00:03:11,779
+A, B, C can all reach one another; D and E can return to each other;
+
+49
+00:03:11,779 --> 00:03:13,637
+so can F and G.
+
+50
+00:03:14,519 --> 00:03:18,985
+These maximal return-trip groups are strongly connected components.
+
+51
+00:03:18,985 --> 00:03:21,068
+Collapse them into boxes.
+
+52
+00:03:21,068 --> 00:03:24,007
+The box graph has no directed cycles.
+
+53
+00:03:24,924 --> 00:03:29,937
+If several boxes formed a cycle, we could travel around it and return.
+
+54
+00:03:29,937 --> 00:03:33,371
+Those boxes would belong to one larger component.
+
+55
+00:03:34,291 --> 00:03:38,874
+This is why we can order the components even
+though we cannot topologically order the
+
+56
+00:03:38,874 --> 00:03:40,407
+original vertices.
+
+57
+00:03:41,311 --> 00:03:46,477
+Does one DFS from D collect exactly its strongly connected component?
+
+58
+00:03:52,391 --> 00:03:54,605
+Trace every reachable arrow.
+
+59
+00:03:54,605 --> 00:03:58,251
+It reaches D, E, F, and G.
+
+60
+00:03:58,251 --> 00:04:00,034
+That's two components.
+
+61
+00:04:00,034 --> 00:04:06,320
+A DFS tree records discovery; a strongly
+connected component requires return journeys.
+
+62
+00:04:07,258 --> 00:04:11,659
+Starting in F-G visits both vertices and stays within their group.
+
+63
+00:04:11,659 --> 00:04:15,839
+No edge points to another component, so this is a sink component.
+
+64
+00:04:15,839 --> 00:04:18,556
+Record F and G as assigned.
+
+65
+00:04:19,504 --> 00:04:25,165
+A search from D then collects D and E,
+skipping the vertices already recorded.
+
+66
+00:04:26,091 --> 00:04:29,854
+Reverse the arrows and run DFS over every vertex,
+
+67
+00:04:29,854 --> 00:04:32,185
+recording vertices when they finish.
+
+68
+00:04:32,185 --> 00:04:38,174
+Our stack is B, C, A, vertex E, D, G, F.
+
+69
+00:04:38,174 --> 00:04:40,736
+Return to the original graph and pop.
+
+70
+00:04:41,658 --> 00:04:45,590
+F comes first, then the next unassigned start is D,
+
+71
+00:04:45,590 --> 00:04:46,550
+then A.
+
+72
+00:04:47,478 --> 00:04:51,163
+Reversing arrows swaps source and sink components.
+
+73
+00:04:51,163 --> 00:04:55,564
+Decreasing finishing time selects source components of the reversed graph,
+
+74
+00:04:55,564 --> 00:04:57,660
+which are sinks of the original.
+
+75
+00:04:57,660 --> 00:05:00,417
+Popping already reverses finishing order.
+
+76
+00:05:01,345 --> 00:05:04,857
+That explains Monday's ‘no need to reverse’ note.
+
+77
+00:05:05,791 --> 00:05:11,572
+Across an arrow between distinct components, the
+upstream component has the greater maximum
+
+78
+00:05:11,572 --> 00:05:12,914
+finishing time.
+
+79
+00:05:12,914 --> 00:05:17,233
+If explored first, it finishes after exploring downstream.
+
+80
+00:05:18,124 --> 00:05:23,749
+If downstream is explored first, it cannot
+reach upstream and finishes earlier.
+
+81
+00:05:23,749 --> 00:05:27,066
+That's the ordering fact to watch for in the proof.
+
+82
+00:05:32,498 --> 00:05:35,649
+Start fresh discovery state for pass two.
+
+83
+00:05:35,649 --> 00:05:41,248
+Keep one assigned set across all components,
+but a new list for each component.
+
+84
+00:05:41,248 --> 00:05:44,604
+Each pass checks vertices and edges once.
+
+85
+00:05:45,571 --> 00:05:49,565
+That's linear time: big O of V plus E.
+
+86
+00:05:50,478 --> 00:05:54,176
+Your notes mention counting paths to and from vertices,
+
+87
+00:05:54,176 --> 00:05:57,379
+multiplying those counts, and removing vertices.
+
+88
+00:05:57,379 --> 00:06:03,508
+The chapter’s nearby exercise asks which
+vertices every source-to-target path crosses.
+
+89
+00:06:04,424 --> 00:06:08,513
+Together, these suggest counting paths through each vertex,
+
+90
+00:06:08,513 --> 00:06:11,205
+then comparing with all complete paths.
+
+91
+00:06:12,085 --> 00:06:16,187
+Use our three-box DAG as a graph in its own right.
+
+92
+00:06:16,187 --> 00:06:20,210
+Call the first box the start and the last the destination.
+
+93
+00:06:20,210 --> 00:06:23,475
+‘To’ counts paths from the start to a chosen box.
+
+94
+00:06:24,495 --> 00:06:27,825
+‘From’ counts paths from that box to the destination.
+
+95
+00:06:28,771 --> 00:06:34,943
+Every complete path through the box splits
+uniquely into one prefix and one suffix.
+
+96
+00:06:34,943 --> 00:06:39,344
+In a DAG, joining them cannot repeat another vertex:
+
+97
+00:06:39,344 --> 00:06:41,098
+that would create a cycle.
+
+98
+00:06:42,024 --> 00:06:46,526
+So paths through equals paths to multiplied by paths from.
+
+99
+00:06:47,445 --> 00:06:49,880
+Give the start one empty prefix.
+
+100
+00:06:49,880 --> 00:06:52,979
+Add incoming counts in topological order.
+
+101
+00:06:52,979 --> 00:06:58,457
+Give the destination one empty suffix,
+then add outgoing counts in reverse order.
+
+102
+00:06:59,391 --> 00:07:02,946
+The middle box has one path to it and one from it.
+
+103
+00:07:02,946 --> 00:07:04,583
+Their product is one.
+
+104
+00:07:05,491 --> 00:07:09,254
+There are two complete routes: directly across the shortcut,
+
+105
+00:07:09,254 --> 00:07:10,634
+or through the middle.
+
+106
+00:07:10,634 --> 00:07:12,167
+How many go through the middle?
+
+107
+00:07:18,052 --> 00:07:19,289
+One of the two.
+
+108
+00:07:19,289 --> 00:07:21,098
+Now remove the shortcut.
+
+109
+00:07:21,098 --> 00:07:24,289
+One route remains, and it passes through the middle.
+
+110
+00:07:24,289 --> 00:07:29,559
+Comparing these counts tells us whether every route uses that vertex.
+
+111
+00:07:35,024 --> 00:07:39,803
+Now switch to an undirected graph: connections work both ways.
+
+112
+00:07:39,803 --> 00:07:41,873
+Remove F from this picture.
+
+113
+00:07:41,873 --> 00:07:44,943
+G becomes separated from the other vertices.
+
+114
+00:07:45,891 --> 00:07:51,139
+A vertex whose removal disconnects a
+connected graph is called a cut vertex.
+
+115
+00:07:51,139 --> 00:07:54,377
+We can study that change using a DFS tree.
+
+116
+00:07:55,311 --> 00:07:57,447
+Start DFS at F.
+
+117
+00:07:57,447 --> 00:08:01,457
+One child branch explores the five vertices on the left.
+
+118
+00:08:01,457 --> 00:08:03,397
+Another explores G.
+
+119
+00:08:03,397 --> 00:08:07,183
+Could an edge join these branches without passing through F?
+
+120
+00:08:13,091 --> 00:08:17,710
+If it did, DFS would have followed it and
+discovered them in the same branch.
+
+121
+00:08:18,637 --> 00:08:24,458
+That's why an undirected DFS root is a cut
+vertex exactly when it has at least two children
+
+122
+00:08:24,458 --> 00:08:26,007
+in the DFS tree.
+
+123
+00:08:26,007 --> 00:08:29,194
+Count tree children, not graph neighbors.
+
+124
+00:08:30,124 --> 00:08:35,577
+With only one child, the remaining tree
+stays connected after removing the root.
+
+125
+00:08:36,530 --> 00:08:42,116
+For a non-root vertex, look for a connection
+from a child subtree to an ancestor above
+
+126
+00:08:42,116 --> 00:08:42,767
+it.
+
+127
+00:08:42,767 --> 00:08:46,709
+That connection gives the subtree another route to the rest of the graph.
+
+128
+00:08:47,624 --> 00:08:53,949
+If one child subtree has no such connection,
+removing the vertex separates that subtree.
+
+129
+00:08:54,865 --> 00:08:59,761
+Read section six point one asking what the bars reveal about ancestry.
+
+130
+00:08:59,761 --> 00:09:05,751
+In six point two and six point three, connect
+back edges to cycles and finish order to
+
+131
+00:09:05,751 --> 00:09:06,828
+schedules.
+
+132
+00:09:07,771 --> 00:09:12,103
+In six point four, connect those schedules to cached answers.
+
+133
+00:09:13,024 --> 00:09:17,777
+Then read six point five and the two-pass algorithm in six point six:
+
+134
+00:09:17,777 --> 00:09:23,490
+why do return-trip groups form a DAG, and why
+does the next search stay inside one group?
+
+135
+00:09:24,490 --> 00:09:29,437
+Finish with Exercises three and four: count paths through vertices,
+
+136
+00:09:29,437 --> 00:09:32,663
+then study what changes when a vertex is removed.
+
+137
+00:09:33,604 --> 00:09:37,953
+DFS records who discovered whom and when each call finished.
+
+138
+00:09:37,953 --> 00:09:41,638
+Those records explain the chapter's bars, dependency orders,
+
+139
+00:09:41,638 --> 00:09:43,604
+and component searches.
+
+140
+00:09:43,604 --> 00:09:47,520
+Today's removal questions ask whether another route exists.
+
+141
+00:09:48,458 --> 00:09:53,992
+On paper, draw the root's two child branches
+and explain what remains when you remove
+
+142
+00:09:53,992 --> 00:09:54,913
+the root.

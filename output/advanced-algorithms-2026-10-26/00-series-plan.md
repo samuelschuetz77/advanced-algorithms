@@ -1,4 +1,10 @@
-# October 26: strongly connected components
+## Production update
+
+Samuel authorized rendering after applying his neutral phrasing throughout. The combined script is now the production source. The ten-minute video, captions, chapters, and verification notes are described in README.md. Earlier approval-pending statements below are historical preparation notes.
+
+# October 26 and 28: Chapter 6 reading primer
+
+Current narration: **script-combined.md**, replacing the SCC-only script.md below. Samuel accepted the fixed-start/fixed-destination interpretation of “to, from, through.” The updated objective is to learn from both class periods and prepare to read Chapter 6 quickly. Today's fetched notes are preserved in sources/2026-10-28/. Figure 6.4 and Exercise 4 were inspected in the actual PDF. The revised script includes an explicitly labeled 40-word rationale for the interpretation, DAG-only path counting, undirected cut-vertex intuition, and a reading route. Full combined-script approval and render remain pending. The previous scope/checklist below is retained as the SCC segment's provenance; the current broader coverage checklist is at the end of script-combined.md.
 
 Status: sources fetched, narration draft complete, algorithm trace checked. Awaiting script approval under video-framework.md §10 before any draft or final render.
 

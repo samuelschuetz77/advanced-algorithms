@@ -1,0 +1,445 @@
+{
+  "streams": [
+    {
+      "index": 0,
+      "codec_name": "h264",
+      "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+      "profile": "High",
+      "codec_type": "video",
+      "codec_tag_string": "avc1",
+      "codec_tag": "0x31637661",
+      "mime_codec_string": "avc1.640028",
+      "width": 1920,
+      "height": 1080,
+      "coded_width": 1920,
+      "coded_height": 1080,
+      "has_b_frames": 2,
+      "pix_fmt": "yuv420p",
+      "level": 40,
+      "chroma_location": "left",
+      "field_order": "progressive",
+      "is_avc": "true",
+      "nal_length_size": "4",
+      "id": "0x1",
+      "r_frame_rate": "30/1",
+      "avg_frame_rate": "30/1",
+      "time_base": "1/15360",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 9216000,
+      "duration": "600.000000",
+      "bit_rate": "197287",
+      "bits_per_raw_sample": "8",
+      "nb_frames": "18000",
+      "extradata_size": 47,
+      "disposition": {
+        "default": 1,
+        "dub": 0,
+        "original": 0,
+        "comment": 0,
+        "lyrics": 0,
+        "karaoke": 0,
+        "forced": 0,
+        "hearing_impaired": 0,
+        "visual_impaired": 0,
+        "clean_effects": 0,
+        "attached_pic": 0,
+        "timed_thumbnails": 0,
+        "non_diegetic": 0,
+        "captions": 0,
+        "descriptions": 0,
+        "metadata": 0,
+        "dependent": 0,
+        "still_image": 0,
+        "multilayer": 0
+      },
+      "tags": {
+        "language": "und",
+        "handler_name": "VideoHandler",
+        "encoder": "Lavc63.1.101 libx264"
+      }
+    },
+    {
+      "index": 1,
+      "codec_name": "aac",
+      "codec_long_name": "AAC (Advanced Audio Coding)",
+      "profile": "LC",
+      "codec_type": "audio",
+      "codec_tag_string": "mp4a",
+      "codec_tag": "0x6134706d",
+      "mime_codec_string": "mp4a.40.2",
+      "sample_fmt": "fltp",
+      "sample_rate": "96000",
+      "channels": 1,
+      "channel_layout": "mono",
+      "bits_per_sample": 0,
+      "initial_padding": 1024,
+      "id": "0x2",
+      "r_frame_rate": "0/0",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/96000",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 57600000,
+      "duration": "600.000000",
+      "bit_rate": "159908",
+      "nb_frames": "56251",
+      "extradata_size": 5,
+      "disposition": {
+        "default": 1,
+        "dub": 0,
+        "original": 0,
+        "comment": 0,
+        "lyrics": 0,
+        "karaoke": 0,
+        "forced": 0,
+        "hearing_impaired": 0,
+        "visual_impaired": 0,
+        "clean_effects": 0,
+        "attached_pic": 0,
+        "timed_thumbnails": 0,
+        "non_diegetic": 0,
+        "captions": 0,
+        "descriptions": 0,
+        "metadata": 0,
+        "dependent": 0,
+        "still_image": 0,
+        "multilayer": 0
+      },
+      "tags": {
+        "language": "und",
+        "handler_name": "SoundHandler"
+      }
+    },
+    {
+      "index": 2,
+      "codec_name": "bin_data",
+      "codec_long_name": "binary data",
+      "codec_type": "data",
+      "codec_tag_string": "text",
+      "codec_tag": "0x74786574",
+      "id": "0x3",
+      "r_frame_rate": "0/0",
+      "avg_frame_rate": "0/0",
+      "time_base": "1/96000",
+      "start_pts": 0,
+      "start_time": "0.000000",
+      "duration_ts": 57600000,
+      "duration": "600.000000",
+      "bit_rate": "9",
+      "nb_frames": "24",
+      "extradata_size": 63,
+      "disposition": {
+        "default": 0,
+        "dub": 0,
+        "original": 0,
+        "comment": 0,
+        "lyrics": 0,
+        "karaoke": 0,
+        "forced": 0,
+        "hearing_impaired": 0,
+        "visual_impaired": 0,
+        "clean_effects": 0,
+        "attached_pic": 0,
+        "timed_thumbnails": 0,
+        "non_diegetic": 0,
+        "captions": 0,
+        "descriptions": 0,
+        "metadata": 0,
+        "dependent": 0,
+        "still_image": 0,
+        "multilayer": 0
+      },
+      "tags": {
+        "language": "eng",
+        "handler_name": "SubtitleHandler"
+      }
+    }
+  ],
+  "chapters": [
+    {
+      "id": 0,
+      "time_base": "1/96000",
+      "start": 0,
+      "start_time": "0.000000",
+      "end": 1840032,
+      "end_time": "19.167000",
+      "tags": {
+        "title": "Three path questions"
+      }
+    },
+    {
+      "id": 1,
+      "time_base": "1/96000",
+      "start": 1840032,
+      "start_time": "19.167000",
+      "end": 3814368,
+      "end_time": "39.733000",
+      "tags": {
+        "title": "Figure 6.4"
+      }
+    },
+    {
+      "id": 2,
+      "time_base": "1/96000",
+      "start": 3814368,
+      "start_time": "39.733000",
+      "end": 5411232,
+      "end_time": "56.367000",
+      "tags": {
+        "title": "Arrival and return"
+      }
+    },
+    {
+      "id": 3,
+      "time_base": "1/96000",
+      "start": 5411232,
+      "start_time": "56.367000",
+      "end": 9993600,
+      "end_time": "104.100000",
+      "tags": {
+        "title": "Nested calls"
+      }
+    },
+    {
+      "id": 4,
+      "time_base": "1/96000",
+      "start": 9993600,
+      "start_time": "104.100000",
+      "end": 11670432,
+      "end_time": "121.567000",
+      "tags": {
+        "title": "The discovery forest"
+      }
+    },
+    {
+      "id": 5,
+      "time_base": "1/96000",
+      "start": 11670432,
+      "start_time": "121.567000",
+      "end": 13574400,
+      "end_time": "141.400000",
+      "tags": {
+        "title": "Three vertex states"
+      }
+    },
+    {
+      "id": 6,
+      "time_base": "1/96000",
+      "start": 13574400,
+      "start_time": "141.400000",
+      "end": 15689568,
+      "end_time": "163.433000",
+      "tags": {
+        "title": "Four edge types"
+      }
+    },
+    {
+      "id": 7,
+      "time_base": "1/96000",
+      "start": 15689568,
+      "start_time": "163.433000",
+      "end": 17632032,
+      "end_time": "183.667000",
+      "tags": {
+        "title": "Finish order"
+      }
+    },
+    {
+      "id": 8,
+      "time_base": "1/96000",
+      "start": 17632032,
+      "start_time": "183.667000",
+      "end": 19635168,
+      "end_time": "204.533000",
+      "tags": {
+        "title": "Return-trip groups"
+      }
+    },
+    {
+      "id": 9,
+      "time_base": "1/96000",
+      "start": 19635168,
+      "start_time": "204.533000",
+      "end": 21209568,
+      "end_time": "220.933000",
+      "tags": {
+        "title": "A DAG of components"
+      }
+    },
+    {
+      "id": 10,
+      "time_base": "1/96000",
+      "start": 21209568,
+      "start_time": "220.933000",
+      "end": 23699232,
+      "end_time": "246.867000",
+      "tags": {
+        "title": "Search from d"
+      }
+    },
+    {
+      "id": 11,
+      "time_base": "1/96000",
+      "start": 23699232,
+      "start_time": "246.867000",
+      "end": 25507200,
+      "end_time": "265.700000",
+      "tags": {
+        "title": "Collect one group"
+      }
+    },
+    {
+      "id": 12,
+      "time_base": "1/96000",
+      "start": 25507200,
+      "start_time": "265.700000",
+      "end": 29318400,
+      "end_time": "305.400000",
+      "tags": {
+        "title": "Two reversals"
+      }
+    },
+    {
+      "id": 13,
+      "time_base": "1/96000",
+      "start": 29318400,
+      "start_time": "305.400000",
+      "end": 31884768,
+      "end_time": "332.133000",
+      "tags": {
+        "title": "The ordering proof"
+      }
+    },
+    {
+      "id": 14,
+      "time_base": "1/96000",
+      "start": 31884768,
+      "start_time": "332.133000",
+      "end": 33609600,
+      "end_time": "350.100000",
+      "tags": {
+        "title": "State for each pass"
+      }
+    },
+    {
+      "id": 15,
+      "time_base": "1/96000",
+      "start": 33609600,
+      "start_time": "350.100000",
+      "end": 35686368,
+      "end_time": "371.733000",
+      "tags": {
+        "title": "Reading the notes"
+      }
+    },
+    {
+      "id": 16,
+      "time_base": "1/96000",
+      "start": 35686368,
+      "start_time": "371.733000",
+      "end": 39078432,
+      "end_time": "407.067000",
+      "tags": {
+        "title": "To, from, through"
+      }
+    },
+    {
+      "id": 17,
+      "time_base": "1/96000",
+      "start": 39078432,
+      "start_time": "407.067000",
+      "end": 40809600,
+      "end_time": "425.100000",
+      "tags": {
+        "title": "Two counting passes"
+      }
+    },
+    {
+      "id": 18,
+      "time_base": "1/96000",
+      "start": 40809600,
+      "start_time": "425.100000",
+      "end": 43644768,
+      "end_time": "454.633000",
+      "tags": {
+        "title": "Compare the paths"
+      }
+    },
+    {
+      "id": 19,
+      "time_base": "1/96000",
+      "start": 43644768,
+      "start_time": "454.633000",
+      "end": 45593568,
+      "end_time": "474.933000",
+      "tags": {
+        "title": "Remove a vertex"
+      }
+    },
+    {
+      "id": 20,
+      "time_base": "1/96000",
+      "start": 45593568,
+      "start_time": "474.933000",
+      "end": 49545600,
+      "end_time": "516.100000",
+      "tags": {
+        "title": "The DFS root"
+      }
+    },
+    {
+      "id": 21,
+      "time_base": "1/96000",
+      "start": 49545600,
+      "start_time": "516.100000",
+      "end": 51312000,
+      "end_time": "534.500000",
+      "tags": {
+        "title": "Another connection"
+      }
+    },
+    {
+      "id": 22,
+      "time_base": "1/96000",
+      "start": 51312000,
+      "start_time": "534.500000",
+      "end": 55027200,
+      "end_time": "573.200000",
+      "tags": {
+        "title": "Chapter reading route"
+      }
+    },
+    {
+      "id": 23,
+      "time_base": "1/96000",
+      "start": 55027200,
+      "start_time": "573.200000",
+      "end": 57600000,
+      "end_time": "600.000000",
+      "tags": {
+        "title": "Try it on paper"
+      }
+    }
+  ],
+  "format": {
+    "filename": "Chapter 6 - Two Lessons in Ten Minutes.mp4",
+    "nb_streams": 3,
+    "nb_programs": 0,
+    "nb_stream_groups": 0,
+    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+    "format_long_name": "QuickTime / MOV",
+    "start_time": "0.000000",
+    "duration": "600.000000",
+    "size": "27432367",
+    "bit_rate": "365764",
+    "probe_score": 100,
+    "tags": {
+      "major_brand": "isom",
+      "minor_version": "512",
+      "compatible_brands": "isomiso2avc1mp41",
+      "title": "Chapter 6 - Two Lessons in Ten Minutes",
+      "encoder": "Lavf63.1.101"
+    }
+  }
+}

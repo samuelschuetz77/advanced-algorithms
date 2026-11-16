@@ -1,0 +1,22 @@
+10/28/2026:
+From to and through a node is important
+Through a node 
+
+Figure 6.4
+Compute paths to
+Compute path forms; both linear
+Multiply path to all all of them (paths to * paths from)
+= then something
+
+
+Think DFS
+Each node will be added once to the tree 
+
+Prove that the root of an undirected graph G. 
+
+Add and remove nodes during depth first search
+
+If a node of a tree has any node connected up to its root
+
+ 
+Friday 

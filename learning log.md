@@ -1613,3 +1613,145 @@ if not(lst):
 - Minutes Spent Documenting: [fill in]
 - Confidence: [fill in]
 
+## 11/11/26 : Quiz - Graphs preparation : Graph representations
+
+- Question/Problem: How do an adjacency list and an adjacency matrix represent the same directed or undirected graph, and what changes in space, edge lookup, and neighbor iteration?
+- When Identified: 11/11/26, about 4:20pm Mountain
+- Importance (1-5): 5
+- How to Learn: Review JEA 5.4 and my Project 2 Graph ADT. Draw one small graph both ways, check whether a directed edge exists in the reverse direction, and count how often an undirected edge appears in neighbor lists. Connect this to my earlier 2E + 1 token insight.
+- Insight/Answer: [After tracing the example, write what I can now explain in my own words. Earlier entries already record my understanding that an undirected edge appears in both endpoints' neighbor lists.]
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/11/26 : Quiz - Graphs preparation : Breadth-first search
+
+- Question/Problem: Why does a FIFO queue visit vertices by distance layers, and when does BFS actually give a shortest path?
+- When Identified: 11/11/26, about 4:20pm Mountain
+- Importance (1-5): 5
+- How to Learn: Trace the queue, visited marks, and parent pointers on a small graph with two competing routes. Compare the first-discovery path with DFS's path, then change one edge weight to test the unweighted assumption. Read JEA 5.6 and 8.4.
+- Insight/Answer: [Record my own queue trace and the shortest-path condition after practicing.]
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/11/26 : Quiz - Graphs preparation : Shortest paths
+
+- Question/Problem: What does relaxing an edge change, and how do I choose between BFS, DAG shortest paths, Dijkstra, and Bellman-Ford from the graph's assumptions?
+- When Identified: 11/11/26, about 4:20pm Mountain
+- Importance (1-5): 5
+- How to Learn: Work a four-vertex weighted example by hand: write tentative distances and predecessors, relax each edge, and test a negative edge. Check JEA 8.3–8.7; review 9.5–9.6 if all-pairs shortest paths was covered in class.
+- Insight/Answer: [Write the decision rule and one relaxation step in my own words after solving the example.]
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/11/26 : Quiz - Graphs preparation : Strongly connected components
+
+- Question/Problem: How do mutual reachability, graph reversal, and DFS finish order identify strongly connected components, and why is the component graph a DAG?
+- When Identified: 11/11/26, about 4:20pm Mountain
+- Importance (1-5): 5
+- How to Learn: Use a directed graph with two cycles and a one-way edge between them. Mark its SCCs, reverse every edge, and trace the two DFS passes specified in the SCC group project. Compare with JEA 6.5–6.6 and my earlier DFS postorder entries.
+- Insight/Answer: [Record my own component grouping and explain the role of finish order after tracing it.]
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/11/26 : Quiz - Graphs preparation : Max flow basics
+
+- Question/Problem: What makes a proposed flow valid, how does a residual path increase it, and how does a cut bound the possible flow?
+- When Identified: 11/11/26, about 4:20pm Mountain
+- Importance (1-5): 5
+- How to Learn: Read JEA 10.0–10.3. On a four-vertex network, label capacities and flows, check conservation at internal vertices, draw forward and backward residual capacities, augment once, and compare the result with a cut capacity.
+- Insight/Answer: [Record the flow and cut I computed, and explain any remaining confusion.]
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/12/26 : Max flow : Residual room on each pipe
+
+- Question/Problem: What does residual mean, and why can `s → a` have residual room 4, then 1, while its capacity remains 6?
+- When Identified: 11/12/26, about 7:00–7:30pm Mountain (rounded)
+- Importance (1-5): 5
+- How to Learn: Trace a complete route `s → a → c → t`. Write the capacity, flow already sent, and room left on each pipe before and after sending flow. Compare `s → a`, `a → c`, and `a → d` rather than treating residual as one number for the whole graph.
+- Insight/Answer: I first thought capacity might be one number for the whole flow, and residual sounded like extra flow for several pipes together. Each directed pipe has its own fixed capacity and changing residual room. If `s → a` has capacity 6 and we send 2 along `s → a → c → t`, `s → a` has 4 left. If 3 more units use `s → a`, then 5 of its 6 units are used, leaving residual room 1. A whole route can add only as much as its pipe with the least room.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## 11/12/26 : Max flow : BFS level order and first route
+
+- Question/Problem: How can BFS find `s → a → c → t` first if it explores the neighbors of `s` before moving to the next level?
+- When Identified: 11/12/26, [time to fill in]
+- Importance (1-5): [fill in]
+- How to Learn: Trace the queue and parent links on our nine-node graph. Separate discovering a node from processing it. The directed pipes and their capacities are:
+
+  ```python
+  capacities = {
+      "s": {"a": 6, "b": 3, "e": 2},
+      "a": {"c": 2, "d": 5},
+      "b": {"c": 4},
+      "c": {"t": 2},
+      "d": {"t": 5},
+      "e": {"g": 1, "f": 1},
+      "f": {"g": 1},
+      "g": {"t": 2},
+      "t": {},
+  }
+  ```
+
+- Insight/Answer: I thought BFS should discover `a`, `b`, and `e` from `s` before exploring `a`'s neighbors, and that was right. After processing `s`, the queue holds `a`, `b`, and `e`. Processing `a` adds `c` and `d`, but BFS still processes `b` and `e` before `c`. With the graph's listed neighbor order, processing `c` first discovers `t`, and the parent links give the first complete route `s → a → c → t`. The earlier explanation skipped the level order, which made the route sound like DFS.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## [extract_from_gpt_chat] : Learning Log 12 : Entry 1
+
+- Question/Problem: How can row and column nodes represent placing tokens on white squares when the graph has no token nodes?
+- When Identified: [fill in day and time]
+- Importance (1-5): [fill in]
+- How to Learn: Work through Erickson Chapter 11, problem 9, while building `eleven_point_nine` in `maxflow_9.py`. Trace the suggested 2-by-2 example: I identified that row 1 must use column 0. With hints, I wrote distinct row/column labels, source and sink insertion, capacity-1 outer edges, and the white-square condition. I corrected the column indexing and equality comparison; the AI moved the square traversal into a separate loop after node creation.
+- Insight/Answer:
+  - A row-to-column edge represents a permitted token position, not a token already placed.
+  - I used different row and column labels so the graph keeps their roles separate.
+  - I added source and sink first, preserving their required positions in the node list.
+  - I correctly used capacity 1 on the outer edges and added middle edges only for white squares.
+  - My code stores white-square eligibility in connections, rather than putting an entire row into a node's data.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## [extract_from_gpt_chat] : Learning Log 12 : Entry 2
+
+- Question/Problem: How do I test a graph's nodes and edges when order matters for some checks but not others?
+- When Identified: [fill in day and time]
+- Importance (1-5): [fill in]
+- How to Learn: Build the 1-by-1 white-board pytest and use the failures to correct my assertions. I converted the node keys to a list, replaced the incorrect count operation with `len`, and used an ordered list for the source/sink check. I wrote the expected edge pairs and converted the actual edges to a set. The AI supplied the capacity-check loop after I requested an override; I did not write that loop unaided.
+- Insight/Answer:
+  - I used a list to check that source and sink appear first in that order.
+  - I corrected my size check to use `len`; a list's `count` counts occurrences of a particular item.
+  - I compared edge sets because connection order is irrelevant to whether the expected edges exist.
+  - Each returned edge is a pair of endpoint labels; its capacity is retrieved separately.
+  - My corrected assertions passed; the added capacity checks cover a separate requirement.
+  - I initially mixed ordered lists, unordered sets, and edge weights; each needs a different check.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+
+## [extract_from_gpt_chat] : Learning Log 12 : Entry 3
+
+- Question/Problem: Why does the black-square example return True when I pass the capacity graph directly into `solution`?
+- When Identified: [fill in day and time]
+- Importance (1-5): [fill in]
+- How to Learn: Investigate the failing black-square test and question why its edge weights were being changed. I requested separate capacity and flow graphs, then wrote `max_flow_9` to copy all nodes before edges, assign zero flow, and return the new graph. I also wrote the source-child lookup and the comparison with the board size in `solution`; the AI supplied the `sum` generator expression under override. That expression is something I want to practice writing next assignment. The route-finding part of my solver remains unfinished.
+- Insight/Answer:
+  - Capacity records an allowed amount; actual flow records the amount sent.
+  - I correctly created a separate flow graph without changing the capacity graph.
+  - I copied nodes before edges, preserving their order, and initialized every copied edge's flow to zero.
+  - I wrote the final comparison between outgoing source flow and the number of required tokens.
+  - Zero initialization is a starting state, not proof that the maximum possible flow is zero.
+  - Still to verify: why supplying a maximum flow differs from asking `solution` to find one.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]
+

@@ -5,6 +5,8 @@
 >
 > Reading links below point to Canvas pages (`module_item_id=32874738`), which in turn link out to the actual reading. PDFs downloaded from those links are saved locally in `Reading for Prep/`, named to match the "Reading for Prep" column values below and tagged with the class date they're due.
 
+**Week 10 verified live on Canvas, 2026-10-28:** October 26: JEA 6.5?6.6; October 28: Chapter 6 exercises; October 30: JEA 8.3 **and 9.5?9.6**. Friday now includes all-pairs shortest paths with DP. Only these three dates were rechecked; the full-schedule sync date below is unchanged.
+
 **Last synced:** 2026-10-03 via ChatGPT in Chrome. Live tentative schedule unchanged from the prior copy. Assignment-specific readings can differ; see the note below.
 
 **Note changes on Canvas as of 2026-09-23** (applied to the table below): 8/28 is "No class meeting" (was Unconference); 9/16 "Reductions and Simplify-and-Delegate (Ch. 1 exercises)"; 9/23 "Game Trees and Intro to NP-Completeness"; 11/2 "Graph Applications and Reductions Preview"; 11/20 "NP-hard problem presentations in class"; 12/11 "Exam 2 in class"; new row 12/16 Final Exam 9:30-11:30 AM (same room).
@@ -44,7 +46,7 @@ open to reviewing/practicing ideas outside those hours if asked.
 | 9 | . | Fri | 10/23 | [JEA 6.2-6.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Applications |
 | 10 | . | Mon | 10/26 | [JEA 6.5-6.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Strongly Connected Components |
 | 10 | . | Wed | 10/28 | [JEA Ch 6 Exercises](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Exercises |
-| 10 | . | Fri | 10/30 | [JEA 8.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Extensions |
+| 10 | . | Fri | 10/30 | [JEA 8.3, 9.5?9.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Relaxations, Single-Source Shortest Path, and All-Pairs Shortest Path with DP |
 | 11 | . | Mon | 11/2 | [JEA 9.5-9.6](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Graph Applications and Reductions Preview |
 | 11 | 5 Max Flow and Linear Programming | Wed | 11/4 | [JEA 10.0-10.3](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Max Flow |
 | 11 | . | Fri | 11/6 | [JEA 11.0-11.4](https://snow.instructure.com/courses/1254074/pages/courseschedule?module_item_id=32874738) | Linear Programming |

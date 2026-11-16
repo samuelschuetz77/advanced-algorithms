@@ -8,6 +8,13 @@
 - Weekly progress checkpoints (6 total, every Wednesday except Thanksgiving week): see [Final Checkpoint 1.md](Final%20Checkpoint%201.md)
 - Builds on Part 1 ([Final Project Part 1 - Pick and Present a Problem.md](Final%20Project%20Part%201%20-%20Pick%20and%20Present%20a%20Problem.md)); problem chosen there: Optimal Facility Location.
 
+## Repository setup links (verified October 28)
+
+- GitHub organization: https://github.com/snow-teichert-2026
+- Accept/create the personal repository: https://classroom50.org/snow-teichert-2026/algorithms-fall-2026/assignments/final-project/accept
+- Canvas final-project page verified live on October 28. The Classroom 50 link currently presents a GitHub authorization screen requesting repository, workflow, and organization-admin access; authorization has not been granted by the agent. Personal repository URL and local clone path are not yet confirmed.
+- The similarly named final-project repositories in SnowSE (2025) and simper-s24 (2024) are older projects, not this assignment.
+
 ## Overview
 A decision problem is in NP if a proposed solution can be verified in polynomial time. NP-hard: every NP problem reduces to it in polynomial time. NP-complete = both. A poly-time solver for any NP-complete problem would give poly-time solvers for all of NP (P = NP).
 

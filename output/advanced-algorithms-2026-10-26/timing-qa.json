@@ -1,0 +1,12 @@
+{
+  "target_frames": 18000,
+  "fps": 30,
+  "seconds": 600,
+  "caption_errors": [],
+  "beats": 59,
+  "prediction_pauses": 5,
+  "final_narration_words": 1195,
+  "total_frames": 18000,
+  "spoken_e_rechecked": true,
+  "overlapping_teaching_edge_corrected": true
+}

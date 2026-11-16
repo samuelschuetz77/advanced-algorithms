@@ -1,0 +1,4 @@
+{
+  "expected": "Reverse the arrows and run DFS over every vertex, recording vertices when they finish. Our stack is B, C, A, vertex E, D, G, F. Return to the original graph and pop.",
+  "heard": " Reverse the arrows and run DFS over every vertex, recording vertices when they finish. Our stack is B, C, A, vertex E, D, G, F. Return to the original graph and pop."
+}

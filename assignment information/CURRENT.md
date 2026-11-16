@@ -5,12 +5,25 @@ the work; do not rely on this file for full requirements.
 
 | Status | Due | Canvas title | Submission type | Turn-in path | Spec |
 |---|---|---|---|---|---|
-| Not started | Mon 11/2/2026, 11:20am (in class) | Exam 1 | In-class Canvas quiz (100 pts, 21 Qs); everything through Class 25; closed everything | N/A | [Exam 1.md](Exam%201.md) |
-| Not started | Wed 10/28/2026, 11:59pm | Final Checkpoint 1 | Text/upload (5 pts): dated progress-journal entry | Final Project repo journal | [Final Checkpoint 1.md](Final%20Checkpoint%201.md) |
+| Not started; due tonight | Thu 11/12/2026, 11:59pm (late window; originally due Wed 11/11) | Final Checkpoint 3 | Text/upload (5 pts): dated journal entry; goal: Step 5 brute-force baseline with runtimes | Final Project repo journal | [Final Checkpoint 3.md](Final%20Checkpoint%203.md) |
+| Not started | Fri 11/13/2026, 11:59pm | Group Project - Reduction From Maxflow to LP | Canvas text + Classroom 50 repo (20 pts; partner; no AI code) | Classroom 50 group repo | [Group Project - Reduction From Maxflow to LP.md](Group%20Project%20-%20Reduction%20From%20Maxflow%20to%20LP.md) |
+| Not started | Mon 11/16/2026, 11:59pm | Learning Log 14 | Canvas text (5 pts) | ../learning log.md | [Learning Log 14.md](Learning%20Log%2014.md) |
+| Not started | Fri 11/20/2026, 11:59pm | Project - Reduction From SAT to ILP | Canvas text: one .py file + correctness proof (33 pts; individual; no AI code) | not created | [Project - Reduction From SAT to ILP.md](Project%20-%20Reduction%20From%20SAT%20to%20ILP.md) |
+| Missing (window closed 11/9) | Fri 11/6/2026, 11:59pm | Project - Applications of Maxflow | Classroom 50 repo + Canvas text (15 pts; no AI) | Classroom 50 repo | [Project - Applications of Maxflow.md](Project%20-%20Applications%20of%20Maxflow.md) |
+| Not started (missed per Canvas) | Wed 11/4/2026, 11:59pm | Final Checkpoint 2 | Text/upload (5 pts) | Final Project repo journal | [Final Checkpoint 2.md](Final%20Checkpoint%202.md) |
+| Not started (missed per Canvas) | Mon 11/9/2026, 11:59pm | Learning Log 13 | Canvas text (5 pts) | ../learning log.md | [Learning Log 13.md](Learning%20Log%2013.md) |
+| Not started (missed per Canvas) | Mon 11/2/2026, 11:59pm | Learning Log 12 | Canvas text (5 pts) | ../learning log.md | [Learning Log 12.md](Learning%20Log%2012.md) |
+| Ungraded practice (0 pts, unlimited attempts) | Sun 11/1/2026, 11:59pm | Exam 1 Practice A / B | Canvas quizzes | N/A | [Exam 1 Practice.md](Exam%201%20Practice.md) |
+| Class activity (not graded) | Class 29 | Class 29 - Flow Applications | Page: edge/vertex-disjoint paths, LP duality walkthrough | N/A | [Class 29 - Flow Applications.md](Class%2029%20-%20Flow%20Applications.md) |
+| Class activity (not graded) | Class 27 | Class 27 - Max Flow | Page: flows, cuts, matching as flow | N/A | [Class 27 - Max Flow.md](Class%2027%20-%20Max%20Flow.md) |
+| Class activity (not graded) | Class 23 | Class 23 - Strongly Connected Components | Page: SCCs, Kosaraju | N/A | [Class 23 - Strongly Connected Components.md](Class%2023%20-%20Strongly%20Connected%20Components.md) |
+| Graded 6.33/14 (Canvas, 11/12) | Fri 11/6/2026, 11:20am (in class) | Quiz - Graphs | Canvas quiz (14 pts, 8 Qs; closed-everything) | N/A | [Quiz - Graphs.md](Quiz%20-%20Graphs.md) |
+| Not graded yet / unsubmitted per Canvas (was in class 11/2) | Mon 11/2/2026, 11:20am (in class) | Exam 1 | In-class Canvas quiz (100 pts, 21 Qs); everything through Class 25; closed everything | N/A | [Exam 1.md](Exam%201.md) |
+| Submitted (Canvas, awaiting grade) | Wed 10/28/2026, 11:59pm | Final Checkpoint 1 | Text/upload (5 pts): dated progress-journal entry | Final Project repo journal | [Final Checkpoint 1.md](Final%20Checkpoint%201.md) |
 | Graded 13/13; submitted 10/23 11:25am | Fri 10/23/2026, 11:20am (in class) | Quiz - DFS and Topological Sort | Canvas quiz (13 pts) | N/A | [Quiz - DFS and Topological Sort.md](Quiz%20-%20DFS%20and%20Topological%20Sort.md) |
 | Class activity (not graded) | Class 22 | Class 22 - Connections to Memoization | Mini lab: `longest_from`, bonus `lis_length` | N/A | [Class 22 - Connections to Memoization.md](Class%2022%20-%20Connections%20to%20Memoization.md) |
-| Not started | Fri 10/30/2026, 10:59pm MDT (API 10/31 04:59Z; verify displayed time) | Group Project - Strongly Connected Components | Canvas text: Python code + pytest tests (21 pts; partner; no AI code) | ../projects or assignments i turn in live here/ (not created) | [Group Project - Strongly Connected Components.md](Group%20Project%20-%20Strongly%20Connected%20Components.md) |
-| Not started | Fri 10/23/2026, 11:59pm | Learning Log 11 | Canvas text (5 pts) | ../learning log.md | [Learning Log 11.md](Learning%20Log%2011.md) |
+| Not submitted per Canvas; was due Sat 10/31 11:59pm (API 11/01 05:59Z) | Fri 10/30/2026, 10:59pm MDT (API 10/31 04:59Z; verify displayed time) | Group Project - Strongly Connected Components | Canvas text: Python code + pytest tests (21 pts; partner; no AI code) | ../projects or assignments i turn in live here/ (not created) | [Group Project - Strongly Connected Components.md](Group%20Project%20-%20Strongly%20Connected%20Components.md) |
+| Graded 4/5 | Fri 10/23/2026, 11:59pm | Learning Log 11 | Canvas text (5 pts) | ../learning log.md | [Learning Log 11.md](Learning%20Log%2011.md) |
 | Class activity (not graded) | Class 21 | Class 21 - DFS Traversal and Topo Sort | Mini lab: `count_paths`, bonus `topo_order` | N/A | [Class 21 - DFS Traversal and Topo Sort.md](Class%2021%20-%20DFS%20Traversal%20and%20Topo%20Sort.md) |
 | Not started | API 12/14 04:59Z (Sun 12/13, 9:59pm MST; verify displayed time) | Final Project | 100 pts | not created | [Final Project.md](Final%20Project.md) |
 | Graded 23.33/25; submitted 10/13 8:32am, late | Wed 10/7/2026, 11:59pm | Practice Quiz - Backtracking and Dynamic Programming | Canvas quiz (25 pts) | N/A; derived answer guide in spec | [Practice Quiz - Backtracking and Dynamic Programming.md](Practice%20Quiz%20-%20Backtracking%20and%20Dynamic%20Programming.md) |
@@ -32,7 +45,16 @@ the work; do not rely on this file for full requirements.
 | Submitted; score not displayed on current Grades page | Fri 9/11/2026, 11:59pm | Project 2 - ADTs and Data Structures | Code/writeup per spec | `../projects or assignments i turn in live here/` | [Project 2 - ADTs and Data Structures.md](Project%202%20-%20ADTs%20and%20Data%20Structures.md) |
 | Graded 5/5 | Wed 9/9/2026, 11:59pm | Learning Log 4 | Canvas text | `../learning log.md` | [Learning Log 4.md](Learning%20Log%204.md) |
 
-**Last synced:** 2026-10-23 via Claude in Chrome (Canvas API; Class 22, Exam 1, Final Project, Final Checkpoint 1, DFS quiz read). Dates and times are Canvas-displayed Mountain time.
+**Last synced:** 2026-11-12 via Claude in Chrome (Canvas API: assignments, modules, Class 23/27/29 pages, Nov specs). Prior sync: 2026-10-23 via Claude in Chrome (Canvas API; Class 22, Exam 1, Final Project, Final Checkpoint 1, DFS quiz read). Dates and times are Canvas-displayed Mountain time.
+
+**Partial Canvas check 2026-11-11:** `Quiz - Graphs` overview and Grades status verified; the other rows above were not resynced. See its spec for the five stated topics and the original Nov 6 quiz window.
+
+## November 12 sync
+
+- New specs written: Final Checkpoint 2 and 3, Learning Logs 12-14, Exam 1 Practice A/B, Project - Applications of Maxflow, Group Project - Reduction From Maxflow to LP, Project - Reduction From SAT to ILP, and Class 23, 27, 29 pages.
+- Needs attention: Final Checkpoint 3 closes tonight 11/12 11:59pm. Project - Applications of Maxflow shows Missing (window closed 11/9) and the LP group project builds on it (due 11/13). Learning Logs 12-13, Final Checkpoint 2, Group Project SCC and Exam 1 show no submission in Canvas.
+- Grades: Quiz - Graphs 6.33/14, Learning Log 11 4/5, Exam 1 Practice A/B 0 (ungraded), Roll Call 79.
+- Classes 24-26 and 28 have no module page yet (only 23, 27, 29 exist). Module 08 (SAT/NP-hardness) has only the SAT-to-ILP project.
 
 ## October 23 sync
 
@@ -72,3 +94,7 @@ the work; do not rely on this file for full requirements.
 - No Learning Log 10 or Wednesday learning log appears in the published modules or Grades as of this sync.
 - [Class 15 - More DP Examples](Class%2015%20-%20More%20DP%20Examples.md) is a class activity, not a separate graded submission.
 - Learning Log 4 and Project 2 show submission icons rather than numeric scores; prior local grade claims cannot be reverified.
+
+## October 28 repository lookup
+
+- Final Project: confirmed Canvas setup link and GitHub organization `snow-teichert-2026`; see Final Project.md. Personal repository creation/lookup is pending Classroom 50 authorization. No code was changed or submitted.

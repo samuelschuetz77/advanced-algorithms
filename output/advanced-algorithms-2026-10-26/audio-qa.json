@@ -1,0 +1,22 @@
+[
+  {
+    "beat": "04-01",
+    "expected": "Vertex H starts at six and finishes at seventeen. Vertex D's whole interval fits inside it. So does vertex L's. Which one finishes first?",
+    "heard": " Vertex H starts at 6 and finishes at 17. Vertex D's whole interval fits inside it. So, does vertex L's. Which one finishes first?"
+  },
+  {
+    "beat": "13-01",
+    "expected": "Reverse the arrows and run DFS over every vertex, recording vertices when they finish. Our stack is B, C, A, E, D, G, F. Return to the original graph and pop.",
+    "heard": " Reverse the arrows and run DFS over every vertex, recording vertices when they finish. Our stack is B, C, A, D, G, F. Return to the original graph and pop."
+  },
+  {
+    "beat": "13-02",
+    "expected": "F comes first, then the next unassigned start is D, then A.",
+    "heard": " F comes first, then the next unassigned start is D, then A."
+  },
+  {
+    "beat": "19-01",
+    "expected": "There are two complete routes: directly across the shortcut, or through the middle. How many go through the middle?",
+    "heard": " There are two complete routes, directly across the shortcut or through the middle. How many go through the middle?"
+  }
+]
