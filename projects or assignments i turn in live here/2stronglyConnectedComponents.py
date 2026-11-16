@@ -66,116 +66,33 @@ def dfs_trees(graph, start_order):
     visited = set()
     for node_1 in start_order:
         if node_1 not in visited:
-            traveled = []
+            post_order = []
             stack = deque()
             stack.append(("visit", node_1))
             while stack:
-                action, vertex = stack.pop()
+                action, vertex = stack.pop() /pop off first iten
                 if action == "finish":
-                    traveled.append(vertex)
+                    post_order.append(vertex) #if item is finished we mark    post_order
                 elif vertex not in visited:
                     visited.add(vertex)
-                    stack.append("finish", vertex)
-                    children = graph.get_neighbors(vertex)
+                    stack.append(("finish", vertex))
+                    children = graph.get_children(vertex)
                     for child in children[::-1]: 
-                        dfs_finish_order()
+                        if child not in visited:
+                            stack.append(("visit", child))
+            yield   post_order 
 
 
-
-
-                    # beleow the stack append loop over outgoing neighbors
-                    # loop of verte children into reverse order
-                    # inside each child work 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            # Remaining adsfjhs: work in the locations described, not necessarily here.
-            # visited tracks discoveries; traveled records nodes when they finish.
-            # Each stack task holds an action followed by the node it concerns.
-
-            # adsfjh 12: Can you fix visited.append(n) inside the elif?
-            # visited is a set: its insertion method is add, not append.
-            # The current node is vertex; n is not defined in this function.
-
-
-
-            # adsfjh 13: Right after marking vertex visited, can you push a "finish"
-            # task for vertex? Use one tuple, like your initial "visit" task.
-            # Stay inside the elif. Schedule completion; do not add to traveled here.
-            # Push this BEFORE child tasks so the stack processes it AFTER them.
-
-            # adsfjh 14: Below that finish task, still inside the elif, can you loop
-            # over vertex's outgoing neighbors? Your Graph method is get_children.
-            # Give it vertex, not node_1: each popped node has its own children.
-            # To explore children in the order returned, push them in reverse order.
-            # Hint: the built-in reversed works on the list get_children returns.
-            # The last child pushed is the first child popped.
-
-            #  Inside the child loop, can you push a "visit" task for each               push visit task from each child 
-            # child that is not already in visited? Each task is one action-node tuple.
-            # Hint: check membership, then use stack's append method.
-            # Do not mark children visited here; your elif does that when popped.
-            # Duplicate pending visits are okay: the visited check on pop skips repeats.
-
-            # adsfjh 16: After while finishes, can you give the caller this tree's
-            # traveled list and still allow the outer for loop to try later starts?
-            # Hint: yield produces one result and lets the function resume afterward.
-            # Place it OUTSIDE while but INSIDE if node_1 not in visited.
-            # Align it with while. A return here would stop before later trees.
-
-            # adsfjh 17: Can you run the five existing tests below with pytest?
-            # Select this file explicitly; its name does not start with test_.
-            # Check finish order, SCC membership, component order, and the deep chain.
-            # Inspect any failure before changing unrelated working code.
-
-            # adsfjh 18: Can you add tests for the missing edge cases below?
-            # Put new test functions beside the existing tests, outside dfs_trees.
-            # Empty graph: no trees. One isolated node: one tree containing that node.
-            # Self-loop: the node finishes once, without endless exploration.
-            # Branching: a points to b and c; b points to d. Add a-to-b before a-to-c.
-            # Following that child order should finish d, b, c, a in one tree.
-            # Shared child: a points to b and c; b also points to c.
-            # Each node finishes once even when several visit tasks name it.
-
-            # adsfjh 19: Can you explain why dfs_trees takes O(V + E) time when
-            # start_order lists each vertex once? Count expansions and edge scans.
-            # A vertex expands only on its first visit; later visits are skipped.
-            # Include building and reversing each get_children list in your count.
-            # This checks DFS only: Graph.add_edge scans a parent list, so the
-            # surrounding graph-building code needs a separate runtime review.
-                
-
-
-
-
-    
-                    
-
-
-
-    
+                        
 
 
 def dfs_finish_order(graph):
-    return [node for tree in dfs_trees(graph, graph.get_nodes()) for node in tree]
+    post_order = []
+
+    for tree in dfs_trees(graph, graph.get.nodes()):
+        for node in tree: 
+            post_order.append(node)
+    return finish_order
 
 
 def kosaraju(graph):
