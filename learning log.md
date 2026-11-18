@@ -1613,12 +1613,12 @@ if not(lst):
 - Minutes Spent Documenting: [fill in]
 - Confidence: [fill in]
 
-## 11/11/26 : Quiz - Graphs preparation : Graph representations
+# DEAD 11/11/26 : Quiz - Graphs preparation : Graph representations
 
 - Question/Problem: How do an adjacency list and an adjacency matrix represent the same directed or undirected graph, and what changes in space, edge lookup, and neighbor iteration?
 - When Identified: 11/11/26, about 4:20pm Mountain
 - Importance (1-5): 5
-- How to Learn: Review JEA 5.4 and my Project 2 Graph ADT. Draw one small graph both ways, check whether a directed edge exists in the reverse direction, and count how often an undirected edge appears in neighbor lists. Connect this to my earlier 2E + 1 token insight.
+- How to Learn: Review JEA 5.4 and my Project 2 Graph ADT. Draw one small graph both ways, check whether a directed edge exists in the reverse direction, and count how often an undirected edge appears in neighbor lists. 
 - Insight/Answer: [After tracing the example, write what I can now explain in my own words. Earlier entries already record my understanding that an undirected edge appears in both endpoints' neighbor lists.]
 - Hours Spent Learning: [fill in]
 - Minutes Spent Documenting: [fill in]
@@ -1646,47 +1646,56 @@ if not(lst):
 - Minutes Spent Documenting: [fill in]
 - Confidence (1-5): [fill in]
 
-## 11/11/26 : Quiz - Graphs preparation : Strongly connected components
-
-- Question/Problem: How do mutual reachability, graph reversal, and DFS finish order identify strongly connected components, and why is the component graph a DAG?
+## 12  
+- Question/Problem: How do I do the step that makes any directed graph a DAG? How would i detect a cycle and make it an SCC. 
 - When Identified: 11/11/26, about 4:20pm Mountain
 - Importance (1-5): 5
-- How to Learn: Use a directed graph with two cycles and a one-way edge between them. Mark its SCCs, reverse every edge, and trace the two DFS passes specified in the SCC group project. Compare with JEA 6.5–6.6 and my earlier DFS postorder entries.
-- Insight/Answer: [Record my own component grouping and explain the role of finish order after tracing it.]
-- Hours Spent Learning: [fill in]
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
+- How to Learn: Use a directed graph with two cycles and a one-way edge between them. Mark its SCCs, reverse every edge, then figure out the algorithm and try it on a piece of paper. 
+- Hours Spent Learning: 4+
+- Insight/ Answer: 
+    - Run DFS and record post order manually
+    - Run DFS another time starting with the most recently finished nodes first - produces distinct tree representing a cycle, each cycle becomes one second-pass DFS tree
+    - my two cycles on either end just became two nodes
+    - They are now SCC's, cool! 
+    - Here is how I did it in code:
+          
+    - for tree in dfs_trees(reversed_graph, scc_start):
+        scc_id = frozenset(tree)
+        g_prime.add_node(scc_id)
+        for node in scc_id:
+            belongs_to[node] = scc_id
 
-## 11/11/26 : Quiz - Graphs preparation : Max flow basics
+- Minutes Spent Documenting: 20 
+- Confidence (5): 4 
 
-- Question/Problem: What makes a proposed flow valid, how does a residual path increase it, and how does a cut bound the possible flow?
+## 12 LEARNING LOG 11/11/26 
+
+- Question/Problem: How can I understand the mechanism of residual
 - When Identified: 11/11/26, about 4:20pm Mountain
 - Importance (1-5): 5
-- How to Learn: Read JEA 10.0–10.3. On a four-vertex network, label capacities and flows, check conservation at internal vertices, draw forward and backward residual capacities, augment once, and compare the result with a cut capacity.
-- Insight/Answer: [Record the flow and cut I computed, and explain any remaining confusion.]
-- Hours Spent Learning: [fill in]
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
+- How to Learn: Make a max flow graph, send flow through one route from source to sink
+- Insight/Answer: 
+    - Forward residual capacity is total capacity minus current flow it means this is how much left we could push forward through this pipe
+    - An edge with capacity of 6 carrying flow 2 has forward residual capacity of 4
+    - Sending those 2 units also creates backward also creates a backward residual capacity of 4 
+    - backward residual capacity is always equal to forwards residual capacity
+    - backwards residual capacity is useful when building augmented or changing paths, if you find a better path to send your flow through you can change flow to go to that better path by blocking the pipe you are on and diverting to another pipe
 
-## 11/12/26 : Max flow : Residual room on each pipe
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 20
+- Confidence (1-5): 4
 
-- Question/Problem: What does residual mean, and why can `s → a` have residual room 4, then 1, while its capacity remains 6?
-- When Identified: 11/12/26, about 7:00–7:30pm Mountain (rounded)
-- Importance (1-5): 5
-- How to Learn: Trace a complete route `s → a → c → t`. Write the capacity, flow already sent, and room left on each pipe before and after sending flow. Compare `s → a`, `a → c`, and `a → d` rather than treating residual as one number for the whole graph.
-- Insight/Answer: I first thought capacity might be one number for the whole flow, and residual sounded like extra flow for several pipes together. Each directed pipe has its own fixed capacity and changing residual room. If `s → a` has capacity 6 and we send 2 along `s → a → c → t`, `s → a` has 4 left. If 3 more units use `s → a`, then 5 of its 6 units are used, leaving residual room 1. A whole route can add only as much as its pipe with the least room.
-- Hours Spent Learning: 0.5
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
 
-## 11/12/26 : Max flow : BFS level order and first route
+
+## 12 Learning Log 11/12/26 :BFS route and Level Order
 
 - Question/Problem: How can BFS find `s → a → c → t` first if it explores the neighbors of `s` before moving to the next level?
-- When Identified: 11/12/26, [time to fill in]
-- Importance (1-5): [fill in]
+- When Identified: 11/12/26
+- Importance (1-5): 5
 - How to Learn: Trace the queue and parent links on our nine-node graph. Separate discovering a node from processing it. The directed pipes and their capacities are:
 
-  ```python
+
+```python
   capacities = {
       "s": {"a": 6, "b": 3, "e": 2},
       "a": {"c": 2, "d": 5},
@@ -1698,35 +1707,39 @@ if not(lst):
       "g": {"t": 2},
       "t": {},
   }
+
   ```
 
-- Insight/Answer: I thought BFS should discover `a`, `b`, and `e` from `s` before exploring `a`'s neighbors, and that was right. After processing `s`, the queue holds `a`, `b`, and `e`. Processing `a` adds `c` and `d`, but BFS still processes `b` and `e` before `c`. With the graph's listed neighbor order, processing `c` first discovers `t`, and the parent links give the first complete route `s → a → c → t`. The earlier explanation skipped the level order, which made the route sound like DFS.
-- Hours Spent Learning: [fill in]
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
+- Insight/Answer: I thought BFS should discover `a`, `b`, and `e` from `s` before exploring `a`'s neighbors, and that was right. After processing `s`, the queue holds `a`, `b`, and `e`. Processing `a` adds `c` and `d`, but BFS still processes `b` and `e` before `c`. With the graph's listed neighbor order, processing `c` first discovers `t`, and the parent links give the first complete route `s → a → c → t`. An earlier explanation skipped the level order, which made the route sound like DFS.
+- Hours Spent Learning: 0.5
+- Minutes Spent Documenting: 20
+- Confidence (1-5): 4
 
-## [extract_from_gpt_chat] : Learning Log 12 : Entry 1
+## 13
 
-- Question/Problem: How can row and column nodes represent placing tokens on white squares when the graph has no token nodes?
-- When Identified: [fill in day and time]
-- Importance (1-5): [fill in]
-- How to Learn: Work through Erickson Chapter 11, problem 9, while building `eleven_point_nine` in `maxflow_9.py`. Trace the suggested 2-by-2 example: I identified that row 1 must use column 0. With hints, I wrote distinct row/column labels, source and sink insertion, capacity-1 outer edges, and the white-square condition. I corrected the column indexing and equality comparison; the AI moved the square traversal into a separate loop after node creation.
-- Insight/Answer:
-  - A row-to-column edge represents a permitted token position, not a token already placed.
-  - I used different row and column labels so the graph keeps their roles separate.
-  - I added source and sink first, preserving their required positions in the node list.
-  - I correctly used capacity 1 on the outer edges and added middle edges only for white squares.
-  - My code stores white-square eligibility in connections, rather than putting an entire row into a node's data.
-- Hours Spent Learning: [fill in]
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
+- Question/Problem: How can a flow graph represent  problem 11.9?
+- When Identified: 11/14/2026
+- Importance (1-5): 2
+- How to Learn: Work through JEA 11.9, and the function `eleven_point_nine` in `maxflow_9.py`. Trace the suggested 2-by-2 example, by making a flow graph.
+- Findings:
+  - Row and column nodes point to specific rows and columns on the board
+  - An edge between a row and column node represents a white square at that row and column.
+  - These are part of the capacity graph, which records allowed flow; the separate flow graph records how much flow each edge carries.
+  - A 1 on a row-column edge represents a token placed on that square.
+  - A source-row capacity 1 means at most one token in that row.
+  - A column-sink capacity 1 allows at most one token in that column.
+  - With source-row capacity 2, two units could split toward different columns, placing two tokens in the same row.
+  - The capacity-2 example changes the source-to-row edge, not the row-to-column edges.
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 2
+- Confidence (1-5): 5
 
-## [extract_from_gpt_chat] : Learning Log 12 : Entry 2
+## 13 
 
 - Question/Problem: How do I test a graph's nodes and edges when order matters for some checks but not others?
-- When Identified: [fill in day and time]
-- Importance (1-5): [fill in]
-- How to Learn: Build the 1-by-1 white-board pytest and use the failures to correct my assertions. I converted the node keys to a list, replaced the incorrect count operation with `len`, and used an ordered list for the source/sink check. I wrote the expected edge pairs and converted the actual edges to a set. The AI supplied the capacity-check loop after I requested an override; I did not write that loop unaided.
+- When Identified: 11/14/26
+- Importance (1-5): 5
+- How to Learn: Build the 1-by-1 white-board pytest and use the failures to correct my assertions. I converted the node keys to a list, replaced the incorrect count operation with `len`, and used an ordered list for the source/sink check. I wrote the expected edge pairs and converted the actual edges to a set. 
 - Insight/Answer:
   - I used a list to check that source and sink appear first in that order.
   - I corrected my size check to use `len`; a list's `count` counts occurrences of a particular item.
@@ -1734,24 +1747,99 @@ if not(lst):
   - Each returned edge is a pair of endpoint labels; its capacity is retrieved separately.
   - My corrected assertions passed; the added capacity checks cover a separate requirement.
   - I initially mixed ordered lists, unordered sets, and edge weights; each needs a different check.
-- Hours Spent Learning: [fill in]
-- Minutes Spent Documenting: [fill in]
-- Confidence (1-5): [fill in]
+- Hours Spent Learning: 1
+- Minutes Spent Documenting: 20
+- Confidence 1-5: 5
 
-## [extract_from_gpt_chat] : Learning Log 12 : Entry 3
 
-- Question/Problem: Why does the black-square example return True when I pass the capacity graph directly into `solution`?
+
+## 13 
+
+- Question/Problem: What do the recursive calls, divided input, and extra work mean in a recurrence such as T(n) = 2T(n/2) + n^2?
+- When Identified: 
+- Importance (1-5): 3
+- How to Learn: In the November 16-17 exam-practice PDF conversation, I asked whether the second recurrence meant two recursive calls on half the input and what the ending n^2 meant. I requested short explanations and worked examples separating those parts.
+- Insight/Answer:
+  - The recursive term describes how many calls are made and the input size each receives.
+  - The added term describes work done by that call outside its recursive calls. (This is n^2 in the original recurrence)
+  - I identified two branches receiving half the input in 2T(n/2) + 1.
+  - Thing left up in the air: can I explain the added work without confusing it with branching or input size?
+- Hours Spent Learning: 45 minutes
+- Minutes Spent Documenting: 5
+- Confidence (1-5): 5
+
+
+## 13
+- Question/Problem: Does the +n^2 ending necessarily mean the work shrinks toward the leaves and the root dominates?
+- When Identified: 11/16/27
+- Importance (1-5): 3
+- How to Learn: I explicitly asked whether n^2 at the end meant shrinking work per level. The conversation compared two, four, and eight children, each receiving half the input. 
+- Insight/Finding:
+  - With squared local work, halving a call's input quarters its local work. work an example starting at 8 with: 4T(n/2) + n^2
+  - Two, four, or eight half-sized children produce half, equal, or double the parent's local work.
+  - Up in the air: can I use both child count and local work instead of deciding from + n^2 alone?
+- Hours Spent Learning: 45 minutes
+- Minutes Spent Documenting: 15
+- Confidence (1-5): 4
+
+## 14 aha
+
+- Question/Problem: Once I know whether the root, leaves, or equal levels dominate, how do I get the Theta bound?
+- When Identified: 11/16
+- Importance (1-5): 5
+- How to Learn: I proposed Theta(n^2 log n) for 4T(n/2) + n, asked for matching worked examples, and requested English rules for root and leaf dominance. 
+- Insight/Answer:
+  - For these recurrences, geometrically shrinking level totals make the root's work determine the bound. In these cases all the work theta cares about is at root. 
+  - for root dom -> compare the relation of total work at that level with input (use an n = something and do the first two levels)
+  - Geometrically growing level totals make leaf work determine the bound; assume constant work per base case. 
+  - If leaves dom -> log base denominator to the number before T
+  - Equal level totals require multiplying one level's work by the number of levels.
+  - 4T(n/2) + n has Theta(n^2) work; 4T(n/2) + n^2 has Theta(n^2 log n),,,, = levels mean log(n) with whatever additional work N or N^2 you have in the recurrence that goes before log(n)
+- Hours Spent Learning: 45 minutes
+- Minutes Spent Documenting: 15
+- Confidence (1-5): 5
+
+## [extract_from_gpt_chat] : Learning Log 13 : Entry 5 : Separate jobs for visited, stack, and finished results
+
+- Question/Problem: While rebuilding dfs_trees, are visited, the stack, and the result list all describing a path?
 - When Identified: [fill in day and time]
 - Importance (1-5): [fill in]
-- How to Learn: Investigate the failing black-square test and question why its edge weights were being changed. I requested separate capacity and flow graphs, then wrote `max_flow_9` to copy all nodes before edges, assign zero flow, and return the new graph. I also wrote the source-child lookup and the comparison with the board size in `solution`; the AI supplied the `sum` generator expression under override. That expression is something I want to practice writing next assignment. The route-finding part of my solver remains unfinished.
+- How to Learn: In the November 15-16 dfs_trees rebuild, I asked whether the structures were the visited set and path, and whether DFS uses a stack. I built the separate lists with hints. The review accepted my unvisited-node conditional and clarified the role of each structure.
 - Insight/Answer:
-  - Capacity records an allowed amount; actual flow records the amount sent.
-  - I correctly created a separate flow graph without changing the capacity graph.
-  - I copied nodes before edges, preserving their order, and initialized every copied edge's flow to zero.
-  - I wrote the final comparison between outgoing source flow and the number of required tokens.
-  - Zero initialization is a starting state, not proof that the maximum possible flow is zero.
-  - Still to verify: why supplying a maximum flow differs from asking `solution` to find one.
+  - The visited set remembers discovered vertices across the entire DFS forest.
+  - The stack holds pending tasks; each tree's result list collects finished vertices.
+  - A finished-node list can cover branches and is not necessarily one continuous path.
+  - Still to verify: can I trace the three structures separately without treating pending work as a finished path?
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: 45 minutes
+- Confidence (1-5): [fill in]
+
+## [extract_from_gpt_chat] : Learning Log 13 : Entry 6 : Popping a DFS task versus finishing a vertex
+
+- Question/Problem: Does popping the stack record postorder, or does it depend on whether the task means visit or finish?
+- When Identified: [fill in day and time]
+- Importance (1-5): [fill in]
+- How to Learn: During the dfs_trees rebuild, I asked whether scheduling a visit was closer to preorder or postorder, then asked what popping represented. I implemented direct unpacking from pop and the finish branch; both were reviewed as correct. I later stated that we need both stack popping and finish order.
+- Insight/Answer:
+  - Popping retrieves the next task; its action determines whether to explore or record completion.
+  - Postorder records a vertex after its DFS children finish.
+  - I implemented task unpacking and appended the vertex in the finish branch.
+  - Popping and recording finish order are separate jobs; only a finish task adds to the finished-node list.
 - Hours Spent Learning: [fill in]
 - Minutes Spent Documenting: [fill in]
 - Confidence (1-5): [fill in]
 
+## [extract_from_gpt_chat] : Learning Log 13 : Entry 7 : Row-column matching for token placement ? revisit
+
+- Question/Problem: How do row-column pairings represent legal token placements and become a max-flow graph?
+- When Identified: [fill in day and time]
+- Importance (1-5): [fill in]
+- How to Learn: Revisit of Learning Log 12, Entry 1, from the November 14 max-flow handout and coding conversation. I questioned the context of matching, whether each row node stored a row of bits, and how pairings represented flow. With hints, I built distinct row/column labels and white-square connections. This records the same learning episode, not additional learning time.
+- Insight/Answer:
+  - Each row and column has its own node; a white square permits an edge between them.
+  - A selected row-column pair represents placing a token at their intersection.
+  - Unit outer capacities prevent reusing a row or column in an integral flow.
+  - I represented white-square eligibility with connections, rather than storing an entire board row inside each node.
+- Hours Spent Learning: [fill in]
+- Minutes Spent Documenting: [fill in]
+- Confidence (1-5): [fill in]

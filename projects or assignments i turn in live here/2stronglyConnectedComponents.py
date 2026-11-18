@@ -70,7 +70,7 @@ def dfs_trees(graph, start_order):
             stack = deque()
             stack.append(("visit", node_1))
             while stack:
-                action, vertex = stack.pop() /pop off first iten
+                action, vertex = stack.pop() # pop off first item 
                 if action == "finish":
                     post_order.append(vertex) #if item is finished we mark    post_order
                 elif vertex not in visited:

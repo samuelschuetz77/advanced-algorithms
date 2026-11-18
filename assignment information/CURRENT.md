@@ -5,9 +5,13 @@ the work; do not rely on this file for full requirements.
 
 | Status | Due | Canvas title | Submission type | Turn-in path | Spec |
 |---|---|---|---|---|---|
-| Not started; due tonight | Thu 11/12/2026, 11:59pm (late window; originally due Wed 11/11) | Final Checkpoint 3 | Text/upload (5 pts): dated journal entry; goal: Step 5 brute-force baseline with runtimes | Final Project repo journal | [Final Checkpoint 3.md](Final%20Checkpoint%203.md) |
-| Not started | Fri 11/13/2026, 11:59pm | Group Project - Reduction From Maxflow to LP | Canvas text + Classroom 50 repo (20 pts; partner; no AI code) | Classroom 50 group repo | [Group Project - Reduction From Maxflow to LP.md](Group%20Project%20-%20Reduction%20From%20Maxflow%20to%20LP.md) |
-| Not started | Mon 11/16/2026, 11:59pm | Learning Log 14 | Canvas text (5 pts) | ../learning log.md | [Learning Log 14.md](Learning%20Log%2014.md) |
+| Missing per Canvas | Wed 11/11/2026, 11:59pm | Final Checkpoint 3 | Text/upload (5 pts): dated journal entry; goal: Step 5 brute-force baseline with runtimes | Final Project repo journal | [Final Checkpoint 3.md](Final%20Checkpoint%203.md) |
+| Missing per Canvas | Fri 11/13/2026, 11:59pm | Group Project - Reduction From Maxflow to LP | Canvas text + Classroom 50 repo (20 pts; partner; no AI code) | Classroom 50 group repo | [Group Project - Reduction From Maxflow to LP.md](Group%20Project%20-%20Reduction%20From%20Maxflow%20to%20LP.md) |
+| Not started | Mon 11/16/2026, 11:59pm (closes 11/16) | Learning Log 14 | Canvas text (5 pts) | ../learning log.md | [Learning Log 14.md](Learning%20Log%2014.md) |
+| Not started | Mon 11/23/2026, 11:59pm | Learning Log 15 | Canvas text (5 pts) | ../learning log.md | [Learning Log 15.md](Learning%20Log%2015.md) |
+| Not started | Mon 11/23/2026, 11:59pm | Quiz - NP Reductions | Canvas quiz (27 pts; closed-everything) | N/A | [Quiz - NP Reductions.md](Quiz%20-%20NP%20Reductions.md) |
+| Not started | Wed 11/18/2026, 11:59pm | Final Checkpoint 4 | Text/upload (5 pts): Step 3 reduction drafted | Final Project repo journal | [Final Checkpoint 4.md](Final%20Checkpoint%204.md) |
+| Unsubmitted (in class today) | Mon 11/16/2026, 11:20am | Quiz - Max Flow and LP | Canvas quiz (14 pts; closed-everything) | N/A | [Quiz - Max Flow and LP.md](Quiz%20-%20Max%20Flow%20and%20LP.md) |
 | Not started | Fri 11/20/2026, 11:59pm | Project - Reduction From SAT to ILP | Canvas text: one .py file + correctness proof (33 pts; individual; no AI code) | not created | [Project - Reduction From SAT to ILP.md](Project%20-%20Reduction%20From%20SAT%20to%20ILP.md) |
 | Missing (window closed 11/9) | Fri 11/6/2026, 11:59pm | Project - Applications of Maxflow | Classroom 50 repo + Canvas text (15 pts; no AI) | Classroom 50 repo | [Project - Applications of Maxflow.md](Project%20-%20Applications%20of%20Maxflow.md) |
 | Not started (missed per Canvas) | Wed 11/4/2026, 11:59pm | Final Checkpoint 2 | Text/upload (5 pts) | Final Project repo journal | [Final Checkpoint 2.md](Final%20Checkpoint%202.md) |
@@ -98,3 +102,5 @@ the work; do not rely on this file for full requirements.
 ## October 28 repository lookup
 
 - Final Project: confirmed Canvas setup link and GitHub organization `snow-teichert-2026`; see Final Project.md. Personal repository creation/lookup is pending Classroom 50 authorization. No code was changed or submitted.
+
+**Last synced:** 2026-11-16 (Canvas API). New: Final Checkpoint 4, Learning Log 15, Quiz - Max Flow and LP, Quiz - NP Reductions. Final Checkpoint 3, Maxflow-to-LP group project, Learning Log 13 show missing.
