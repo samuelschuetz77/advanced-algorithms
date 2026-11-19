@@ -8,3 +8,7 @@
 	path = projects or assignments i turn in live here/Maxflow-LP
 	url = https://github.com/snow-teichert-2026/algorithms-fall-2026-maxflow-lp-samuelschuetz77.git
 	branch = main
+[submodule "projects or assignments i turn in live here/algorithms-fall-2026-final-project-samuelschuetz77"]
+	path = projects or assignments i turn in live here/algorithms-fall-2026-final-project-samuelschuetz77
+	url = https://github.com/snow-teichert-2026/algorithms-fall-2026-final-project-samuelschuetz77.git
+	branch = main
